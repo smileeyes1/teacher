@@ -72,8 +72,9 @@
     }
 
     textarea.output-area {
-      height: 320px;
+      height: 360px;
       resize: vertical;
+      white-space: pre-wrap;
     }
   </style>
 </head>
@@ -84,34 +85,86 @@
   <h2>إنشاء محاكاة تعليمية</h2>
 
   <label>المادة</label>
-  <input type="text" placeholder="مثال: رياضيات، علوم، لغة عربية">
+  <input id="subject" type="text" placeholder="مثال: رياضيات، علوم، لغة عربية">
 
   <label>الصف</label>
-  <input type="text" placeholder="مثال: الثاني، الخامس">
+  <input id="grade" type="text" placeholder="مثال: الثاني، الخامس">
 
   <label>الوحدة</label>
-  <input type="text" placeholder="اختياري">
+  <input id="unit" type="text" placeholder="اختياري">
 
   <label>الدرس أو المفهوم</label>
-  <input type="text" placeholder="مثال: الكسور، الجملة الاسمية">
+  <input id="lesson" type="text" placeholder="مثال: الكسور، الجملة الاسمية">
 
   <label>نوع المحاكاة</label>
   <div class="radio-group">
-    <input type="radio" name="type" checked> <label>عميقة</label><br>
-    <input type="radio" name="type"> <label>علاجية</label><br>
-    <input type="radio" name="type"> <label>إثرائية</label>
+    <input type="radio" name="type" value="عميقة" checked> <label>عميقة</label><br>
+    <input type="radio" name="type" value="علاجية"> <label>علاجية</label><br>
+    <input type="radio" name="type" value="إثرائية"> <label>إثرائية</label>
   </div>
 
   <label>الهدف العميق (اختياري)</label>
-  <textarea placeholder="ما الذي تريد أن يتغير في طريقة تفكير الطالب؟"></textarea>
+  <textarea id="deepGoal" placeholder="ما الذي تريد أن يتغير في طريقة تفكير الطالب؟"></textarea>
 
-  <button>إنشاء المحاكاة</button>
+  <button onclick="generateSimulation()">إنشاء المحاكاة</button>
 
   <div class="output">
     <label>ناتج المحاكاة</label>
-    <textarea class="output-area" placeholder="ستظهر المحاكاة هنا..."></textarea>
+    <textarea class="output-area" id="output" placeholder="ستظهر المحاكاة هنا..."></textarea>
   </div>
 </div>
+
+<script>
+function generateSimulation() {
+  const subject = document.getElementById("subject").value || "غير محددة";
+  const grade = document.getElementById("grade").value || "غير محدد";
+  const unit = document.getElementById("unit").value || "—";
+  const lesson = document.getElementById("lesson").value || "—";
+  const deepGoal = document.getElementById("deepGoal").value;
+  const type = document.querySelector('input[name="type"]:checked').value;
+
+  const simulation = `
+محاكاة تعليمية ${type}
+
+المادة: ${subject}
+الصف: ${grade}
+الوحدة: ${unit}
+الدرس / المفهوم: ${lesson}
+
+الفكرة المركزية:
+تحويل المفهوم إلى تجربة حيّة يعيشها الطالب قبل أن يسمّيها.
+
+بداية المحاكاة:
+يبدأ المعلم بسؤال واقعي أو موقف من حياة الطالب له علاقة مباشرة بالمفهوم،
+دون ذكر تعريف أو قاعدة.
+
+تجربة صفّية:
+يُطلب من الطلبة التفاعل مع الموقف، اتخاذ قرار، أو تقديم تفسير،
+ثم تُناقش الإجابات جماعيًا لاكتشاف الفكرة الأساسية.
+
+لحظة الإدراك:
+يوجّه المعلم النقاش حتى يصل الطلبة بأنفسهم إلى جوهر المفهوم،
+ويُترك للطلبة التعبير عنه بألفاظهم.
+
+إدخال الرمز أو القاعدة:
+تُقدَّم القاعدة أو المصطلح بعد الفهم، بوصفه اسمًا لما تم اكتشافه.
+
+نشاط عكسي:
+يُطلب من الطلبة ابتكار مثال جديد يطبق المفهوم في سياق مختلف.
+
+التقويم العميق:
+يُقيَّم الفهم من خلال سؤال يطلب تفسيرًا أو قرارًا، لا اختيارًا مباشرًا.
+
+الهدف العميق:
+${deepGoal || "إعادة بناء فهم الطالب للمفهوم بطريقة أعمق وأكثر ثباتًا."}
+
+إرشاد للمعلم:
+ركّز على الحوار، وتجنّب الإسراع في إعطاء الإجابة.
+`;
+
+  document.getElementById("output").value = simulation.trim();
+}
+</script>
 
 </body>
 </html>
