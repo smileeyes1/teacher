@@ -3,63 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>واجهة إنشاء محاكاة تعليمية</title>
+  <title>نظام إنشاء محاكاة تعليمية عميقة</title>
 
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
+      background-color: #f4f6f8;
       margin: 0;
-      padding: 16px;
+      padding: ١٦px;
     }
 
     .container {
       background: #ffffff;
-      max-width: 600px;
+      max-width: ٦٤٠px;
       margin: auto;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: ٢٠px;
+      border-radius: ١٠px;
+      box-shadow: 0 ٤px ٨px rgba(0,0,0,0.1);
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: ٢٠px;
     }
 
     label {
       font-weight: bold;
       display: block;
-      margin-top: 12px;
+      margin-top: ١٢px;
     }
 
     input, textarea, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 16px;
+      width: ١٠٠%;
+      padding: ١٠px;
+      margin-top: ٦px;
+      border-radius: ٦px;
+      border: ١px solid #ccc;
+      font-size: ١٦px;
     }
 
-    .radio-group {
-      margin-top: 8px;
+    textarea {
+      resize: vertical;
     }
 
-    .radio-group label {
+    .option-group {
+      margin-top: ٨px;
+    }
+
+    .option-group label {
       font-weight: normal;
-      margin-left: 10px;
+      margin-left: ٨px;
     }
 
     button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 14px;
-      font-size: 18px;
+      margin-top: ٢٠px;
+      width: ١٠٠%;
+      padding: ١٤px;
+      font-size: ١٨px;
       background-color: #1976d2;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: ٨px;
       cursor: pointer;
     }
 
@@ -68,13 +72,13 @@
     }
 
     .output {
-      margin-top: 24px;
+      margin-top: ٢٤px;
     }
 
-    textarea.output-area {
-      height: 360px;
-      resize: vertical;
+    .output textarea {
+      height: ٤٢٠px;
       white-space: pre-wrap;
+      font-family: "Tahoma", Arial, sans-serif;
     }
   </style>
 </head>
@@ -82,35 +86,45 @@
 <body>
 
 <div class="container">
-  <h2>إنشاء محاكاة تعليمية</h2>
+  <h2>إنشاء محاكاة تعليمية عميقة</h2>
 
   <label>المادة</label>
-  <input id="subject" type="text" placeholder="مثال: رياضيات، علوم، لغة عربية">
+  <input id="subject" placeholder="مثال: رياضيات – علوم – لغة عربية">
 
   <label>الصف</label>
-  <input id="grade" type="text" placeholder="مثال: الثاني، الخامس">
+  <input id="grade" placeholder="مثال: الثاني – الرابع">
 
-  <label>الوحدة</label>
-  <input id="unit" type="text" placeholder="اختياري">
+  <label>الوحدة (اختياري)</label>
+  <input id="unit" placeholder="اسم الوحدة إن وُجد">
 
   <label>الدرس أو المفهوم</label>
-  <input id="lesson" type="text" placeholder="مثال: الكسور، الجملة الاسمية">
+  <input id="lesson" placeholder="مثال: المقارنة بين عددين – الجملة الاسمية">
+
+  <label>مستوى الطلبة</label>
+  <select id="level">
+    <option value="ضعاف">طلاب ضعاف</option>
+    <option value="عادي" selected>صف عادي</option>
+    <option value="موهوبين">طلاب موهوبين</option>
+  </select>
 
   <label>نوع المحاكاة</label>
-  <div class="radio-group">
-    <input type="radio" name="type" value="عميقة" checked> <label>عميقة</label><br>
-    <input type="radio" name="type" value="علاجية"> <label>علاجية</label><br>
-    <input type="radio" name="type" value="إثرائية"> <label>إثرائية</label>
+  <div class="option-group">
+    <input type="radio" name="type" value="عميقة" checked>
+    <label>عميقة</label><br>
+    <input type="radio" name="type" value="علاجية">
+    <label>علاجية</label><br>
+    <input type="radio" name="type" value="إثرائية">
+    <label>إثرائية</label>
   </div>
 
   <label>الهدف العميق (اختياري)</label>
-  <textarea id="deepGoal" placeholder="ما الذي تريد أن يتغير في طريقة تفكير الطالب؟"></textarea>
+  <textarea id="deepGoal" placeholder="ما الذي تريد أن يتغيّر في طريقة تفكير الطالب؟"></textarea>
 
   <button onclick="generateSimulation()">إنشاء المحاكاة</button>
 
   <div class="output">
     <label>ناتج المحاكاة</label>
-    <textarea class="output-area" id="output" placeholder="ستظهر المحاكاة هنا..."></textarea>
+    <textarea id="output" placeholder="ستظهر المحاكاة هنا..."></textarea>
   </div>
 </div>
 
@@ -120,46 +134,115 @@ function generateSimulation() {
   const grade = document.getElementById("grade").value || "غير محدد";
   const unit = document.getElementById("unit").value || "—";
   const lesson = document.getElementById("lesson").value || "—";
+  const level = document.getElementById("level").value;
   const deepGoal = document.getElementById("deepGoal").value;
   const type = document.querySelector('input[name="type"]:checked').value;
 
   const simulation = `
-محاكاة تعليمية ${type}
+محاكاة تعليمية ${type} – موجّهة بالأسئلة ومكيّفة حسب المستوى
 
 المادة: ${subject}
 الصف: ${grade}
 الوحدة: ${unit}
 الدرس / المفهوم: ${lesson}
+مستوى الطلبة: ${level}
 
-الفكرة المركزية:
-تحويل المفهوم إلى تجربة حيّة يعيشها الطالب قبل أن يسمّيها.
+١) الافتراض الحدسي المتوقع:
+غالبًا ما ينطلق الطالب من فهم تلقائي أو سطحي للمفهوم.
 
-بداية المحاكاة:
-يبدأ المعلم بسؤال واقعي أو موقف من حياة الطالب له علاقة مباشرة بالمفهوم،
-دون ذكر تعريف أو قاعدة.
+▸ السؤال الموجّه:
+"لماذا يبدو هذا الفهم صحيحًا لك في البداية؟"
 
-تجربة صفّية:
-يُطلب من الطلبة التفاعل مع الموقف، اتخاذ قرار، أو تقديم تفسير،
-ثم تُناقش الإجابات جماعيًا لاكتشاف الفكرة الأساسية.
+—
 
-لحظة الإدراك:
-يوجّه المعلم النقاش حتى يصل الطلبة بأنفسهم إلى جوهر المفهوم،
-ويُترك للطلبة التعبير عنه بألفاظهم.
+٢) موقف واقعي كاشف:
+يقدّم المعلم موقفًا من حياة الطالب
+يظهر أن الفهم الأولي غير كافٍ.
 
-إدخال الرمز أو القاعدة:
-تُقدَّم القاعدة أو المصطلح بعد الفهم، بوصفه اسمًا لما تم اكتشافه.
+▸ السؤال:
+"هل هذا التفسير وحده يكفي للتعامل مع الموقف؟ لماذا؟"
 
-نشاط عكسي:
-يُطلب من الطلبة ابتكار مثال جديد يطبق المفهوم في سياق مختلف.
+—
 
-التقويم العميق:
-يُقيَّم الفهم من خلال سؤال يطلب تفسيرًا أو قرارًا، لا اختيارًا مباشرًا.
+٣) تكييف المسار حسب المستوى:
+
+▸ للطلبة الضعاف:
+— تبسيط الموقف
+— استخدام تمثيل حسي
+▸ السؤال:
+"ماذا يحدث لو غيّرنا جزءًا واحدًا فقط؟"
+
+▸ للصف العادي:
+— نقاش جماعي مفتوح
+▸ السؤال:
+"هل يمكن تفسير الموقف بطريقة أخرى؟"
+
+▸ للطلبة الموهوبين:
+— إضافة شرط جديد
+▸ السؤال:
+"هل يظل تفسيرك صحيحًا بعد هذا التغيير؟"
+
+—
+
+٤) الاحتكاك المعرفي:
+تظهر تفسيرات متعددة ومتعارضة.
+
+▸ السؤال:
+"ما الشيء المشترك الذي تحتاجه كل الإجابات لتكون مقنعة؟"
+
+—
+
+٥) لحظة التحوّل المفاهيمي:
+يقود المعلم الحوار حتى يكتشف الطلبة أن:
+جوهر المفهوم، لا شكله، هو ما يحل المشكلة.
+
+▸ السؤال:
+"لو تجاهلنا المظهر، ما الذي يجب أن ننظر إليه فعلًا؟"
+
+—
+
+٦) التسمية أو القاعدة:
+بعد الاكتشاف، يقدّم المعلم المصطلح أو القاعدة.
+
+▸ سؤال تثبيت:
+"كيف يعبّر هذا الاسم عمّا اكتشفناه؟"
+
+—
+
+٧) التطبيق الموجّه:
+نشاط واحد فقط مناسب للمستوى.
+
+▸ السؤال:
+"ما الذي جعلك تختار هذا الحل دون غيره؟"
+
+—
+
+٨) نقل التعلّم:
+ربط المفهوم بسياق جديد.
+
+▸ السؤال:
+"أين يمكن أن نحتاج هذا النوع من التفكير خارج هذا الدرس؟"
+
+—
+
+٩) التقويم العميق:
+ليس اختبارًا بل تأملًا.
+
+▸ السؤال الختامي:
+"كيف ستفكر في موقف مشابه لاحقًا بشكل مختلف؟"
+
+—
+
+١٠) الأثر الذهني المتوقع:
+الانتقال من فهم سطحي
+إلى فهم أعمق وأكثر ثباتًا.
 
 الهدف العميق:
-${deepGoal || "إعادة بناء فهم الطالب للمفهوم بطريقة أعمق وأكثر ثباتًا."}
+${deepGoal || "بناء تغيير مستقر في طريقة تفكير الطالب، لا حفظ مؤقت."}
 
 إرشاد للمعلم:
-ركّز على الحوار، وتجنّب الإسراع في إعطاء الإجابة.
+إذا أجاب الطالب بسرعة دون تردد،
+فالسؤال يحتاج إعادة صياغة، لا شرح.
 `;
 
   document.getElementById("output").value = simulation.trim();
