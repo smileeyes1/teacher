@@ -1,45 +1,45 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نظام إنشاء محاكاة تعليمية عميقة</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>نظام المحاكاة التعليمية العميقة</title>
 
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f6f8;
       margin: 0;
-      padding: ١٦px;
+      padding: 16px;
     }
 
     .container {
       background: #ffffff;
-      max-width: ٦٤٠px;
+      max-width: 640px;
       margin: auto;
-      padding: ٢٠px;
-      border-radius: ١٠px;
-      box-shadow: 0 ٤px ٨px rgba(0,0,0,0.1);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
     h2 {
       text-align: center;
-      margin-bottom: ٢٠px;
+      margin-bottom: 20px;
     }
 
     label {
       font-weight: bold;
       display: block;
-      margin-top: ١٢px;
+      margin-top: 12px;
     }
 
     input, textarea, select {
-      width: ١٠٠%;
-      padding: ١٠px;
-      margin-top: ٦px;
-      border-radius: ٦px;
-      border: ١px solid #ccc;
-      font-size: ١٦px;
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
     }
 
     textarea {
@@ -47,23 +47,23 @@
     }
 
     .option-group {
-      margin-top: ٨px;
+      margin-top: 8px;
     }
 
     .option-group label {
       font-weight: normal;
-      margin-left: ٨px;
+      margin-left: 8px;
     }
 
     button {
-      margin-top: ٢٠px;
-      width: ١٠٠%;
-      padding: ١٤px;
-      font-size: ١٨px;
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
       background-color: #1976d2;
       color: white;
       border: none;
-      border-radius: ٨px;
+      border-radius: 8px;
       cursor: pointer;
     }
 
@@ -72,13 +72,13 @@
     }
 
     .output {
-      margin-top: ٢٤px;
+      margin-top: 24px;
     }
 
     .output textarea {
-      height: ٤٢٠px;
+      height: 420px;
       white-space: pre-wrap;
-      font-family: "Tahoma", Arial, sans-serif;
+      font-family: Tahoma, Arial, sans-serif;
     }
   </style>
 </head>
@@ -129,7 +129,10 @@
 </div>
 
 <script>
-function generateSimulation() {
+/* ضع مفتاح Gemini الخاص بك هنا فقط */
+const GEMINI_API_KEY = "PUT_YOUR_API_KEY_HERE";
+
+async function generateSimulation() {
   const subject = document.getElementById("subject").value || "غير محددة";
   const grade = document.getElementById("grade").value || "غير محدد";
   const unit = document.getElementById("unit").value || "—";
@@ -138,114 +141,59 @@ function generateSimulation() {
   const deepGoal = document.getElementById("deepGoal").value;
   const type = document.querySelector('input[name="type"]:checked').value;
 
-  const simulation = `
-محاكاة تعليمية ${type} – موجّهة بالأسئلة ومكيّفة حسب المستوى
+  const prompt = `
+أنت نظام تربوي معماري محترف.
+أنشئ محاكاة تعليمية ${type} عميقة وموجّهة بالأسئلة، مكيّفة حسب مستوى الطلبة.
 
 المادة: ${subject}
 الصف: ${grade}
 الوحدة: ${unit}
-الدرس / المفهوم: ${lesson}
+الدرس: ${lesson}
 مستوى الطلبة: ${level}
 
-١) الافتراض الحدسي المتوقع:
-غالبًا ما ينطلق الطالب من فهم تلقائي أو سطحي للمفهوم.
-
-▸ السؤال الموجّه:
-"لماذا يبدو هذا الفهم صحيحًا لك في البداية؟"
-
-—
-
-٢) موقف واقعي كاشف:
-يقدّم المعلم موقفًا من حياة الطالب
-يظهر أن الفهم الأولي غير كافٍ.
-
-▸ السؤال:
-"هل هذا التفسير وحده يكفي للتعامل مع الموقف؟ لماذا؟"
-
-—
-
-٣) تكييف المسار حسب المستوى:
-
-▸ للطلبة الضعاف:
-— تبسيط الموقف
-— استخدام تمثيل حسي
-▸ السؤال:
-"ماذا يحدث لو غيّرنا جزءًا واحدًا فقط؟"
-
-▸ للصف العادي:
-— نقاش جماعي مفتوح
-▸ السؤال:
-"هل يمكن تفسير الموقف بطريقة أخرى؟"
-
-▸ للطلبة الموهوبين:
-— إضافة شرط جديد
-▸ السؤال:
-"هل يظل تفسيرك صحيحًا بعد هذا التغيير؟"
-
-—
-
-٤) الاحتكاك المعرفي:
-تظهر تفسيرات متعددة ومتعارضة.
-
-▸ السؤال:
-"ما الشيء المشترك الذي تحتاجه كل الإجابات لتكون مقنعة؟"
-
-—
-
-٥) لحظة التحوّل المفاهيمي:
-يقود المعلم الحوار حتى يكتشف الطلبة أن:
-جوهر المفهوم، لا شكله، هو ما يحل المشكلة.
-
-▸ السؤال:
-"لو تجاهلنا المظهر، ما الذي يجب أن ننظر إليه فعلًا؟"
-
-—
-
-٦) التسمية أو القاعدة:
-بعد الاكتشاف، يقدّم المعلم المصطلح أو القاعدة.
-
-▸ سؤال تثبيت:
-"كيف يعبّر هذا الاسم عمّا اكتشفناه؟"
-
-—
-
-٧) التطبيق الموجّه:
-نشاط واحد فقط مناسب للمستوى.
-
-▸ السؤال:
-"ما الذي جعلك تختار هذا الحل دون غيره؟"
-
-—
-
-٨) نقل التعلّم:
-ربط المفهوم بسياق جديد.
-
-▸ السؤال:
-"أين يمكن أن نحتاج هذا النوع من التفكير خارج هذا الدرس؟"
-
-—
-
-٩) التقويم العميق:
-ليس اختبارًا بل تأملًا.
-
-▸ السؤال الختامي:
-"كيف ستفكر في موقف مشابه لاحقًا بشكل مختلف؟"
-
-—
-
-١٠) الأثر الذهني المتوقع:
-الانتقال من فهم سطحي
-إلى فهم أعمق وأكثر ثباتًا.
-
 الهدف العميق:
-${deepGoal || "بناء تغيير مستقر في طريقة تفكير الطالب، لا حفظ مؤقت."}
+${deepGoal || "إحداث تغيير مستقر في طريقة تفكير الطالب"}
 
-إرشاد للمعلم:
-إذا أجاب الطالب بسرعة دون تردد،
-فالسؤال يحتاج إعادة صياغة، لا شرح.
+التزم بالبنية التالية:
+- افتراض حدسي
+- موقف واقعي كاشف
+- احتكاك معرفي
+- أسئلة موجّهة
+- لحظة تحوّل مفاهيمي
+- تسمية بعد الاكتشاف
+- تطبيق موجه
+- نقل التعلّم
+- تقويم عميق
 `;
 
-  document.getElementById("output").value = simulation.trim();
+  document.getElementById("output").value = "⏳ يتم التوليد باستخدام Gemini...";
+
+  try {
+    const response = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + GEMINI_API_KEY,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }]
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!data.candidates || !data.candidates[0]) {
+      document.getElementById("output").value = "❌ لم يتم استلام رد صالح من Gemini.";
+      return;
+    }
+
+    const text = data.candidates[0].content.parts[0].text;
+    document.getElementById("output").value = text;
+
+  } catch (error) {
+    document.getElementById("output").value =
+      "❌ حدث خطأ في الاتصال. تأكد من صحة المفتاح أو الاتصال.";
+  }
 }
 </script>
 
