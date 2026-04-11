@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>واجهة إنشاء محاكاة تعليمية</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 16px;
+    }
+
+    .container {
+      background: #ffffff;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .radio-group {
+      margin-top: 8px;
+    }
+
+    .radio-group label {
+      font-weight: normal;
+      margin-left: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #125aa0;
+    }
+
+    .output {
+      margin-top: 24px;
+    }
+
+    textarea.output-area {
+      height: 320px;
+      resize: vertical;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>إنشاء محاكاة تعليمية</h2>
+
+  <label>المادة</label>
+  <input type="text" placeholder="مثال: رياضيات، علوم، لغة عربية">
+
+  <label>الصف</label>
+  <input type="text" placeholder="مثال: الثاني، الخامس">
+
+  <label>الوحدة</label>
+  <input type="text" placeholder="اختياري">
+
+  <label>الدرس أو المفهوم</label>
+  <input type="text" placeholder="مثال: الكسور، الجملة الاسمية">
+
+  <label>نوع المحاكاة</label>
+  <div class="radio-group">
+    <input type="radio" name="type" checked> <label>عميقة</label><br>
+    <input type="radio" name="type"> <label>علاجية</label><br>
+    <input type="radio" name="type"> <label>إثرائية</label>
+  </div>
+
+  <label>الهدف العميق (اختياري)</label>
+  <textarea placeholder="ما الذي تريد أن يتغير في طريقة تفكير الطالب؟"></textarea>
+
+  <button>إنشاء المحاكاة</button>
+
+  <div class="output">
+    <label>ناتج المحاكاة</label>
+    <textarea class="output-area" placeholder="ستظهر المحاكاة هنا..."></textarea>
+  </div>
+</div>
+
+</body>
+</html>
