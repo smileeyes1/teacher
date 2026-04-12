@@ -6,112 +6,46 @@
 <title>الداعم التربوي للمعلّم الفلسطيني</title>
 
 <style>
-/* ====== ضبط عام ====== */
 :root{
-  --bg:#f4f6f8;
-  --card:#ffffff;
-  --accent:#1f5d80;
-  --soft:#e9f2f7;
-  --text:#222;
-  --muted:#666;
-  --border:#ddd;
-  --radius:14px;
+  --bg:#f4f6f8; --card:#fff; --accent:#1f5d80;
+  --soft:#e9f2f7; --text:#222; --muted:#666;
+  --border:#ddd; --radius:14px; --font:14px;
 }
 
-*{
-  box-sizing:border-box;
-  font-family:"Tahoma","Segoe UI",sans-serif;
-}
+*{box-sizing:border-box;font-family:"Tahoma","Segoe UI",sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);padding:16px;font-size:var(--font)}
+.wrapper{max-width:960px;margin:auto}
 
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  padding:16px;
-}
-
-.wrapper{
-  max-width:960px;
-  margin:auto;
-}
-
-/* ====== البطاقات ====== */
 .card{
-  background:var(--card);
-  padding:20px;
-  margin-bottom:16px;
+  background:var(--card);padding:20px;margin-bottom:16px;
   border-radius:var(--radius);
   box-shadow:0 4px 16px rgba(0,0,0,.06);
 }
 
-h1{
-  margin:0 0 8px;
-  color:var(--accent);
-  font-size:22px;
-}
+h1{margin:0 0 8px;color:var(--accent);font-size:22px}
+h2{margin:0 0 6px;font-size:18px}
+p{margin:0;color:var(--muted);line-height:1.7}
 
-h2{
-  margin:0 0 6px;
-  font-size:18px;
+select,button{
+  width:100%;padding:14px;margin-top:10px;
+  font-size:15px;border-radius:12px;border:1px solid var(--border)
 }
+button{background:var(--accent);color:#fff;border:none;cursor:pointer}
+button.secondary{background:#aaa}
+button.light{background:#ddd;color:#000}
 
-p{
-  margin:0;
-  color:var(--muted);
-  line-height:1.7;
-}
+.note{background:var(--soft);padding:12px;border-radius:12px;margin-top:10px;font-size:14px}
 
-/* ====== عناصر التفاعل ====== */
-select, button{
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  font-size:15px;
-  border-radius:12px;
-  border:1px solid var(--border);
-}
-
-button{
-  background:var(--accent);
-  color:#fff;
-  border:none;
-  cursor:pointer;
-}
-
-button.secondary{
-  background:#aaa;
-}
-
-.note{
-  background:var(--soft);
-  padding:12px;
-  border-radius:12px;
-  margin-top:10px;
-  font-size:14px;
-}
-
-/* ====== المخرجات ====== */
 output{
-  display:block;
-  background:#fafafa;
-  border:1px dashed #ccc;
-  padding:16px;
-  margin-top:16px;
-  border-radius:12px;
-  white-space:pre-wrap;
-  font-size:14px;
+  display:block;background:#fafafa;border:1px dashed #ccc;
+  padding:16px;margin-top:16px;border-radius:12px;white-space:pre-wrap
 }
 
-/* ====== استجابة الشاشات ====== */
-@media (max-width:600px){
-  h1{font-size:20px}
-  h2{font-size:17px}
-}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 
-/* ====== الطباعة ====== */
 @media print{
   body{background:#fff}
-  button, select{display:none}
+  button, select, .controls{display:none}
 }
 </style>
 </head>
@@ -119,17 +53,11 @@ output{
 <body>
 <div class="wrapper">
 
-<!-- ====== الرأس ====== -->
 <div class="card">
   <h1>الداعم التربوي للمعلّم الفلسطيني</h1>
-  <p>
-    خبير تربوي مرافق — قبل الحصّة فقط.<br>
-    المرجع الوحيد: الكتاب المدرسي الفلسطيني الحكومي.<br>
-    النظام يقترح… والمعلّم يختار.
-  </p>
+  <p>خبير مرافق قبل الحصّة — النظام يقترح، وأنت تختار.</p>
 </div>
 
-<!-- ====== سياق الحصّة ====== -->
 <div class="card">
   <h2>١) سياق الحصّة</h2>
 
@@ -140,38 +68,61 @@ output{
     <option>المرحلة الثانوية</option>
   </select>
 
-  <select id="subject">
+  <select id="subject" onchange="updateScenarios()">
     <option>الرياضيات</option>
     <option>اللغة العربية</option>
     <option>العلوم</option>
-    <option>التربية الوطنية</option>
   </select>
 
   <div class="note">
-    لا محتوى خارج الكتاب — لا شرح — لا تفسير.<br><br>
-    • فكرة واحدة فقط.<br>
-    • سؤال واحد يقود لنطق الفكرة.<br>
-    • احترام التدرّج المعرفي كما في الكتاب.
+    • كتاب المنهاج هو المرجع الوحيد<br>
+    • فكرة واحدة – سؤال واحد – إغلاق واعٍ
+  </div>
+
+  <div class="controls">
+    <button class="light" onclick="zoom(true)">تكبير الخط</button>
+    <button class="light" onclick="zoom(false)">تصغير الخط</button>
   </div>
 </div>
 
-<!-- ====== المحاكاة الواقعية ====== -->
 <div class="card">
-  <h2>٢) محاكاة ما قد يحدث في الصف</h2>
-
-  <button onclick="simulate('partial')">شارك عدد قليل من الطلبة</button>
-  <button onclick="simulate('imprecise')">كانت الإجابات غير دقيقة</button>
-  <button onclick="simulate('silence')">ساد صمت أو تردّد</button>
+  <h2>٢) محاكاة الصف الواقعي</h2>
+  <div id="scenarios"></div>
 </div>
 
-<!-- ====== المخرج ====== -->
 <div class="card" id="result"></div>
 
 </div>
 
 <script>
-function simulate(state){
+const scenarioMap = {
+  "الرياضيات":[
+    ["partial","شارك عدد قليل من الطلبة"],
+    ["imprecise","كانت الإجابات غير دقيقة"],
+    ["silence","ساد صمت أو تردّد"]
+  ],
+  "اللغة العربية":[
+    ["partial","قرأ طالب واحد فقط"],
+    ["imprecise","الأصوات غير واضحة"],
+    ["silence","تردّد عام في القراءة"]
+  ],
+  "العلوم":[
+    ["partial","شارك عدد قليل بالملاحظة"],
+    ["imprecise","الاستنتاجات غير دقيقة"],
+    ["silence","صمت أثناء الملاحظة"]
+  ]
+};
 
+function updateScenarios(){
+  const s = subject.value;
+  scenarios.innerHTML="";
+  scenarioMap[s].forEach(x=>{
+    scenarios.innerHTML += `<button onclick="simulate('${x[0]}')">${x[1]}</button>`;
+  });
+  localStorage.setItem("lastSubject",s);
+}
+
+function simulate(state){
   const header =
 `تحضير حصّة — معتمد
 الصف: ${grade.value}
@@ -179,49 +130,34 @@ function simulate(state){
 
 `;
 
-  let body = "";
+  const bodies={
+    partial:`الرد المهني:\nتثبيت المحاولة.\n\nالقرار:\nالمشاركة كافية — الإغلاق صحيح.`,
+    imprecise:`الرد المهني:\nقبول الفكرة العامة.\n\nالقرار:\nالمحاولة تحقّقت — الإغلاق صحيح.`,
+    silence:`الرد المهني:\nتطبيع الصمت.\n\nالقرار:\nالصمت ليس فشلًا — الإغلاق صحيح.`
+  };
 
-  switch(state){
-    case "partial":
-      body =
-`الردّ المهني:
-تثبيت المحاولة دون تعميم.
-
-القرار:
-المشاركة الجزئية كافية.
-الإغلاق الآن قرار مهني صحيح.
-`;
-      break;
-
-    case "imprecise":
-      body =
-`الردّ المهني:
-قبول الفكرة العامة دون تصويب علني.
-
-القرار:
-المحاولة تحقّقت.
-التوقّف هنا حكمة مهنية.
-`;
-      break;
-
-    case "silence":
-      body =
-`الردّ المهني:
-تطبيع الصمت والتفكير الهادئ.
-
-القرار:
-الصمت ليس فشلًا.
-الإغلاق قرار تربوي سليم.
-`;
-      break;
-  }
-
-  document.getElementById("result").innerHTML = `
-    <h2>المخرج المعتمد</h2>
-    <output>${header}${body}</output>
-    <button class="secondary" onclick="window.print()">طباعة / حفظ</button>
-  `;
+  result.innerHTML=`
+<h2>المخرج المعتمد</h2>
+<output>${header}${bodies[state]}</output>
+<div class="controls">
+  <button class="secondary" onclick="window.print()">طباعة التحضير</button>
+  <button class="light" onclick="printCard()">بطاقة صفّية</button>
+</div>`;
 }
+
+function printCard(){
+  const o = document.querySelector("output").innerText;
+  const w = window.open();
+  w.document.write(`<pre style="font-family:Tahoma">${o}</pre>`);
+  w.print();
+}
+
+function zoom(up){
+  let f = parseInt(getComputedStyle(document.body).fontSize);
+  document.body.style.fontSize = (up?f+1:f-1)+"px";
+}
+
+updateScenarios();
 </script>
 
 </body>
