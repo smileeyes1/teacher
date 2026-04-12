@@ -2,17 +2,21 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>تحضير الصفّ الأوّل — دعم المعلّم</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الداعم الخبير للمعلّم الفلسطيني</title>
 
 <style>
 :root{
-  --bg:#f7f7f7;
+  --bg:#f4f6f8;
   --card:#ffffff;
-  --text:#222;
+  --text:#1f1f1f;
   --muted:#666;
-  --accent:#2c6e91;
-  --soft:#eaf2f6;
+  --accent:#1f5d80;
+  --soft:#e9f2f7;
+  --border:#ddd;
 }
+
+/* Reset + Typography */
 *{
   box-sizing:border-box;
   font-family:"Segoe UI","Tahoma",sans-serif;
@@ -22,137 +26,161 @@ body{
   background:var(--bg);
   color:var(--text);
 }
-.wrapper{
-  max-width:٦٨٠px;
-  margin:٣٠px auto;
-  padding:٢٠px;
+
+/* Layout */
+.container{
+  max-width:860px;
+  margin:auto;
+  padding:16px;
 }
 .card{
   background:var(--card);
-  border-radius:١٤px;
-  padding:٢٠px;
-  box-shadow:٠ ٤px ١٤px rgba(٠,٠,٠,٠.٠٦);
-  margin-bottom:٢٠px;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.06);
+  margin-bottom:16px;
 }
+
+/* Headings */
 h1{
-  margin-top:٠;
-  font-size:٢٢px;
+  margin:0 0 10px 0;
+  font-size:22px;
   color:var(--accent);
 }
 h2{
-  font-size:١٨px;
-  margin-bottom:١٠px;
+  margin:0 0 8px 0;
+  font-size:18px;
 }
 p{
+  margin:0;
   color:var(--muted);
-  line-height:١.٧;
+  line-height:1.7;
 }
+
+/* Form */
 label{
   display:block;
-  margin-top:١٢px;
-  font-size:١٤px;
+  margin-top:12px;
+  font-size:14px;
 }
 input, textarea{
-  width:١٠٠%;
-  padding:١٢px;
-  margin-top:٦px;
-  border-radius:١٠px;
-  border:١px solid #ddd;
-  font-size:١٤px;
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  font-size:14px;
 }
 textarea{
-  min-height:٨٠px;
+  min-height:80px;
   resize:vertical;
 }
+
+/* Notes */
 .note{
   background:var(--soft);
-  padding:١٢px;
-  border-radius:١٠px;
-  font-size:١٤px;
-  margin-top:١٠px;
+  border-radius:10px;
+  padding:12px;
+  margin-top:10px;
+  font-size:14px;
 }
+
+/* Actions */
 .actions{
   display:flex;
-  gap:١٠px;
-  margin-top:٢٠px;
+  gap:10px;
+  margin-top:16px;
+  flex-wrap:wrap;
 }
 button{
-  flex:١;
-  padding:١٤px;
+  flex:1;
+  min-width:140px;
+  padding:14px;
   border:none;
-  border-radius:١٢px;
+  border-radius:12px;
   background:var(--accent);
   color:#fff;
-  font-size:١٥px;
+  font-size:15px;
   cursor:pointer;
 }
-button.secondary{
-  background:#aaa;
-}
+button.secondary{background:#aaa;}
+
 output{
   display:block;
+  margin-top:16px;
+  padding:16px;
   background:#fafafa;
-  border:١px dashed #ccc;
-  padding:١٦px;
-  border-radius:١٠px;
-  margin-top:١٦px;
+  border:1px dashed #ccc;
+  border-radius:10px;
   white-space:pre-wrap;
-  font-size:١٤px;
+  font-size:14px;
 }
+
+/* Footer */
 .footer{
   text-align:center;
-  font-size:١٣px;
+  font-size:13px;
   color:#888;
-  margin-top:٣٠px;
+  margin:24px 0;
+}
+
+/* Responsive tweaks */
+@media(max-width:600px){
+  h1{font-size:20px;}
+  h2{font-size:17px;}
 }
 </style>
 </head>
 
 <body>
-<div class="wrapper">
+<div class="container">
 
+  <!-- Header -->
   <div class="card">
-    <h1>تحضير حصة — الصفّ الأوّل</h1>
+    <h1>الداعم الخبير للمعلّم الفلسطيني</h1>
     <p>
-      هذا النموذج مُصمَّم لتخفيف الجهد عنك،<br>
-      وحماية الطفل في تجربته الأولى مع التعلّم المدرسي.
+      نظام تحضير وتنظيم مهني داعم.<br>
+      لا تقييم، لا مقارنة، لا تسريع.<br>
+      يخفّف العبء ويحفظ قرارك التربوي.
     </p>
   </div>
 
+  <!-- Book -->
   <div class="card">
-    <h2>١) الكتاب الرسمي</h2>
-    <label>اسم الكتاب</label>
-    <input id="book" placeholder="اللغة العربية — الصفّ الأوّل">
-
-    <label>الوحدة / الصفحة</label>
-    <input id="place" placeholder="الوحدة الأولى — ص ١٢">
+    <h2>١) اعتماد الكتاب الحكومي</h2>
+    <label>اسم الكتاب الرسمي</label>
+    <input id="book" placeholder="مثال: اللغة العربية — الصفّ الأوّل">
+    <label>الصف / الوحدة / الصفحة</label>
+    <input id="place" placeholder="الوحدة الأولى — صفحة ١٥">
   </div>
 
+  <!-- Idea -->
   <div class="card">
-    <h2>٢) فكرة الحصّة (صغيرة جدًا)</h2>
-    <textarea id="idea" placeholder="كلمة، صورة، أو فكرة قصيرة من النص فقط."></textarea>
+    <h2>٢) فكرة الحصّة (واحدة فقط)</h2>
+    <textarea id="idea" placeholder="أصغر فكرة مكتملة من نصّ الكتاب فقط."></textarea>
     <div class="note">
-      ✓ فكرة واحدة<br>
-      ✓ من نصّ الكتاب فقط<br>
-      ✓ مناسبة لطفل في بداية التعلّم
+      • فكرة واحدة<br>
+      • من النص الرسمي فقط<br>
+      • بلا شرح زائد
     </div>
   </div>
 
+  <!-- Question -->
   <div class="card">
-    <h2>٣) سؤال شفهي آمن</h2>
-    <textarea id="question" placeholder="سؤال بسيط، لا يتطلّب جملة طويلة."></textarea>
+    <h2>٣) سؤال آمن يقود للمحاولة</h2>
+    <textarea id="question" placeholder="سؤال شفهي بسيط، يقبل الكلمة أو الإشارة."></textarea>
     <div class="note">
-      لا إلزام.<br>
-      الإشارة أو الكلمة الواحدة كافية.
+      الصمت طبيعي.<br>
+      المحاولة كافية.
     </div>
   </div>
 
+  <!-- Approval -->
   <div class="card">
-    <h2>٤) الإغلاق التربوي</h2>
-
+    <h2>٤) الاعتماد والإغلاق</h2>
     <div class="note">
-      إذا حاول طفل واحد أو أكثر:<br>
-      فالحصّة ناجحة، والإغلاق صحيح.
+      متى حاول طفل واحد أو أكثر:<br>
+      فالحصّة ناجحة والتوقّف صحيح.
     </div>
 
     <div class="actions">
@@ -164,8 +192,8 @@ output{
   </div>
 
   <div class="footer">
-    الصفّ الأوّل لا يحتاج أكثر من هذا.<br>
-    التوقّف هنا حكمة.
+    هذا الداعم لا يراقبك ولا يقيمك.<br>
+    ما فعلته كافٍ.
   </div>
 
 </div>
@@ -179,7 +207,7 @@ function approve(){
   if(!b||!p||!i||!q)return;
 
   result.textContent=
-`تحضير حصّة — الصفّ الأوّل (منهاج رسمي)
+`تحضير حصّة — دعم خبير للمعلّم الفلسطيني
 
 الكتاب:
 ${b}
@@ -194,12 +222,13 @@ ${i}
 ${q}
 
 قرار مهني:
+الصمت متوقّع.
 المحاولة كافية.
-الصمت طبيعي.
 الإغلاق صحيح.`;
 }
+
 function resetAll(){
-  document.querySelectorAll('input,textarea').forEach(e=>e.value="");
+  document.querySelectorAll("input,textarea").forEach(e=>e.value="");
   result.textContent="";
 }
 </script>
