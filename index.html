@@ -6,47 +6,32 @@
 <title>المرافق الصامت للحصّة</title>
 
 <style>
-body{
-  font-family:Tahoma;
-  background:#f4f6f8;
-  padding:16px;
-  color:#222;
+:root{
+  --bg:#f4f6f8; --card:#ffffff; --accent:#1f5d80;
+  --soft:#e9f2f7; --text:#222; --muted:#666;
+  --border:#ddd; --radius:14px;
 }
+*{box-sizing:border-box;font-family:Tahoma,"Segoe UI",sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);padding:16px}
+.wrapper{max-width:960px;margin:auto}
 .card{
-  background:#fff;
-  padding:20px;
-  margin-bottom:16px;
-  border-radius:14px;
-  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  background:var(--card);padding:20px;margin-bottom:16px;
+  border-radius:var(--radius);
+  box-shadow:0 4px 16px rgba(0,0,0,.08);
 }
-h1,h2{margin-top:0;color:#1f5d80}
+h1{margin:0 0 8px;color:var(--accent);font-size:22px}
+h2{margin:0 0 6px;font-size:18px}
+p{margin:0;color:var(--muted);line-height:1.7}
 textarea,button{
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  font-size:15px;
-  border-radius:10px;
-  border:1px solid #ccc;
+  width:100%;padding:14px;margin-top:10px;
+  font-size:15px;border-radius:12px;border:1px solid var(--border)
 }
-textarea{min-height:120px}
-button{
-  background:#1f5d80;
-  color:#fff;
-  border:none;
-  cursor:pointer;
-}
-.note{
-  background:#e9f2f7;
-  padding:12px;
-  margin-top:10px;
-  border-radius:10px;
-  font-size:14px;
-}
+textarea{min-height:120px;resize:vertical}
+button{background:var(--accent);color:#fff;border:none;cursor:pointer}
+.note{background:var(--soft);padding:12px;border-radius:12px;margin-top:10px;font-size:14px}
 pre{
-  background:#fafafa;
-  padding:14px;
-  border-radius:10px;
-  white-space:pre-wrap;
+  background:#fafafa;border:1px dashed #ccc;
+  padding:16px;border-radius:12px;white-space:pre-wrap;font-size:14px
 }
 @media print{
   body{background:#fff}
@@ -56,152 +41,126 @@ pre{
 </head>
 
 <body>
+<div class="wrapper">
 
+<!-- رأس النظام -->
 <div class="card">
   <h1>المرافق الصامت للحصّة</h1>
   <p>
-    نظام ذكي ينتج محاكاة صفّية واقعية قابلة للتنفيذ.<br>
-    يستخدم محتوى الكتاب أولًا، وإن تعذّر ينتقل إلى دعم آمن.
+    نظام ذكي يُنتج محاكاة صفّية عملية قابلة للتنفيذ.<br>
+    يستخدم محتوى الكتاب أولًا، وإن تعذّر يعتمد ذكاءً تربويًا آمنًا.<br>
+    ما سيحدث في الحصّة محسوب ومقبول.
   </p>
 </div>
 
+<!-- إدخال اختياري من الكتاب -->
 <div class="card">
-  <h2>نص الدرس من الكتاب (اختياري لكنه الأولوية)</h2>
-  <textarea id="lessonText"
-  placeholder="ألصق هنا نص الدرس كما هو من الكتاب..."></textarea>
-
+  <h2>نص الدرس من الكتاب (اختياري)</h2>
+  <textarea id="lessonText" placeholder="ألصق هنا سطرًا أو سطرين من الدرس إن رغبت..."></textarea>
   <div class="note">
     ✅ إن وُجد نص واضح → تُبنى المحاكاة عليه.<br>
-    ✅ إن لم يوجد → النظام يدعمك تلقائيًا.
+    ✅ إن لم يُدخل شيء → تنتج محاكاة عامة واقعية وآمنة.
   </div>
-
-  <button onclick="buildSimulation()">إنتاج المحاكاة الصفّية</button>
+  <button onclick="generateSimulation()">إنتاج المحاكاة الصفّية</button>
 </div>
 
+<!-- المخرج -->
 <div class="card" id="result"></div>
 
+</div>
+
 <script>
-function detectType(text){
-  text = text.toLowerCase();
-  if(text.includes("اقرأ") || text.includes("قراءة") || text.includes("نص"))
-    return "قرائي";
-  if(text.includes("عد") || text.includes("احسب") || text.includes("اكتب"))
-    return "عددي";
-  if(text.includes("لاحظ") || text.includes("صورة") || text.includes("شاهد"))
-    return "بصري";
-  if(text.includes("استنتج") || text.includes("فسر") || text.includes("جرّب"))
-    return "استقصائي";
-  return "غير محدد";
+function recognizeFromContent(text){
+  const t = text.toLowerCase();
+  let nature="عام", load="متوسط";
+
+  if(t.includes("اقرأ")||t.includes("نص")){
+    nature="قرائي"; load="متوسط";
+  } else if(t.includes("عد")||t.includes("احسب")||t.includes("اكتب")){
+    nature="عددي"; load="مرتفع";
+  } else if(t.includes("لاحظ")||t.includes("صورة")||t.includes("شاهد")){
+    nature="بصري"; load="منخفض";
+  } else if(t.includes("استنتج")||t.includes("فسر")||t.includes("جرّب")){
+    nature="استقصائي"; load="مرتفع";
+  }
+
+  return {nature, load};
 }
 
-function buildSimulation(){
-  const text = lessonText.value.trim();
-  let type = "غير محدد";
+function buildSimulation(nature, load){
+  let s =
+`نوع الدرس: ${nature}
+العبء المتوقع: ${load}
 
-  if(text.length > 20){
-    type = detectType(text);
-  }
+الجوانب النفسية المرجّحة:
+- تردّد طبيعي
+- خوف من الخطأ
+- تفاوت مشاركة
+- صمت وظيفي خصوصًا في البداية
 
-  let output = "";
+التفسير التربوي:
+هذه استجابات طبيعية وليست مؤشر ضعف.
+`;
 
-  if(type === "قرائي"){
-    output = `
-الدرس قرائي (من محتوى الكتاب).
-
-ما قد يحدث طبيعيًا:
-- صمت
-- قراءة فردية
-- تردّد
-
-التصرف المهني الصحيح:
-- تطبيع التردد
-- تثبيت أول محاولة
-
-الإغلاق:
-المحاولة أو الصمت كافيان.`;
-  }
-
-  else if(type === "عددي"){
-    output = `
-الدرس عددي (من محتوى الكتاب).
-
-ما قد يحدث طبيعيًا:
-- أخطاء
-- بطء
-- مشاركة جزئية
-
-التصرف المهني الصحيح:
+  if(load==="مرتفع"){
+    s+=
+`التصرف المهني الآمن:
 - قبول أول محاولة
 - عدم التصويب العلني
+- تخفيف الوتيرة
 
-الإغلاق:
-التوقف بعد المحاولة الأولى كافٍ.`;
-  }
+قرار الإغلاق:
+التوقف بعد أول محاولة أو صمت كامل صحيح مهنيًا.
+`;
+  } else if(load==="متوسط"){
+    s+=
+`التصرف المهني الآمن:
+- تطبيع التردّد
+- سؤال واحد فقط
+- تثبيت المحاولة
 
-  else if(type === "بصري"){
-    output = `
-الدرس بصري (من محتوى الكتاب).
-
-ما قد يحدث طبيعيًا:
-- وصف عام
-- ملاحظات غير دقيقة
-
-التصرف المهني الصحيح:
+قرار الإغلاق:
+التوقف بعد أول تفاعل مفهوم كافٍ.
+`;
+  } else {
+    s+=
+`التصرف المهني الآمن:
 - تثبيت الملاحظة
-- عدم التوسيع
+- عدم التوسّع
+- الحفاظ على الهدوء
 
-الإغلاق:
-التوقف بعد أول ملاحظة صائب.`;
+قرار الإغلاق:
+التوقف المبكر يعزّز الأمان.
+`;
   }
 
-  else if(type === "استقصائي"){
-    output = `
-الدرس استقصائي (من محتوى الكتاب).
-
-ما قد يحدث طبيعيًا:
-- تردّد
-- محاولات غير مكتملة
-
-التصرف المهني الصحيح:
-- قبول المحاولة
-- عدم الضغط
-
-الإغلاق:
-التوقف بعد أول محاولة صحيح.`;
-  }
-
-  else{
-    output = `
-محاكاة ذكية عامة (دعم آمن).
-
-ما قد يحدث طبيعيًا:
-- صمت
-- مشاركة جزئية
-- إجابات تقريبية
-
-التصرف المهني الصحيح:
-- قبول ما يحدث
-- المحافظة على الهدوء
-
-الإغلاق:
-التوقف بعد أول تفاعل كافٍ.`;
-  }
-
-  result.innerHTML = `
-    <h2>المحاكاة الصفّية الجاهزة للتنفيذ</h2>
-    <pre>${output}
-
-----------------------------------
-ملاحظة داعمة:
+  s+=
+`------------------------------------------------
+ملاحظة داعمة للمعلّم:
 ما حدث في الحصّة كافٍ مهنيًا.
-لا حاجة للإضافة أو القلق.
-----------------------------------
-</pre>
-    <div class="note">
-      🖨️ اطبع هذه الوثيقة وادخل الحصّة مباشرة.
-    </div>
-    <button onclick="window.print()">طباعة</button>
-  `;
+التوقف هنا جودة لا تقصير.
+------------------------------------------------`;
+
+  return s;
+}
+
+function generateSimulation(){
+  const text = lessonText.value.trim();
+  let rec;
+
+  if(text.length>20){
+    rec = recognizeFromContent(text);   // أولوية المحتوى
+  }else{
+    rec = {nature:"عام", load:"متوسط"}; // ذكاء آمن افتراضي
+  }
+
+  const simulation = buildSimulation(rec.nature, rec.load);
+
+  document.getElementById("result").innerHTML =
+  `<h2>المحاكاة الصفّية الجاهزة للتنفيذ</h2>
+   <pre>${simulation}</pre>
+   <div class="note">🖨️ اطبع وادخل الحصّة بثقة.</div>
+   <button onclick="window.print()">طباعة</button>`;
 }
 </script>
 
