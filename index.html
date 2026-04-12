@@ -2,38 +2,52 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>محاكاة صفّية واقعية</title>
+<title>محاكاة صفّية زمنية واقعية</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
-  font-family: Tahoma;
-  background:#f4f6f8;   /* ✅ خلفية فاتحة */
-  color:#222;
-  margin:0;
+  font-family:Tahoma;
+  background:#f4f6f8;
   padding:20px;
+  color:#222;
 }
-
 .card{
-  background:#ffffff;
+  background:#fff;
   padding:20px;
   border-radius:14px;
-  box-shadow:0 4px 16px rgba(0,0,0,.08);
-  max-width:700px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  max-width:760px;
   margin:auto;
+  margin-bottom:16px;
 }
-
-h1{color:#1f5d80}
-
+h1,h2{color:#1f5d80;margin-top:0}
+input,select,textarea,button{
+  width:100%;
+  padding:12px;
+  margin-top:8px;
+  font-size:15px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+textarea{min-height:80px}
+button{
+  background:#1f5d80;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
 #screen{
   background:#fafafa;
   border:1px dashed #ccc;
-  border-radius:12px;
+  border-radius:10px;
   padding:16px;
   min-height:240px;
   white-space:pre-wrap;
-  font-size:15px;
   line-height:1.7;
+}
+@media print{
+  button,input,select,textarea{display:none}
 }
 </style>
 </head>
@@ -41,44 +55,78 @@ h1{color:#1f5d80}
 <body>
 
 <div class="card">
-  <h1>محاكاة صفّية واقعية</h1>
+  <h1>محاكاة صفّية مبنية على الدرس والزمن</h1>
   <p>
-    هذه محاكاة تعمل تلقائيًا.<br>
-    ما يظهر الآن هو ما يحدث في الصف خطوة بخطوة.
+    هذا المنتج يُنتج محاكاة صفّية حقيقية قابلة للتنفيذ،
+    اعتمادًا على عنوان الدرس أو مصدره، مع تقسيم زمني واقعي.
   </p>
+</div>
 
-  <div id="screen">⏳ جاري بدء الحصّة…</div>
+<div class="card">
+  <h2>مدخلات الدرس</h2>
+  <input id="title" placeholder="عنوان الدرس (مثال: مكوّنات العدد 5)">
+  <input type="file" id="file">
+  <input id="link" placeholder="رابط الدرس (اختياري)">
+  
+  <select id="subject">
+    <option value="math">رياضيات</option>
+    <option value="civics">تربية وطنية</option>
+  </select>
+
+  <input id="duration" type="number" placeholder="مدة الحصة بالدقائق (مثال: 45)">
+
+  <button onclick="startSimulation()">إنتاج المحاكاة</button>
+</div>
+
+<div class="card">
+  <h2>المحاكاة الصفّية</h2>
+  <div id="screen">⏳ في انتظار التشغيل…</div>
 </div>
 
 <script>
-const timeline = [
-  "🔔 بداية الحصّة\nالطلبة يدخلون الصف.",
-  "📖 المعلّم يفتح الكتاب\nويطرح سؤالًا واحدًا فقط.",
-  "⏳ لحظات صمت...\nلا أحد يجيب فورًا.",
-  "🧠 قرار مهني تلقائي:\nهذا صمت طبيعي.",
-  "👤 طالب واحد يحاول الإجابة.\nالإجابة غير مكتملة.",
-  "✅ الردّ الصحيح:\n«شكرًا لمحاولتك»\nلا تصويب، لا ضغط.",
-  "🛑 قرار الإغلاق:\nالمحاولة كافية.\nالتوقّف الآن صحيح.",
-  "✅ نهاية الحصّة:\nما حدث كافٍ.\nلا حاجة للإضافة."
-];
+function startSimulation(){
+  const subject = document.getElementById("subject").value;
+  const duration = parseInt(document.getElementById("duration").value) || 45;
 
-let i = 0;
-const screen = document.getElementById("screen");
+  const t1 = Math.round(duration * 0.2);
+  const t2 = Math.round(duration * 0.5);
+  const t3 = duration - t1 - t2;
 
-function play(){
-  if(i < timeline.length){
-    screen.textContent += "\n\n" + timeline[i];
-    i++;
-    setTimeout(play, 1800);
+  let timeline = [];
+
+  if(subject === "math"){
+    timeline = [
+      `🔔 الدقائق 0–${t1}:\nبداية حصة الرياضيات.\nالطلبة ينظرون إلى المثال.\nتردد طبيعي.`,
+      `➗ الدقائق ${t1}–${t1+t2}:\nمحاولات حل.\nأخطاء وبطء.\nمشاركة فردية واحدة.`,
+      `🛑 الدقائق ${t1+t2}–${duration}:\nالهدف بدأ يتشكل.\nالإغلاق الآن مهني وصحيح.`
+    ];
+  } else {
+    timeline = [
+      `🔔 الدقائق 0–${t1}:\nبداية حصة التربية الوطنية.\nقراءة فقرة أو عرض صورة.\nصمت تفكيري.`,
+      `🗣️ الدقائق ${t1}–${t1+t2}:\nإجابات عامة.\nحذر في التعبير.\nتفاعل محدود.`,
+      `🛑 الدقائق ${t1+t2}–${duration}:\nالفكرة وصلت.\nالإغلاق مبكرًا يحمي المعنى.`
+    ];
   }
+
+  playTimeline(timeline);
 }
 
-/* ✅ تبدأ تلقائيًا */
-setTimeout(()=>{
-  screen.textContent = timeline[0];
-  i = 1;
-  setTimeout(play, 1800);
-}, 800);
+function playTimeline(timeline){
+  const screen = document.getElementById("screen");
+  screen.textContent = "";
+  let index = 0;
+
+  function next(){
+    if(index < timeline.length){
+      screen.textContent += timeline[index] + "\n\n";
+      index++;
+      setTimeout(next, 2000);
+    } else {
+      screen.textContent += "✅ نهاية الحصة:\nما حدث كافٍ.\nلا حاجة للإضافة.";
+    }
+  }
+  next();
+}
 </script>
 
 </body>
