@@ -6,148 +6,151 @@
 <title>الداعم الخبير — الرياضيات | الصفّ الأوّل</title>
 
 <style>
-:root{
-  --bg:#f4f6f8;
-  --card:#ffffff;
-  --text:#222;
-  --muted:#666;
-  --accent:#1f5d80;
-  --soft:#e9f2f7;
-  --border:#ddd;
+body{
+  font-family:"Tahoma",sans-serif;
+  background:#f4f6f8;
+  margin:0;
+  padding:16px;
+  color:#222;
 }
-*{box-sizing:border-box;font-family:"Segoe UI","Tahoma",sans-serif;}
-body{margin:٠;background:var(--bg);color:var(--text);}
-.container{max-width:٨٢٠px;margin:auto;padding:١٦px;}
 .card{
-  background:var(--card);
-  border-radius:١٤px;
-  padding:٢٠px;
-  box-shadow:٠ ٤px ١٦px rgba(٠,٠,٠,٠.٠٦);
-  margin-bottom:١٦px;
+  background:#ffffff;
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.06);
 }
-h1{margin:٠ ٠ ٨px;font-size:٢٢px;color:var(--accent);}
-h2{margin:٠ ٠ ٨px;font-size:١٨px;}
-p{margin:٠;color:var(--muted);line-height:١.٦;}
-
-select,button{
-  width:١٠٠%;
-  padding:١٤px;
-  border-radius:١٢px;
-  border:١px solid var(--border);
-  margin-top:١٠px;
-  font-size:١٥px;
+h1{
+  margin-top:0;
+  font-size:22px;
+  color:#1f5d80;
+}
+h2{
+  font-size:18px;
+  margin-bottom:8px;
+}
+p{
+  margin:0;
+  line-height:1.7;
+  color:#555;
 }
 button{
-  background:var(--accent);
-  color:#fff;
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  font-size:15px;
   border:none;
+  border-radius:12px;
+  background:#1f5d80;
+  color:#fff;
+  cursor:pointer;
 }
-button.secondary{background:#aaa;}
-
 .note{
-  background:var(--soft);
-  padding:١٢px;
-  border-radius:١٠px;
-  margin-top:١٠px;
-  font-size:١٤px;
+  background:#e9f2f7;
+  border-radius:10px;
+  padding:12px;
+  margin-top:10px;
+  font-size:14px;
 }
-
 output{
   display:block;
   background:#fafafa;
-  border:١px dashed #ccc;
-  border-radius:١٠px;
-  padding:١٦px;
-  margin-top:١٦px;
+  border:1px dashed #ccc;
+  border-radius:10px;
+  padding:16px;
+  margin-top:16px;
   white-space:pre-wrap;
-  font-size:١٤px;
-}
-
-@media(max-width:٦٠٠px){
-  h1{font-size:٢٠px;}
-  h2{font-size:١٧px;}
+  font-size:14px;
 }
 </style>
 </head>
 
 <body>
-<div class="container">
 
-  <div class="card">
-    <h1>الداعم الخبير للمعلّم</h1>
-    <p>
-      مقيَّد بكتاب <strong>الرياضيات — الصفّ الأوّل</strong>.<br>
-      لا يطلب منك شرحًا أو تخطيطًا… أنت تختار فقط.
-    </p>
-  </div>
-
-  <div class="card">
-    <h2>١) نوع درس الرياضيات</h2>
-    <select id="lesson">
-      <option>الأعداد (تعرّف / تسمية)</option>
-      <option>العدّ الشفهي</option>
-      <option>مقارنة كميّات</option>
-      <option>العلاقة بين عددين</option>
-      <option>نشاط عملي بسيط</option>
-    </select>
-
-    <div class="note">
-      مأخوذ من بنية دروس الرياضيات في الصفّ الأوّل.
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>٢) نمط السؤال المسموح</h2>
-    <select id="question">
-      <option>كم ترى هنا؟</option>
-      <option>أيّهما أكثر؟</option>
-      <option>من يستطيع العدّ؟</option>
-      <option>هل الأعداد متساوية؟</option>
-    </select>
-
-    <div class="note">
-      الإشارة، العدّ الجماعي، أو الصمت… جميعها مقبولة.
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>٣) الإغلاق التربوي المعتمد</h2>
-    <select id="closure">
-      <option>محاولة واحدة — الإغلاق صحيح</option>
-      <option>محاولات غير دقيقة — الإغلاق صحيح</option>
-      <option>تفاعل جسدي فقط — الإغلاق صحيح</option>
-    </select>
-
-    <button onclick="generate()">اعتماد القرار</button>
-    <button class="secondary" onclick="resetAll()">تفريغ</button>
-
-    <output id="result"></output>
-  </div>
-
+<div class="card">
+  <h1>الداعم الخبير للمعلّم</h1>
+  <p>
+    محاكاة واقعية لدرس <strong>الرياضيات — الصفّ الأوّل</strong>.<br>
+    النظام يقترح… وأنت تختار فقط.
+  </p>
 </div>
 
+<div class="card">
+  <h2>الفكرة العلمية للدرس</h2>
+  <p>التعرّف إلى عدد ومقارنته بكميّة.</p>
+</div>
+
+<div class="card">
+  <h2>السؤال الواحد المستخدم</h2>
+  <p>«كم عدد الأشياء التي نراها هنا؟»</p>
+</div>
+
+<div class="card">
+  <h2>ما الذي حدث في الصف؟</h2>
+
+  <button onclick="simulate(1)">شارك طفل واحد فقط</button>
+  <button onclick="simulate(2)">كانت الإجابات غير دقيقة</button>
+  <button onclick="simulate(3)">ساد صمت جماعي</button>
+</div>
+
+<div class="card" id="result"></div>
+
 <script>
-function generate(){
-  result.textContent =
-`قرار تربوي — الرياضيات (الصفّ الأوّل)
+function simulate(caseId){
+  let text = "";
 
-نوع الدرس:
-${lesson.value}
+  if(caseId===1){
+    text = `
+    <h2>ردّ مهني آمن</h2>
+    <p>تثبيت المحاولة دون تعميم:</p>
+    <p>«سمعنا محاولة، شكرًا لك»</p>
+    <div class="note">
+      المحاولة كافية.<br>
+      الإغلاق الآن قرار مهني صحيح.
+    </div>
+    <output>
+تحضير مختصر:
+– فكرة واحدة (مقارنة عدد).
+– مشاركة واحدة كافية.
+– تمّ الإغلاق.
+    </output>`;
+  }
 
-نمط السؤال:
-${question.value}
+  if(caseId===2){
+    text = `
+    <h2>ردّ مهني آمن</h2>
+    <p>قبول الفكرة العامة دون تصحيح علني:</p>
+    <p>«نحن قريبون من العدد»</p>
+    <div class="note">
+      الخطأ غير دالّ على فشل.<br>
+      التوقّف الآن صحيح.
+    </div>
+    <output>
+تحضير مختصر:
+– فكرة واحدة قُوربت.
+– هدَف المحاولة تحقّق.
+– تمّ الإغلاق.
+    </output>`;
+  }
 
-قرار الإغلاق:
-${closure.value}
+  if(caseId===3){
+    text = `
+    <h2>ردّ مهني آمن</h2>
+    <p>تطبيع الصمت:</p>
+    <p>«نفكّر بهدوء… هذا طبيعي»</p>
+    <div class="note">
+      الصمت ليس فشلًا.<br>
+      الإغلاق قرار تربوي سليم.
+    </div>
+    <output>
+تحضير مختصر:
+– فكرة واحدة عُرضت.
+– الصمت قُبل.
+– تمّ الإغلاق.
+    </output>`;
+  }
 
-ملاحظة مهنية:
-الكتاب هو المرجع.
-التوقّف هنا صحيح.`;
-}
-
-function resetAll(){
-  document.querySelectorAll("select").forEach(s=>s.selectedIndex=٠);
-  result.textContent="";
+  document.getElementById("result").innerHTML = text;
 }
 </script>
 
