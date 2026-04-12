@@ -1,147 +1,162 @@
-بدي منك تقدّم لي داعمًا كاملًا للمعلم الفلسطيني الحكومي،
-وتتعامل مع هذا الطلب بوصفك شريكًا تنفيذيًا مسؤولًا بالكامل
-داخل الواقع اليومي للمدرسة والصف،
-وليس مستشارًا، ولا مقترح أفكار، ولا منشئ نماذج، ولا مفسّرًا.
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسطرة الإيقاف الصفّي — فلسطين</title>
+<style>
+:root{
+  --bg:#eef2f5; --card:#fff; --accent:#1f5d80; --border:#ddd; --r:14px;
+}
+*{box-sizing:border-box;font-family:Tahoma}
+body{margin:0;background:var(--bg);padding:12px}
+.wrap{max-width:900px;margin:auto}
+.card{
+  background:var(--card);
+  padding:12px;
+  margin-bottom:12px;
+  border-radius:var(--r);
+  box-shadow:0 4px 14px rgba(0,0,0,.08)
+}
+h1,h2{margin:0 0 8px;color:var(--accent);font-size:18px}
+p{margin:0;color:#444}
+input,button,textarea{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  font-size:14px;
+  border-radius:10px;
+  border:1px solid var(--border)
+}
+textarea{resize:none;height:64px}
+button{background:var(--accent);color:#fff;border:none;cursor:pointer}
+.zone{
+  background:#fafafa;
+  border:1px dashed #ccc;
+  border-radius:12px;
+  padding:12px;
+  white-space:pre-wrap;
+  line-height:1.8
+}
+.lock{opacity:.45;pointer-events:none}
+.actions{display:grid;gap:8px}
+@media print{
+  input,button,textarea,.actions{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
 
-كل ما يَرِد في هذا الطلب يُعامل كأمر تنفيذي مُلزِم،
-لا يجوز لك تأويله أو تخفيفه أو تجاوزه،
-ولا يُسمح بالتعامل معه بوصفه تفضيلًا أسلوبيًا.
+  <!-- عنوان -->
+  <div class="card">
+    <h1>مسطرة الإيقاف الصفّي المرتبطة بالكتاب</h1>
+  </div>
 
-أريد نظام دعم واقعي قابل للتنفيذ داخل الصف الحقيقي،
-يرفع العبء الذهني والسلوكي عن المعلم كاملًا،
-ويضبط السلوك ويوجّه الفعل التربوي
-دون أن يطلب من المعلم:
-تفكيرًا إضافيًا،
-أو قرارات متكرّرة،
-أو جهدًا زائدًا.
+  <!-- اعتماد الكتاب (شرط تشغيل) -->
+  <div class="card" id="gateBook">
+    <h2>اعتماد الكتاب (شرط تشغيل)</h2>
+    <input type="file" id="bookFile" accept=".pdf,image/*">
+    <input type="url" id="bookLink" placeholder="رابط رسمي معتمد (اختياري)">
+    <div class="actions">
+      <button onclick="approveBook()">اعتماد الكتاب</button>
+    </div>
+    <div class="zone" id="bookStatus">الحالة: غير معتمد.</div>
+  </div>
 
-أطلب أن يتضمن المنتج نفسه آلية داخلية صريحة
-لرفع واعتماد الكتاب المدرسي الفلسطيني،
-بوصفه المنهاج الرسمي الكامل الوحيد لهذا العمل،
-وأن يكون هذا الاعتماد شرط تشغيل سيادي غير قابل للتجاوز.
+  <!-- إدخال المثال والسؤال -->
+  <div class="card lock" id="gateLesson">
+    <h2>المثال والسؤال (من النص حرفيًا)</h2>
+    <input id="title" placeholder="عنوان الدرس كما في الكتاب">
+    <input id="page" placeholder="رقم الصفحة / الفقرة">
+    <textarea id="example" placeholder="انسخ المثال كما هو من الكتاب (حرفيًا)"></textarea>
+    <textarea id="question" placeholder="السؤال الواحد من نفس المثال"></textarea>
+    <div class="actions">
+      <button onclick="start()">ابدأ</button>
+    </div>
+  </div>
 
-شروط رفع واعتماد الكتاب داخل المنتج:
+  <!-- التشغيل الصامت -->
+  <div class="card lock" id="gateRun">
+    <h2>سير الحصّة (تشغيل صامت)</h2>
+    <div class="zone" id="runZone">بانتظار البدء…</div>
+    <div class="actions">
+      <button onclick="markAttempt()">حدثت محاولة / نُطقت الفكرة</button>
+      <button onclick="print()">طباعة</button>
+      <button onclick="resetAll()">إعادة</button>
+    </div>
+  </div>
 
-- رفع الكتاب يكون جزءًا بنيويًا من المنتج نفسه،
-  لا إجراءً خارجيًا ولا خطوة اختيارية.
-- لا يعمل أي جزء من النظام قبل رفع الكتاب واعتماده صراحة.
-- آلية الرفع تدعم:
-  • ملف PDF
-  • صور صفحات واضحة
-  • رابط رسمي معتمد
-- عند اعتماد الكتاب:
-  يُغلق أي مصدر أو مرجع آخر تلقائيًا.
-- يُعامل الكتاب المرفوع باعتباره المرجعية العليا الوحيدة
-  لكل تنظيم ودعم وقرار صادر عن النظام.
+  <!-- بطاقة الرصد -->
+  <div class="card lock" id="gateTrack">
+    <h2>بطاقة الإغلاق</h2>
+    <div class="zone" id="trackZone"></div>
+  </div>
 
-التعامل مع الكتاب — أوامر صارمة غير قابلة للنقاش:
+</div>
 
-- يُمنع تفسير الكتاب.
-- يُمنع اختصاره.
-- يُمنع إعادة صياغته.
-- يُمنع تلخيص أفكاره.
-- يُمنع تفكيك النص أو تحليله.
-- يُمنع تعميم المحتوى.
-- يُمنع سد أي فجوات مهما كان السبب.
-- يُمنع تحسينه أو تطوير مخرجاته.
-- يُمنع إضافة أهداف أو أنشطة أو محتوى
-  من خارج نص الكتاب حرفيًا.
-- يُمنع أي معالجة رقمية لمحتوى الكتاب
-  داخل زمن الحصة.
+<script>
+// بوابة السيادة
+let BOOK_OK=false, STARTED=false, CLOSED=false, T0=null;
 
-قاعدة منع القوالب نهائيًا:
+function approveBook(){
+  const f=document.getElementById('bookFile').files.length>0;
+  const l=document.getElementById('bookLink').value.trim().length>0;
+  if(!f && !l){
+    document.getElementById('bookStatus').textContent='الحالة: فشل صامت (لم يُعتمد كتاب).';
+    return;
+  }
+  BOOK_OK=true;
+  document.getElementById('bookStatus').textContent='الحالة: مُعتمد كمنهاج رسمي وحيد.';
+  unlock('gateLesson');
+  unlock('gateRun');
+  unlock('gateTrack');
+}
 
-- يُمنع استخدام أي قوالب عامة،
-  أو بنى جاهزة،
-  أو نصوص نمطية،
-  أو مسارات افتراضية.
-- أي مخرج يجب أن يكون مبنيًا
-  على مثال حقيقي حرفيًا من الكتاب المدرسي نفسه،
-  يمكن تتبّع كل جزء منه إلى موضع واضح في الكتاب.
-- أي ناتج لا يستند إلى مثال نصّي واقعي من الكتاب
-  يُلغى فورًا دون استكمال.
+function unlock(id){
+  document.getElementById(id).classList.remove('lock');
+}
 
-منع الاختصار والتعميم:
+function start(){
+  if(!BOOK_OK || STARTED) return;
+  const title=val('title'), page=val('page'), ex=val('example'), q=val('question');
+  if(!ex || !q){ return; }
+  STARTED=true; T0=Date.now();
+  const run=document.getElementById('runZone');
+  run.textContent=
+    'عنوان الدرس: '+title+
+    '\nالصفحة/الفقرة: '+page+
+    '\n\nالسؤال طُرح.\nصمت…\nبانتظار محاولة.';
+}
 
-- يُمنع اختصار الفكرة بدعوى التبسيط.
-- يُمنع تلخيص النص.
-- يُمنع تحويل المثال الحقيقي
-  إلى فكرة عامة أو صياغة بديلة.
-- أي اختصار يخلّ بتسلسل النص أو منطقه
-  يُعد إخفاقًا تنفيذيًا مباشرًا.
+function markAttempt(){
+  if(!STARTED || CLOSED) return;
+  CLOSED=true;
+  const dt=Math.max(0,Math.round((Date.now()-T0)/1000));
+  document.getElementById('runZone').textContent+='\n\n⛔ إغلاق محسوب.';
+  document.getElementById('trackZone').textContent=
+    '⛔ هنا توقّفت.\n' +
+    'مدة التفاعل (ثوانٍ): '+toArabicDigits(dt)+
+    '\nالسبب: محاولة/نُطقت الفكرة.';
+}
 
-اعتبار المحادثة مرجعية ملزمة:
+function resetAll(){
+  BOOK_OK=false; STARTED=false; CLOSED=false; T0=null;
+  ['title','page','example','question'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('bookStatus').textContent='الحالة: غير معتمد.';
+  document.getElementById('runZone').textContent='بانتظار البدء…';
+  document.getElementById('trackZone').textContent='';
+  ['gateLesson','gateRun','gateTrack'].forEach(id=>{
+    document.getElementById(id).classList.add('lock');
+  });
+}
 
-كل ما ورد في هذه المحادثة حتى هذه اللحظة،
-بما يشمل:
-- تعريف الدور،
-- الفلسفة التربوية،
-- قواعد الصمت،
-- منطق الإغلاق،
-- محظورات الشرح والاقتراح،
-- قواعد الفشل الصامت،
-- مبادئ رفع العبء وضبط السلوك،
+function val(id){ return document.getElementById(id).value.trim(); }
 
-يُعد أوامر تنفيذية سيادية مُلزِمة،
-غير قابلة للتأويل أو التخفيف أو الالتفاف،
-ويجب الالتزام بها حرفيًا في أي تنفيذ أو مخرج.
-
-وظيفة النظام الوحيدة:
-
-- دعم المعلم دعمًا كاملًا واقعيًا
-  قبل الحصة وأثناءها وبعدها.
-- تنظيم التدفق والسلوك الصفي
-  دون تدخل ظاهر أو شروحات.
-- ضبط القرارات التنفيذية
-  بحيث لا يُحمَّل المعلم أي عبء ذهني إضافي.
-- حماية الأمان النفسي للمعلم والطلبة.
-- تحويل سؤال:
-  «متى أكمّل؟ ومتى أتوقف؟»
-  إلى قرار محسوب يتخذه النظام لا المعلم.
-
-مواصفات الداعم:
-
-- واقعي، غير مثالي.
-- قابل للتنفيذ في المدارس الفلسطينية الحكومية.
-- يعمل مع جميع الصفوف وجميع المواد دون تخصيص يدوي.
-- يعتمد فقط على الكتاب المدرسي المرفوع والمعتمد.
-- لا يطلب إدخالات مرهقة أو تحليلًا من المعلم.
-- لا يطلب من المعلم اختيار مسارات
-  أو اتخاذ قرارات أثناء التشغيل.
-- يراعي المستخدم النهائي المتعب،
-  المضغوط،
-  داخل صف مكتظ.
-
-محظورات نهائية غير قابلة للتفاوض:
-
-- أي شرح نظري أو تربوي.
-- أي اقتراحات أو بدائل.
-- أي قوالب أو نماذج تعبئة.
-- أي تحميل عبء أخلاقي أو مهني على المعلم.
-- أي تدخل تقني داخل زمن الحصة.
-- أي طلب قرارات من المعلم أثناء التنفيذ.
-
-آلية العمل الملزمة:
-
-- النظام هو الذي يحسب.
-- النظام هو الذي ينظّم.
-- النظام هو الذي يضبط.
-- النظام هو الذي يقرّر.
-- المعلم ينفّذ براحة وطمأنينة.
-
-لا يبدأ أي تنفيذ،
-ولا يُنتج أي مخرج،
-ولا تُعرض أي واجهة تشغيلية،
-قبل اعتماد الكتاب اعتمادًا صريحًا داخل المنتج.
-
-أي إخفاق في الالتزام بما سبق
-يؤدي إلى إغلاق فوري أو فشل صامت دون تفسير.
-
-سلّمني النتيجة كمنتج عملي مكتمل،
-جاهز للاستخدام اليومي داخل الصف الفلسطيني،
-يرفع العبء كاملًا،
-يضبط السلوك،
-ويعمل فقط على أمثلة حقيقية من الكتاب المدرسي،
-دون اختصار،
-ودون قوالب،
-ودون تعميم.
+// تحويل أرقام للعرض العربي الشرقي
+function toArabicDigits(n){
+  return String(n).replace(/\d/g, d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+}
+</script>
+</body>
+</html>
