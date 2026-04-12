@@ -3,24 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>النظام التشغيلي المدرسي — فلسطين</title>
-
+<title>النظام التشغيلي الواقعي للمعلم الفلسطيني</title>
 <style>
 :root{--bg:#eef2f5;--card:#fff;--accent:#1f5d80;--border:#ddd;--radius:14px}
 *{box-sizing:border-box;font-family:Tahoma}
 body{margin:0;background:var(--bg);padding:16px}
-.wrap{max-width:1020px;margin:auto}
-.card{
-  background:var(--card);padding:16px;margin-bottom:16px;border-radius:var(--radius);
-  box-shadow:0 4px 16px rgba(0,0,0,.08)
-}
+.wrap{max-width:1100px;margin:auto}
+.card{background:var(--card);padding:16px;margin-bottom:16px;border-radius:var(--radius);
+box-shadow:0 4px 16px rgba(0,0,0,.08)}
 h1,h2{margin:0 0 8px;color:var(--accent)}
 input,button{width:100%;padding:12px;margin-top:8px;font-size:15px;border-radius:10px;border:1px solid var(--border)}
 button{background:var(--accent);color:#fff;border:none;cursor:pointer}
-.zone{
-  background:#fafafa;border:1px dashed #ccc;border-radius:12px;
-  padding:14px;white-space:pre-wrap;line-height:1.7
-}
+.zone{background:#fafafa;border:1px dashed #ccc;border-radius:12px;padding:14px;
+white-space:pre-wrap;line-height:1.7}
 .actions{display:flex;gap:8px;margin-top:8px}
 .actions button{flex:1}
 @media print{input,button,.actions{display:none}}
@@ -47,7 +42,7 @@ button{background:var(--accent);color:#fff;border:none;cursor:pointer}
 </div>
 
 <div class="card">
-  <h2>سير الحصة (محاكاة سلوكية زمنية)</h2>
+  <h2>المحاكاة الصفّية الحقيقية (سلوكية زمنية)</h2>
   <div id="sim" class="zone"></div>
   <div class="actions">
     <button onclick="print()">طباعة</button>
@@ -63,15 +58,15 @@ button{background:var(--accent);color:#fff;border:none;cursor:pointer}
 </div>
 
 <script>
-// ===== اشتقاق التعقيد من العنوان فقط =====
+// ====== اشتقاق التعقيد من العنوان فقط ======
 function complexityFromTitle(title){
   let s = Math.max((title||'').length, 10);
-  if(/تطبيق|تحليل|حل|مشكلات/.test(title)) s += 14;
+  if(/تطبيق|تحليل|حل|مشكلات|تقويم/.test(title)) s += 14;
   if(/مراجعة|تمهيد|تعريف/.test(title)) s -= 8;
   return Math.max(s, 10);
 }
 
-// ===== اشتقاق الزمن =====
+// ====== اشتقاق الزمن ======
 function deriveSlices(total){
   total = Math.min(Math.max(total||45, 30), 60);
   const a = Math.round(total*0.24);
@@ -79,19 +74,20 @@ function deriveSlices(total){
   return [a, b, total];
 }
 
-// ===== محرك السلوك الصفّي (آلة حالات) =====
+// ====== محرك السلوك الصفّي (آلة حالات) ======
 let minute=0, pressure=0, meaning=0, timer=null;
 function eventTick(){
   const pool = [
-    {p:1,m:0, t:"صمت طبيعي في الصف."},
+    {p:1,m:0, t:"صمت عام طبيعي."},
     {p:0,m:1, t:"محاولة فردية غير مكتملة."},
     {p:1,m:0, t:"تشتت خفيف محدود."},
-    {p:0,m:1, t:"تركيز قصير على الفكرة."}
+    {p:0,m:1, t:"تركيز قصير على الفكرة."},
+    {p:0,m:1, t:"سؤال عفوي من طالب."}
   ];
   return pool[Math.floor(Math.random()*pool.length)];
 }
 
-// ===== بناء التحضير والخطة بلا قوالب =====
+// ====== التحضير والخطة بلا قوالب ======
 function buildPrep(title, minutes){
   const c = complexityFromTitle(title);
   const [a,b,T] = deriveSlices(minutes);
@@ -106,11 +102,11 @@ ${a}–${b} د: تشكّل جزئي للمعنى (محاولات فردية).
 ${b}–${T} د: قرار إغلاق عند تحقّق الشرط.
 
 شرط الإغلاق:
-(زمن كافٍ) ∧ (معنى ابتدائي) ∨ (ضغط مرتفع).
+(وقت كافٍ + معنى ابتدائي) أو (ضغط مرتفع).
 `;
 }
 
-// ===== تشغيل المحاكاة =====
+// ====== تشغيل المحاكاة ======
 function playSimulation(total){
   clearInterval(timer);
   minute=0; pressure=0; meaning=0;
@@ -123,7 +119,6 @@ function playSimulation(total){
     pressure += e.p;
     meaning += e.m;
     box.textContent += `\n\n⏱ دقيقة ${minute}: ${e.t}\n(ضغط=${pressure} | معنى=${meaning})`;
-    // قرار آلي مُلزم
     if(meaning>=2 || pressure>=4 || minute>=Math.ceil(T*0.7)){
       box.textContent += `\n\n🛑 قرار آلي: الإغلاق الآن صحيح.`;
       clearInterval(timer);
@@ -131,7 +126,7 @@ function playSimulation(total){
   }, 1200);
 }
 
-// ===== الرصد مشتق من المسار =====
+// ====== الرصد مشتق من المسار ======
 function buildTracking(title){
   const d = new Date().toLocaleDateString('ar-EG');
   return `
@@ -146,7 +141,7 @@ function buildTracking(title){
 `;
 }
 
-// ===== واجهة =====
+// ====== واجهة ======
 function RUN(){
   const title = document.getElementById("lessonTitle").value || "درس من الكتاب";
   const minutes = parseInt(document.getElementById("lessonMinutes").value) || 45;
