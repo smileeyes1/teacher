@@ -3,50 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الداعم التربوي للمعلّم الفلسطيني</title>
-
+<title>المرافق الصامت للحصّة | منهاج فلسطين</title>
 <style>
 :root{
   --bg:#f4f6f8; --card:#fff; --accent:#1f5d80;
   --soft:#e9f2f7; --text:#222; --muted:#666;
-  --border:#ddd; --radius:14px; --font:14px;
+  --border:#ddd; --radius:14px;
 }
-
 *{box-sizing:border-box;font-family:"Tahoma","Segoe UI",sans-serif}
-body{margin:0;background:var(--bg);color:var(--text);padding:16px;font-size:var(--font)}
+body{margin:0;background:var(--bg);color:var(--text);padding:16px}
 .wrapper{max-width:960px;margin:auto}
-
-.card{
-  background:var(--card);padding:20px;margin-bottom:16px;
-  border-radius:var(--radius);
-  box-shadow:0 4px 16px rgba(0,0,0,.06);
-}
-
+.card{background:var(--card);padding:20px;margin-bottom:16px;border-radius:var(--radius);
+box-shadow:0 4px 16px rgba(0,0,0,.06)}
 h1{margin:0 0 8px;color:var(--accent);font-size:22px}
 h2{margin:0 0 6px;font-size:18px}
 p{margin:0;color:var(--muted);line-height:1.7}
-
-select,button{
-  width:100%;padding:14px;margin-top:10px;
-  font-size:15px;border-radius:12px;border:1px solid var(--border)
+select,input,button{
+  width:100%;padding:14px;margin-top:10px;font-size:15px;
+  border-radius:12px;border:1px solid var(--border)
 }
 button{background:var(--accent);color:#fff;border:none;cursor:pointer}
 button.secondary{background:#aaa}
-button.light{background:#ddd;color:#000}
-
 .note{background:var(--soft);padding:12px;border-radius:12px;margin-top:10px;font-size:14px}
-
-output{
-  display:block;background:#fafafa;border:1px dashed #ccc;
-  padding:16px;margin-top:16px;border-radius:12px;white-space:pre-wrap
-}
-
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-
-@media print{
-  body{background:#fff}
-  button, select, .controls{display:none}
-}
+output{display:block;background:#fafafa;border:1px dashed #ccc;padding:16px;margin-top:16px;
+border-radius:12px;white-space:pre-wrap;font-size:14px}
+@media (max-width:600px){h1{font-size:20px}h2{font-size:17px}}
+@media print{body{background:#fff}select,input,button{display:none}}
 </style>
 </head>
 
@@ -54,13 +36,16 @@ output{
 <div class="wrapper">
 
 <div class="card">
-  <h1>الداعم التربوي للمعلّم الفلسطيني</h1>
-  <p>خبير مرافق قبل الحصّة — النظام يقترح، وأنت تختار.</p>
+  <h1>المرافق الصامت للحصّة</h1>
+  <p>
+    خبير مرافق قبل الحصّة فقط.<br>
+    المرجع الوحيد: الكتاب المدرسي الفلسطيني الحكومي.<br>
+    الدعم يتمّ بحلّ السيناريوهات مسبقًا.
+  </p>
 </div>
 
 <div class="card">
-  <h2>١) سياق الحصّة</h2>
-
+  <h2>١) الربط الرسمي بالكتاب</h2>
   <select id="grade">
     <option>الصف الأوّل</option>
     <option>الصف الثاني</option>
@@ -68,26 +53,21 @@ output{
     <option>المرحلة الثانوية</option>
   </select>
 
-  <select id="subject" onchange="updateScenarios()">
+  <select id="subject">
     <option>الرياضيات</option>
     <option>اللغة العربية</option>
     <option>العلوم</option>
+    <option>التربية الوطنية</option>
   </select>
 
+  <input id="page" type="number" placeholder="رقم الصفحة في الكتاب (إلزامي)"/>
+
   <div class="note">
-    • كتاب المنهاج هو المرجع الوحيد<br>
-    • فكرة واحدة – سؤال واحد – إغلاق واعٍ
+    الربط الرسمي يتم عبر الصفحة فقط.<br>
+    الفكرة والسؤال يؤخذان من الكتاب الورقي.
   </div>
 
-  <div class="controls">
-    <button class="light" onclick="zoom(true)">تكبير الخط</button>
-    <button class="light" onclick="zoom(false)">تصغير الخط</button>
-  </div>
-</div>
-
-<div class="card">
-  <h2>٢) محاكاة الصف الواقعي</h2>
-  <div id="scenarios"></div>
+  <button onclick="buildPath()">حضّر مسار الحصّة</button>
 </div>
 
 <div class="card" id="result"></div>
@@ -95,70 +75,46 @@ output{
 </div>
 
 <script>
-const scenarioMap = {
-  "الرياضيات":[
-    ["partial","شارك عدد قليل من الطلبة"],
-    ["imprecise","كانت الإجابات غير دقيقة"],
-    ["silence","ساد صمت أو تردّد"]
-  ],
-  "اللغة العربية":[
-    ["partial","قرأ طالب واحد فقط"],
-    ["imprecise","الأصوات غير واضحة"],
-    ["silence","تردّد عام في القراءة"]
-  ],
-  "العلوم":[
-    ["partial","شارك عدد قليل بالملاحظة"],
-    ["imprecise","الاستنتاجات غير دقيقة"],
-    ["silence","صمت أثناء الملاحظة"]
-  ]
-};
+function buildPath(){
+  if(!page.value){ alert("يرجى إدخال رقم الصفحة"); return; }
 
-function updateScenarios(){
-  const s = subject.value;
-  scenarios.innerHTML="";
-  scenarioMap[s].forEach(x=>{
-    scenarios.innerHTML += `<button onclick="simulate('${x[0]}')">${x[1]}</button>`;
-  });
-  localStorage.setItem("lastSubject",s);
-}
-
-function simulate(state){
   const header =
-`تحضير حصّة — معتمد
+`مسار حصّة — معتمد رسميًا
 الصف: ${grade.value}
 المبحث: ${subject.value}
+الصفحة: ${page.value}
+المرجع: الكتاب المدرسي الفلسطيني الحكومي
+
+الفكرة: (تُحدَّد من نص الصفحة)
+السؤال: (سؤال واحد من الصفحة)
 
 `;
 
-  const bodies={
-    partial:`الرد المهني:\nتثبيت المحاولة.\n\nالقرار:\nالمشاركة كافية — الإغلاق صحيح.`,
-    imprecise:`الرد المهني:\nقبول الفكرة العامة.\n\nالقرار:\nالمحاولة تحقّقت — الإغلاق صحيح.`,
-    silence:`الرد المهني:\nتطبيع الصمت.\n\nالقرار:\nالصمت ليس فشلًا — الإغلاق صحيح.`
-  };
+  const body =
+`السيناريوهات المحتملة (محلولة مسبقًا):
 
-  result.innerHTML=`
-<h2>المخرج المعتمد</h2>
-<output>${header}${bodies[state]}</output>
-<div class="controls">
-  <button class="secondary" onclick="window.print()">طباعة التحضير</button>
-  <button class="light" onclick="printCard()">بطاقة صفّية</button>
-</div>`;
+(أ) مشاركة جزئية:
+- رد مهني: تثبيت المحاولة دون تعميم.
+- الإغلاق: المشاركة الجزئية كافية — التوقّف صحيح.
+
+(ب) إجابات غير دقيقة:
+- رد مهني: قبول الفكرة العامة دون تصويب علني.
+- الإغلاق: المحاولة تحقّقت — التوقّف حكمة.
+
+(ج) صمت أو تردّد:
+- رد مهني: تطبيع الصمت والتفكير الهادئ.
+- الإغلاق: الصمت ليس فشلًا — التوقّف قرار تربوي.
+
+إقرار مهني:
+في جميع الحالات السابقة، الإغلاق بعد أول محاولة أو صمت كامل قرار صحيح ولا يحتاج تبريرًا.
+`;
+
+  result.innerHTML = `
+    <h2>وثيقة مسار الحصّة</h2>
+    <output>${header}${body}</output>
+    <button class="secondary" onclick="window.print()">طباعة الوثيقة</button>
+  `;
 }
-
-function printCard(){
-  const o = document.querySelector("output").innerText;
-  const w = window.open();
-  w.document.write(`<pre style="font-family:Tahoma">${o}</pre>`);
-  w.print();
-}
-
-function zoom(up){
-  let f = parseInt(getComputedStyle(document.body).fontSize);
-  document.body.style.fontSize = (up?f+1:f-1)+"px";
-}
-
-updateScenarios();
 </script>
-
 </body>
 </html>
