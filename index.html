@@ -3,86 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الداعم الخبير — جميع الصفوف</title>
+<title>الداعم التربوي للمعلّم الفلسطيني</title>
 
 <style>
-body{font-family:Tahoma;background:#f4f6f8;margin:0;padding:16px;color:#222;}
-.card{background:#fff;border-radius:14px;padding:20px;margin-bottom:16px;
-box-shadow:0 4px 16px rgba(0,0,0,.06);}
-h1{margin:0 0 10px;color:#1f5d80;font-size:22px;}
-h2{margin:0 0 8px;font-size:18px;}
-select,button{width:100%;padding:14px;margin-top:10px;
-border-radius:12px;border:1px solid #ddd;font-size:15px;}
-button{background:#1f5d80;color:#fff;border:none;}
-.note{background:#e9f2f7;padding:12px;border-radius:10px;margin-top:10px;font-size:14px;}
-output{display:block;background:#fafafa;border:1px dashed #ccc;
-border-radius:10px;padding:16px;margin-top:16px;white-space:pre-wrap;}
+/* === SETUP === */
+:root{
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --accent:#1f5d80;
+  --soft:#e9f2f7;
+  --text:#222;
+  --muted:#666;
+  --border:#ddd;
+  --radius:14px;
+}
+
+*{box-sizing:border-box;font-family:"Tahoma","Segoe UI",sans-serif}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  padding:16px;
+}
+
+/* === LAYOUT === */
+.wrapper{max-width:960px;margin:auto}
+.card{
+  background:var(--card);
+  padding:20px;
+  margin-bottom:16px;
+  border-radius:var(--radius);
+  box-shadow:0 4px 16px rgba(0,0,0,.06);
+}
+
+h1{margin:0 0 8px;color:var(--accent);font-size:22px}
+h2{margin:0 0 6px;font-size:18px}
+p{margin:0;color:var(--muted);line-height:1.7}
+
+/* === UI === */
+select,button{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  font-size:15px;
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+button{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+button.secondary{background:#aaa}
+
+.note{
+  background:var(--soft);
+  padding:12px;
+  border-radius:12px;
+  margin-top:10px;
+  font-size:14px;
+}
+
+output{
+  display:block;
+  background:#fafafa;
+  border:1px dashed #ccc;
+  padding:16px;
+  margin-top:16px;
+  border-radius:12px;
+  white-space:pre-wrap;
+  font-size:14px;
+}
+
+/* === RESPONSIVE === */
+@media(max-width:600px){
+  h1{font-size:20px}
+  h2{font-size:17px}
+}
 </style>
 </head>
 
 <body>
+<div class="wrapper">
 
+<!-- ===== HEADER ===== -->
 <div class="card">
-  <h1>الداعم الخبير للمعلّم الفلسطيني</h1>
-  <p>نظام مرافق قبل الحصّة — الكتاب هو المرجع، وأنت تختار فقط.</p>
+  <h1>الداعم التربوي للمعلّم الفلسطيني</h1>
+  <p>
+    نظام خبير مرافق – قبل الحصّة.<br>
+    الكتاب الحكومي هو المرجع الوحيد.<br>
+    النظام يقترح… وأنت تختار فقط.
+  </p>
 </div>
 
+<!-- ===== CONTEXT SELECTION ===== -->
 <div class="card">
-  <h2>١) اختر الصف</h2>
+  <h2>١) الإطار العام للدرس</h2>
+
   <select id="grade">
     <option>الصف الأوّل</option>
     <option>الصف الثاني</option>
     <option>المرحلة الأساسية العليا</option>
     <option>المرحلة الثانوية</option>
   </select>
-</div>
 
-<div class="card">
-  <h2>٢) اختر المبحث</h2>
   <select id="subject">
     <option>الرياضيات</option>
     <option>اللغة العربية</option>
     <option>العلوم</option>
     <option>التربية الوطنية</option>
   </select>
+
+  <div class="note">
+    المرجع: الكتاب المدرسي الفلسطيني الرسمي فقط.<br>
+    لا محتوى خارج الكتاب – لا شرح – لا تفسير.
+  </div>
 </div>
 
+<!-- ===== SCIENTIFIC CORE ===== -->
 <div class="card">
-  <h2>٣) ماذا حدث في الصف؟</h2>
+  <h2>٢) البنية العلمية الثابتة</h2>
+  <p>
+    • فكرة واحدة فقط.<br>
+    • سؤال واحد يقود لنطق الفكرة.<br>
+    • التدرّج المعرفي محفوظ.
+  </p>
+</div>
+
+<!-- ===== REALISTIC SIMULATION ===== -->
+<div class="card">
+  <h2>٣) ماذا قد يحدث في الصف؟</h2>
+
   <button onclick="simulate(1)">شارك عدد قليل من الطلبة</button>
   <button onclick="simulate(2)">كانت الإجابات غير دقيقة</button>
-  <button onclick="simulate(3)">ساد صمت أو تردد</button>
+  <button onclick="simulate(3)">ساد صمت أو تردّد</button>
 </div>
 
+<!-- ===== RESULT ===== -->
 <div class="card" id="result"></div>
 
+</div>
+
 <script>
-function simulate(caseId){
-let txt="";
-if(caseId===1){
-txt=`ردّ مهني:
-تثبيت المحاولة دون تعميم.
+function simulate(type){
+  let r="";
+  if(type===1){
+    r=`
+<h2>ردّ مهني آمن</h2>
+<p>تثبيت المحاولة دون تعميم:</p>
+<p>«سمعنا محاولة، شكرًا لك»</p>
 
-الإغلاق:
-المشاركة الجزئية كافية.
-التوقّف الآن صحيح.`;
-}
-if(caseId===2){
-txt=`ردّ مهني:
-قبول الفكرة العامة دون تصحيح علني.
+<div class="note">
+المحاولة كافية.<br>
+الإغلاق هنا قرار مهني صحيح.
+</div>
 
-الإغلاق:
-المحاولة تحقّقت.
-التوقّف صحيح.`;
-}
-if(caseId===3){
-txt=`ردّ مهني:
-تطبيع الصمت والتردّد.
+<output>
+تحضير مختصر:
+• فكرة واحدة عُولجت.
+• مشاركة جزئية كافية.
+• تمّ الإغلاق.
+</output>`;
+  }
 
-الإغلاق:
-الصمت ليس فشلًا.
-التوقّف قرار مهني.`;}
-document.getElementById("result").innerHTML="<output>"+txt+"</output>";
+  if(type===2){
+    r=`
+<h2>ردّ مهني آمن</h2>
+<p>قبول الفكرة العامة دون تصحيح علني:</p>
+<p>«الأفكار قريبة من الهدف»</p>
+
+<div class="note">
+الخطأ غير دالّ على فشل.<br>
+التوقّف هنا حكمة مهنية.
+</div>
+
+<output>
+تحضير مختصر:
+• فكرة واحدة قُوربت.
+• المحاولة تحقّقت.
+• تمّ الإغلاق.
+</output>`;
+  }
+
+  if(type===3){
+    r=`
+<h2>ردّ مهني آمن</h2>
+<p>تطبيع الصمت:</p>
+<p>«نفكّر بهدوء… هذا طبيعي»</p>
+
+<div class="note">
+الصمت ليس فشلًا.<br>
+الإغلاق قرار تربوي سليم.
+</div>
+
+<output>
+تحضير مختصر:
+• فكرة واحدة عُرضت.
+• الصمت قُبل.
+• تمّ الإغلاق.
+</output>`;
+  }
+
+  document.getElementById("result").innerHTML=r;
 }
 </script>
 
