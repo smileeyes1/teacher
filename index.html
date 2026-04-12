@@ -6,7 +6,7 @@
 <title>الداعم التربوي للمعلّم الفلسطيني</title>
 
 <style>
-/* === SETUP === */
+/* ================== ضبط عام ================== */
 :root{
   --bg:#f4f6f8;
   --card:#ffffff;
@@ -18,7 +18,11 @@
   --radius:14px;
 }
 
-*{box-sizing:border-box;font-family:"Tahoma","Segoe UI",sans-serif}
+*{
+  box-sizing:border-box;
+  font-family:"Tahoma","Segoe UI",sans-serif;
+}
+
 body{
   margin:0;
   background:var(--bg);
@@ -26,8 +30,12 @@ body{
   padding:16px;
 }
 
-/* === LAYOUT === */
-.wrapper{max-width:960px;margin:auto}
+.wrapper{
+  max-width:960px;
+  margin:auto;
+}
+
+/* ================== البطاقات ================== */
 .card{
   background:var(--card);
   padding:20px;
@@ -36,12 +44,25 @@ body{
   box-shadow:0 4px 16px rgba(0,0,0,.06);
 }
 
-h1{margin:0 0 8px;color:var(--accent);font-size:22px}
-h2{margin:0 0 6px;font-size:18px}
-p{margin:0;color:var(--muted);line-height:1.7}
+h1{
+  margin:0 0 8px;
+  color:var(--accent);
+  font-size:22px;
+}
 
-/* === UI === */
-select,button{
+h2{
+  margin:0 0 6px;
+  font-size:18px;
+}
+
+p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+/* ================== عناصر التفاعل ================== */
+select, button{
   width:100%;
   padding:14px;
   margin-top:10px;
@@ -49,13 +70,17 @@ select,button{
   border-radius:12px;
   border:1px solid var(--border);
 }
+
 button{
   background:var(--accent);
   color:#fff;
   border:none;
   cursor:pointer;
 }
-button.secondary{background:#aaa}
+
+button.secondary{
+  background:#aaa;
+}
 
 .note{
   background:var(--soft);
@@ -65,6 +90,7 @@ button.secondary{background:#aaa}
   font-size:14px;
 }
 
+/* ================== المخرجات ================== */
 output{
   display:block;
   background:#fafafa;
@@ -76,10 +102,16 @@ output{
   font-size:14px;
 }
 
-/* === RESPONSIVE === */
+/* ================== استجابة الشاشات ================== */
 @media(max-width:600px){
   h1{font-size:20px}
   h2{font-size:17px}
+}
+
+/* ================== الطباعة ================== */
+@media print{
+  body{background:#fff}
+  button,select{display:none}
 }
 </style>
 </head>
@@ -87,19 +119,19 @@ output{
 <body>
 <div class="wrapper">
 
-<!-- ===== HEADER ===== -->
+<!-- ================== الرأس ================== -->
 <div class="card">
   <h1>الداعم التربوي للمعلّم الفلسطيني</h1>
   <p>
-    نظام خبير مرافق – قبل الحصّة.<br>
-    الكتاب الحكومي هو المرجع الوحيد.<br>
-    النظام يقترح… وأنت تختار فقط.
+    خبير تربوي مرافق — قبل الحصّة فقط.<br>
+    المرجع الوحيد: الكتاب المدرسي الفلسطيني الحكومي.<br>
+    النظام يقترح… والمعلّم يختار.
   </p>
 </div>
 
-<!-- ===== CONTEXT SELECTION ===== -->
+<!-- ================== السياق ================== -->
 <div class="card">
-  <h2>١) الإطار العام للدرس</h2>
+  <h2>١) سياق الحصّة</h2>
 
   <select id="grade">
     <option>الصف الأوّل</option>
@@ -116,96 +148,79 @@ output{
   </select>
 
   <div class="note">
-    المرجع: الكتاب المدرسي الفلسطيني الرسمي فقط.<br>
-    لا محتوى خارج الكتاب – لا شرح – لا تفسير.
-  </div>
-</div>
-
-<!-- ===== SCIENTIFIC CORE ===== -->
-<div class="card">
-  <h2>٢) البنية العلمية الثابتة</h2>
-  <p>
+    لا محتوى خارج الكتاب – لا شرح – لا تفسير  <p>
     • فكرة واحدة فقط.<br>
     • سؤال واحد يقود لنطق الفكرة.<br>
-    • التدرّج المعرفي محفوظ.
+    • احترام التدرّج المعرفي كما في الكتاب.
   </p>
 </div>
 
-<!-- ===== REALISTIC SIMULATION ===== -->
+<!-- ================== المحاكاة الواقعية ================== -->
 <div class="card">
-  <h2>٣) ماذا قد يحدث في الصف؟</h2>
+  <h2>٣) محاكاة ما قد يحدث في الصف</h2>
 
-  <button onclick="simulate(1)">شارك عدد قليل من الطلبة</button>
-  <button onclick="simulate(2)">كانت الإجابات غير دقيقة</button>
-  <button onclick="simulate(3)">ساد صمت أو تردّد</button>
+  <button onclick="simulate('partial')">شارك عدد قليل من الطلبة</button>
+  <button onclick="simulate('imprecise')">كانت الإجابات غير دقيقة</button>
+  <button onclick="simulate('silence')">ساد صمت أو تردّد</button>
 </div>
 
-<!-- ===== RESULT ===== -->
+<!-- ================== المخرج ================== -->
 <div class="card" id="result"></div>
 
 </div>
 
 <script>
-function simulate(type){
-  let r="";
-  if(type===1){
-    r=`
-<h2>ردّ مهني آمن</h2>
-<p>تثبيت المحاولة دون تعميم:</p>
-<p>«سمعنا محاولة، شكرًا لك»</p>
+function simulate(state){
 
-<div class="note">
-المحاولة كافية.<br>
-الإغلاق هنا قرار مهني صحيح.
-</div>
+  const header =
+`تحضير حصّة — معتمد
+الصف: ${grade.value}
+المبحث: ${subject.value}
 
-<output>
-تحضير مختصر:
-• فكرة واحدة عُولجت.
-• مشاركة جزئية كافية.
-• تمّ الإغلاق.
-</output>`;
-  }
+`;
 
-  if(type===2){
-    r=`
-<h2>ردّ مهني آمن</h2>
-<p>قبول الفكرة العامة دون تصحيح علني:</p>
-<p>«الأفكار قريبة من الهدف»</p>
+  let body = "";
 
-<div class="note">
-الخطأ غير دالّ على فشل.<br>
+  switch(state){
+    case "partial":
+      body =
+`الردّ المهني:
+تثبيت المحاولة دون تعميم.
+
+القرار:
+المشاركة الجزئية كافية.
+الإغلاق الآن قرار مهني صحيح.
+`;
+      break;
+
+    case "imprecise":
+      body =
+`الردّ المهني:
+قبول الفكرة العامة دون تصويب علني.
+
+القرار:
+المحاولة تحقّقت.
 التوقّف هنا حكمة مهنية.
-</div>
+`;
+      break;
 
-<output>
-تحضير مختصر:
-• فكرة واحدة قُوربت.
-• المحاولة تحقّقت.
-• تمّ الإغلاق.
-</output>`;
-  }
+    case "silence":
+      body =
+`الردّ المهني:
+تطبيع الصمت والتفكير الهادئ.
 
-  if(type===3){
-    r=`
-<h2>ردّ مهني آمن</h2>
-<p>تطبيع الصمت:</p>
-<p>«نفكّر بهدوء… هذا طبيعي»</p>
-
-<div class="note">
-الصمت ليس فشلًا.<br>
+القرار:
+الصمت ليس فشلًا.
 الإغلاق قرار تربوي سليم.
-</div>
-
-<output>
-تحضير مختصر:
-• فكرة واحدة عُرضت.
-• الصمت قُبل.
-• تمّ الإغلاق.
-</output>`;
+`;
+      break;
   }
 
-  document.getElementById("result").innerHTML=r;
+  document.getElementById("result").innerHTML = `
+    <h2>المخرج المعتمد</h2>
+    <output>${header}${body}</output>
+    <button class="secondary" onclick="window.print()">طباعة / حفظ</button>
+  `;
 }
 </script>
 
