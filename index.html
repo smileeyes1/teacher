@@ -2,130 +2,162 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>محاكاة صفّية زمنية واقعية</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مرافق الحصة الذكي</title>
 
 <style>
-body{
-  font-family:Tahoma;
-  background:#f4f6f8;
-  padding:20px;
-  color:#222;
+:root{
+  --bg:#f4f6f8; --card:#fff; --accent:#1f5d80;
+  --soft:#e9f2f7; --text:#222; --muted:#666;
+  --border:#ddd; --radius:14px;
 }
+*{box-sizing:border-box;font-family:Tahoma,"Segoe UI",sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);padding:16px}
+.wrap{max-width:900px;margin:auto}
 .card{
-  background:#fff;
-  padding:20px;
-  border-radius:14px;
-  box-shadow:0 4px 16px rgba(0,0,0,0.08);
-  max-width:760px;
-  margin:auto;
-  margin-bottom:16px;
+  background:var(--card);padding:20px;margin-bottom:16px;
+  border-radius:var(--radius);
+  box-shadow:0 4px 16px rgba(0,0,0,.08)
 }
-h1,h2{color:#1f5d80;margin-top:0}
+h1,h2{margin:0 0 8px;color:var(--accent)}
+p{margin:0;color:var(--muted);line-height:1.7}
 input,select,textarea,button{
-  width:100%;
-  padding:12px;
-  margin-top:8px;
-  font-size:15px;
-  border-radius:10px;
-  border:1px solid #ccc;
+  width:100%;padding:12px;margin-top:8px;
+  font-size:15px;border-radius:10px;border:1px solid var(--border)
 }
-textarea{min-height:80px}
-button{
-  background:#1f5d80;
-  color:#fff;
-  border:none;
-  cursor:pointer;
-}
+textarea{min-height:70px;resize:vertical}
+button{background:var(--accent);color:#fff;border:none;cursor:pointer}
+.note{background:var(--soft);padding:12px;border-radius:10px;margin-top:10px;font-size:14px}
 #screen{
-  background:#fafafa;
-  border:1px dashed #ccc;
-  border-radius:10px;
-  padding:16px;
-  min-height:240px;
-  white-space:pre-wrap;
-  line-height:1.7;
+  background:#fafafa;border:1px dashed #ccc;border-radius:12px;
+  padding:16px;min-height:240px;white-space:pre-wrap;line-height:1.7
 }
-@media print{
-  button,input,select,textarea{display:none}
-}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.actions button{flex:1}
+@media print{input,select,textarea,button,.actions{display:none}}
 </style>
 </head>
 
 <body>
+<div class="wrap">
 
+<!-- رأس -->
 <div class="card">
-  <h1>محاكاة صفّية مبنية على الدرس والزمن</h1>
+  <h1>مرافق الحصة الذكي</h1>
   <p>
-    هذا المنتج يُنتج محاكاة صفّية حقيقية قابلة للتنفيذ،
-    اعتمادًا على عنوان الدرس أو مصدره، مع تقسيم زمني واقعي.
+    صفحة عملية ترافقك كمعلّم لتنظيم الحصة وتنفيذها بثقة.<br>
+    النظام يفكّر ويتصرّف… وأنت تُدرّس.
   </p>
 </div>
 
+<!-- مدخلات بسيطة -->
 <div class="card">
-  <h2>مدخلات الدرس</h2>
+  <h2>معلومات سريعة (واحد يكفي)</h2>
   <input id="title" placeholder="عنوان الدرس (مثال: مكوّنات العدد 5)">
   <input type="file" id="file">
   <input id="link" placeholder="رابط الدرس (اختياري)">
-  
+  <textarea id="hint" placeholder="سطر/كلمتان من الكتاب (اختياري لتعزيز التعرّف)"></textarea>
+
   <select id="subject">
     <option value="math">رياضيات</option>
     <option value="civics">تربية وطنية</option>
+    <option value="science">علوم</option>
   </select>
 
   <input id="duration" type="number" placeholder="مدة الحصة بالدقائق (مثال: 45)">
 
-  <button onclick="startSimulation()">إنتاج المحاكاة</button>
+  <div class="note">
+    ✅ لا تعبئة طويلة. أدخل ما يتوفر فقط.  
+    ✅ الصفحة تستخدم المدخلات إن وُجدت، وإلا تعمل بذكاء آمن.
+  </div>
+
+  <button onclick="start()">ابدأ الحصة</button>
 </div>
 
+<!-- الشاشة -->
 <div class="card">
-  <h2>المحاكاة الصفّية</h2>
-  <div id="screen">⏳ في انتظار التشغيل…</div>
+  <h2>سير الحصة (محاكاة حقيقية)</h2>
+  <div id="screen">⏳ في انتظار البدء…</div>
+  <div class="actions">
+    <button onclick="print()">طباعة</button>
+    <button onclick="reset()">إعادة</button>
+  </div>
+</div>
+
 </div>
 
 <script>
-function startSimulation(){
-  const subject = document.getElementById("subject").value;
-  const duration = parseInt(document.getElementById("duration").value) || 45;
-
-  const t1 = Math.round(duration * 0.2);
-  const t2 = Math.round(duration * 0.5);
-  const t3 = duration - t1 - t2;
-
-  let timeline = [];
-
-  if(subject === "math"){
-    timeline = [
-      `🔔 الدقائق 0–${t1}:\nبداية حصة الرياضيات.\nالطلبة ينظرون إلى المثال.\nتردد طبيعي.`,
-      `➗ الدقائق ${t1}–${t1+t2}:\nمحاولات حل.\nأخطاء وبطء.\nمشاركة فردية واحدة.`,
-      `🛑 الدقائق ${t1+t2}–${duration}:\nالهدف بدأ يتشكل.\nالإغلاق الآن مهني وصحيح.`
-    ];
-  } else {
-    timeline = [
-      `🔔 الدقائق 0–${t1}:\nبداية حصة التربية الوطنية.\nقراءة فقرة أو عرض صورة.\nصمت تفكيري.`,
-      `🗣️ الدقائق ${t1}–${t1+t2}:\nإجابات عامة.\nحذر في التعبير.\nتفاعل محدود.`,
-      `🛑 الدقائق ${t1+t2}–${duration}:\nالفكرة وصلت.\nالإغلاق مبكرًا يحمي المعنى.`
-    ];
-  }
-
-  playTimeline(timeline);
+// تقسيم الزمن تلقائيًا
+function splitTime(total){
+  const start = Math.max(5, Math.round(total*0.2));
+  const core  = Math.max(10, Math.round(total*0.5));
+  const end   = Math.max(5, total - start - core);
+  return [start, start+core, total];
 }
 
-function playTimeline(timeline){
-  const screen = document.getElementById("screen");
-  screen.textContent = "";
-  let index = 0;
+// تعرّف ذكي مبسّط من تلميحة كتابية إن وُجدت
+function recognize(h){
+  const t = (h||"").toLowerCase();
+  if(/عد|احسب|اكتب|قارن|كم/.test(t)) return {nature:"عددي", load:"مرتفع"};
+  if(/اقرأ|نص|معنى|فهم/.test(t))     return {nature:"قرائي", load:"متوسط"};
+  if(/لاحظ|صورة|شاهد|ارسم/.test(t))  return {nature:"بصري", load:"منخفض"};
+  return {nature:"عام", load:"متوسط"};
+}
 
-  function next(){
-    if(index < timeline.length){
-      screen.textContent += timeline[index] + "\n\n";
-      index++;
-      setTimeout(next, 2000);
-    } else {
-      screen.textContent += "✅ نهاية الحصة:\nما حدث كافٍ.\nلا حاجة للإضافة.";
-    }
+// يبني محاكاة زمنية واقعية حسب المادة والعبء
+function buildTimeline(sub, load, times){
+  const [tA, tB, total] = times;
+  if(sub==="math"){
+    return [
+`🔔 0–${tA} د: بداية رياضيات.\nالطلبة ينظرون للمثال.\nتردد طبيعي.`,
+`➗ ${tA}–${tB} د: محاولات حل.\nأخطاء وبطء.\nمشاركة فردية واحدة.`,
+`🛑 ${tB}–${total} د: معالم الفكرة ظهرت.\nالإغلاق الآن مهني وصحيح.`
+    ];
   }
-  next();
+  if(sub==="civics"){
+    return [
+`🔔 0–${tA} د: تربية وطنية.\nقراءة فقرة/عرض صورة.\nصمت تفكيري.`,
+`🗣️ ${tA}–${tB} د: إجابات عامة.\nحذر في التعبير.\nتفاعل محدود.`,
+`🛑 ${tB}–${total} د: القيمة زُرعت.\nالإغلاق المبكر يحمي المعنى.`
+    ];
+  }
+  // علوم/عام
+  return [
+`🔔 0–${tA} د: بداية.\nسؤال واحد فقط.\nتركيز بصري/عملي.`,
+`🔬 ${tA}–${tB} د: ملاحظات غير دقيقة.\nتصحيح غير علني.`,
+`🛑 ${tB}–${total} د: الفكرة بدأت تتضح.\nالتوقف الآن صحيح.`
+  ];
+}
+
+let timer=null, idx=0, lines=[];
+
+function start(){
+  const dur = parseInt(document.getElementById("duration").value)||45;
+  const sub = document.getElementById("subject").value;
+  const hint= document.getElementById("hint").value;
+  const rec = recognize(hint);
+  const times = splitTime(dur);
+  lines = buildTimeline(sub, rec.load, times);
+
+  const screen = document.getElementById("screen");
+  screen.textContent = "⏳ بدء الحصة…";
+  idx=0; clearInterval(timer);
+
+  timer = setInterval(()=>{
+    if(idx < lines.length){
+      screen.textContent += "\n\n"+lines[idx];
+      idx++;
+    }else{
+      screen.textContent +=
+`\n\n✅ نهاية الحصة:\nما حدث كافٍ مهنيًا.\nالتوقف هنا جودة لا تقصير.`;
+      clearInterval(timer);
+    }
+  }, 2000);
+}
+
+function reset(){
+  clearInterval(timer);
+  document.getElementById("screen").textContent="⏳ في انتظار البدء…";
 }
 </script>
 
