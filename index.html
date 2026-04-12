@@ -2,189 +2,193 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>الخبير التربوي المرافق — دعم المعلّم</title>
+<title>الخبير التربوي المرافق — منهاج وزارة التربية الفلسطينية</title>
+
 <style>
 :root{
-  --bg:#f7f7f8;
+  --bg:#f6f7f8;
   --card:#ffffff;
-  --text:#222;
+  --text:#1f1f1f;
   --muted:#666;
-  --accent:#2f6f91;
-  --soft:#e6f0f6;
-  --danger:#c0392b;
+  --accent:#1e5c7a;
+  --soft:#e9f2f7;
 }
-*{box-sizing:border-box;font-family:"Segoe UI","Tahoma",sans-serif;}
+*{
+  box-sizing:border-box;
+  font-family:"Segoe UI","Tahoma",sans-serif;
+}
 body{
   margin:0;
   background:var(--bg);
   color:var(--text);
 }
 .container{
-  max-width:720px;
-  margin:40px auto;
-  padding:20px;
+  max-width:700px;
+  margin:٤٠px auto;
+  padding:٢٠px;
 }
 .card{
   background:var(--card);
-  border-radius:14px;
-  padding:24px;
-  box-shadow:0 6px 20px rgba(0,0,0,0.06);
-  margin-bottom:20px;
+  border-radius:١٤px;
+  padding:٢٤px;
+  box-shadow:0 ٦px ١٨px rgba(0,0,0,0.06);
+  margin-bottom:٢٠px;
 }
 h1{
   margin-top:0;
-  font-size:22px;
+  font-size:٢٢px;
   color:var(--accent);
 }
 h2{
-  font-size:18px;
-  margin-bottom:10px;
+  font-size:١٨px;
 }
 p{
-  line-height:1.7;
+  line-height:١.٧;
   color:var(--muted);
 }
 label{
   display:block;
-  margin-top:14px;
-  font-size:14px;
+  margin-top:١٤px;
+  font-size:١٤px;
 }
-input,textarea{
+input, textarea{
   width:100%;
-  margin-top:6px;
-  padding:12px;
-  border-radius:10px;
-  border:1px solid #ddd;
-  font-size:14px;
+  margin-top:٦px;
+  padding:١٢px;
+  border-radius:١٠px;
+  border:١px solid #ddd;
+  font-size:١٤px;
 }
-textarea{min-height:90px;resize:vertical;}
+textarea{
+  min-height:٩٠px;
+  resize:vertical;
+}
 .notice{
   background:var(--soft);
-  padding:12px;
-  border-radius:10px;
-  font-size:14px;
-  margin-top:12px;
+  padding:١٢px;
+  border-radius:١٠px;
+  font-size:١٤px;
+  margin-top:١٠px;
 }
 .actions{
   display:flex;
-  gap:10px;
-  margin-top:20px;
+  gap:١٠px;
+  margin-top:٢٠px;
 }
 button{
   flex:1;
-  padding:14px;
+  padding:١٤px;
   border:none;
-  border-radius:12px;
+  border-radius:١٢px;
   background:var(--accent);
   color:#fff;
-  font-size:15px;
+  font-size:١٥px;
   cursor:pointer;
 }
 button.secondary{
-  background:#bbb;
+  background:#aaa;
 }
-button.danger{
-  background:var(--danger);
-}
-button:active{transform:scale(0.98);}
+button:active{transform:scale(٠.٩٨);}
 output{
   display:block;
-  white-space:pre-wrap;
   background:#fafafa;
-  border:1px dashed #ccc;
-  padding:16px;
-  border-radius:10px;
-  margin-top:16px;
-  font-size:14px;
+  border:١px dashed #ccc;
+  padding:١٦px;
+  border-radius:١٠px;
+  margin-top:١٦px;
+  white-space:pre-wrap;
 }
 .footer{
   text-align:center;
-  font-size:13px;
+  font-size:١٣px;
   color:#888;
-  margin-top:30px;
+  margin-top:٣٠px;
 }
 </style>
 </head>
-<body>
 
+<body>
 <div class="container">
 
   <div class="card">
     <h1>الخبير التربوي المرافق</h1>
     <p>
-      هذه مساحة دعم هادئة لك كمعلّم/ـة.<br>
-      لا تقييم، لا مقارنة، لا تسريع.<br>
-      فقط تنظيم لحظة تعلّم واحدة… ثم إغلاق كريم.
+      نظام دعم تحضيري ملتزم التزامًا كاملًا<br>
+      <strong>بمنهاج وزارة التربية والتعليم الفلسطينية (الكتاب المدرسي الرسمي)</strong>.<br><br>
+      لا يضيف، لا يفسّر، لا يستبدل، ولا يختصر المنهاج.
     </p>
   </div>
 
   <div class="card">
-    <h2>١) اعتماد الكتاب</h2>
-    <label>اسم الكتاب</label>
-    <input id="book" placeholder="مثال: اللغة العربية — الصف الأوّل">
+    <h2>١) اعتماد الكتاب الرسمي</h2>
+
+    <label>اسم الكتاب كما ورد رسميًا</label>
+    <input id="book" placeholder="مثال: اللغة العربية — الصفّ الأوّل — الفصل الأوّل">
 
     <label>الصف / الوحدة / الصفحة</label>
-    <input id="place" placeholder="مثال: وحدة القراءة — ص ٢٣">
+    <input id="place" placeholder="مثال: الوحدة الأولى — صفحة ٢٣">
   </div>
 
   <div class="card">
-    <h2>٢) فكرة الحصّة (واحدة فقط)</h2>
-    <textarea id="idea" placeholder="اكتب أصغر فكرة مكتملة من النص كما هي في الكتاب."></textarea>
+    <h2>٢) فكرة الحصّة (من نصّ الكتاب فقط)</h2>
+
+    <textarea id="idea" placeholder="اكتب الفكرة كما هي مستخلصة حرفيًا من النص المطبوع في الكتاب."></textarea>
+
     <div class="notice">
-      ✔ لا تبسيط زائد<br>
-      ✔ لا قفز مفاهيمي<br>
-      ✔ فكرة واحدة تُحتَرم ثم يُتوقّف
+      ✔ ممنوع أي فكرة من خارج النص<br>
+      ✔ لا تبسيط خارج صياغة الكتاب<br>
+      ✔ فكرة واحدة فقط للحصّة الواحدة
     </div>
   </div>
 
   <div class="card">
-    <h2>٣) سؤال يقود لنطق الفكرة</h2>
-    <textarea id="question" placeholder="سؤال مفتوح، آمن، لا يُحرج، يقود للنطق فقط."></textarea>
+    <h2>٣) سؤال واحد يقود لنطق الفكرة</h2>
+
+    <textarea id="question" placeholder="سؤال مباشر، آمن، مستند إلى نصّ الكتاب فقط."></textarea>
   </div>
 
   <div class="card">
-    <h2>٤) قرارك المهني</h2>
-    <p>
-      متى نُطقت الفكرة — أو حُوصِر الصمت بكرامة — الإغلاق صحيح.
-    </p>
+    <h2>٤) اعتماد مهني وإغلاق</h2>
+
+    <div class="notice">
+      عند نطق الفكرة أو محاولة نطقها:<br>
+      التوقّف صحيح ومُعتمد مهنيًا.
+    </div>
 
     <div class="actions">
       <button onclick="generate()">اعتماد التحضير</button>
-      <button class="secondary" onclick="resetAll()">تفريغ الصفحة</button>
-      <button class="danger" onclick="closeClass()">إغلاق واعٍ</button>
+      <button class="secondary" onclick="resetAll()">تفريغ النموذج</button>
     </div>
 
     <output id="result"></output>
   </div>
 
   <div class="footer">
-    هذا النظام لا يراقبك — ولا يقيسك — ولا يحلّ محلك.<br>
-    هو هنا فقط ليخفّف عنك.
+    هذا التحضير ملتزم بالمنهاج الحكومي الفلسطيني<br>
+    ولا يُستخدم داخل زمن الحصّة.
   </div>
 
 </div>
 
 <script>
 function generate(){
-  const book = document.getElementById('book').value.trim();
-  const place = document.getElementById('place').value.trim();
-  const idea = document.getElementById('idea').value.trim();
-  const question = document.getElementById('question').value.trim();
+  const book=document.getElementById('book').value.trim();
+  const place=document.getElementById('place').value.trim();
+  const idea=document.getElementById('idea').value.trim();
+  const question=document.getElementById('question').value.trim();
 
-  if(!book || !place || !idea || !question){
-    return;
-  }
+  if(!book||!place||!idea||!question){return;}
 
-  const text =
-`تحضير حصّة (اعتماد هادئ)
+  document.getElementById('result').textContent=
+`تحضير حصّة ملتزم بالمنهاج الحكومي الفلسطيني
 
-الكتاب:
+الكتاب المعتمد:
 ${book}
 
 الموضع:
 ${place}
 
-فكرة الحصّة:
+فكرة الحصّة (من النص فقط):
 ${idea}
 
 السؤال القائد:
@@ -193,18 +197,12 @@ ${question}
 ملاحظة مهنية:
 الصمت متوقّع.
 المحاولة كافية.
-الإغلاق قرار صحيح.`;
-
-  document.getElementById('result').textContent = text;
+الإغلاق قرار تربوي صحيح.`;
 }
 
 function resetAll(){
-  document.querySelectorAll('input,textarea,output').forEach(e=>e.value ? e.value="" : e.textContent="");
-}
-
-function closeClass(){
-  document.getElementById('result').textContent =
-"تمّ الإغلاق.\nلا حاجة للمزيد.\nالتوقّف هنا جودة، لا تقصير.";
+  document.querySelectorAll('input,textarea').forEach(e=>e.value="");
+  document.getElementById('result').textContent="";
 }
 </script>
 
