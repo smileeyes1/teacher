@@ -2,247 +2,127 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>الخبير المساعد والمنظِّم والضابط للمعلم</title>
+<title>الداعم الواقعي للمعلم الفلسطيني</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root{
-  --bg:#f6f7f8;
-  --paper:#ffffff;
-  --ink:#222;
-  --muted:#666;
-  --line:#dddddd;
-  --safe:#f0f0f0;
-}
-
-*{box-sizing:border-box}
-
 body{
+  font-family: Tahoma, Arial, sans-serif;
+  background:#f6f7f8;
   margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:"Tahoma","Arial",sans-serif;
-  line-height:1.9;
+  color:#222;
+  line-height:1.8;
 }
-
 .container{
-  max-width:900px;
+  max-width:850px;
   margin:auto;
   padding:24px;
+  background:#fff;
 }
-
-.header{
-  text-align:center;
-  border-bottom:2px solid var(--line);
-  padding-bottom:16px;
-}
-
-.header h1{margin:0 0 8px}
-.header p{margin:0;color:var(--muted)}
-
-.card{
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:20px;
-  margin-top:20px;
-}
-
-h2{
-  margin-top:0;
-  font-size:1.2rem;
-}
-
-.field{
-  margin:16px 0;
-}
-
-.label{
-  color:var(--muted);
-  font-size:0.95rem;
-}
-
-.line{
-  border-bottom:1px dotted #333;
-  height:24px;
+h1{text-align:center;border-bottom:2px solid #ccc;padding-bottom:10px;}
+.section{margin-top:22px;}
+input, textarea, select{
+  width:100%;
+  padding:10px;
   margin-top:6px;
 }
-
-.checks span{
-  margin-left:18px;
-}
-
-.note{
-  background:var(--safe);
-  border-right:4px solid #777;
-  padding:14px;
+button{
+  width:100%;
+  padding:16px;
   margin-top:14px;
-  font-size:0.95rem;
-}
-
-details{
-  margin-top:20px;
-  border:1px solid var(--line);
-  border-radius:10px;
-  background:var(--paper);
-}
-
-summary{
-  padding:16px;
+  font-size:1rem;
+  border:none;
+  background:#eaeaea;
   cursor:pointer;
-  font-weight:bold;
 }
-
-details[open] summary{
-  border-bottom:1px solid var(--line);
-}
-
-.details-body{
+button:hover{background:#dcdcdc;}
+.output{
+  background:#f0f0f0;
+  border-right:4px solid #777;
   padding:16px;
+  margin-top:20px;
+  display:none;
 }
-
 .footer{
   margin-top:40px;
-  padding-top:20px;
-  border-top:2px solid var(--line);
+  border-top:1px solid #ccc;
+  padding-top:14px;
   text-align:center;
-  color:var(--muted);
-  font-size:0.9rem;
-}
-
-@media print{
-  body{background:#fff}
-  .container{max-width:100%;padding:0}
-  summary{display:none}
-  details{border:none}
-  .card,.note{border:none}
+  color:#666;
 }
 </style>
+
+<script>
+function generate(){
+  const role = document.getElementById("role").value;
+  const idea = document.getElementById("idea").value;
+  const context = document.getElementById("context").value;
+
+  let text = "";
+
+  if(role==="organize"){
+    text = `تنظيم الموقف:\n\nنركّز اليوم على فكرة واحدة فقط: ${idea}.\nنُبقي الشرح في حدّه الأدنى، ونغلق الحصة عند أول محاولة.`;
+  }
+  if(role==="explain"){
+    text = `شرح مبسّط:\n\nالفكرة الأساس هي: ${idea}.\nنطرح سؤالًا واحدًا فقط، وننتظر دون ضغط.`;
+  }
+  if(role==="analyze"){
+    text = `تحليل واقعي:\n\nالسياق الحالي (${context}) لا يحتمل توسّعًا.\nالمحاولة الجزئية كافية، والضغط سيضرّ التعلّم.`;
+  }
+  if(role==="plan"){
+    text = `خطة قصيرة جدًا:\n\n١) فكرة واحدة: ${idea}\n٢) سؤال واحد\n٣) إغلاق عند أول محاولة`;
+  }
+  if(role==="choose"){
+    text = `الاختيار المهني:\n\nأفضل قرار الآن هو الإغلاق الهادئ.\nهذا يحميك ويحفظ استقرار الطلبة.`;
+  }
+  if(role==="fill"){
+    text = `نص مكتمل:\n\nتم تنفيذ الحصة وفق فكرة "${idea}".\nوبسبب السياق ${context}، تم الإغلاق عند اللحظة المناسبة مهنيًا.`;
+  }
+
+  document.getElementById("result").innerText=text;
+  document.getElementById("result").style.display="block";
+}
+</script>
 </head>
 
 <body>
 <div class="container">
 
-  <!-- الهوية -->
-  <div class="header">
-    <h1>الخبير المساعد والمنظِّم والضابط للمعلم</h1>
-    <p>نسخة تشغيلية تفاعلية — واقعية فلسطينية</p>
-    <p>الكتاب المدرسي هو المرجع • الإغلاق الواعي نجاح</p>
-  </div>
+<h1>الداعم المهني للمعلم الفلسطيني</h1>
+<p style="text-align:center;">
+اختر ما تحتاجه الآن، وخذ ناتجًا واحدًا مكتملًا.
+</p>
 
-  <!-- تهيئة نفسية -->
-  <div class="card">
-    <h2>قبل أن تبدأ</h2>
-    <p>
-      هذه الصفحة ليست للتدريس، ولا للتقييم، ولا للمقارنة.
-      هي مساحة تهدئة وتنظيم قرار لك أنت.
-    </p>
-    <div class="note">
-      الواقع قد يكون متقلّبًا.  
-      التوقّف المبكّر ليس فشلًا مهنيًا.
-    </div>
-  </div>
+<div class="section">
+<label>ما الدور الذي تريده الآن؟</label>
+<select id="role">
+  <option value="organize">نظّم لي</option>
+  <option value="explain">اشرح لي</option>
+  <option value="analyze">حلّل لي</option>
+  <option value="plan">اكتب خطة قصيرة</option>
+  <option value="choose">اختر واحدًا</option>
+  <option value="fill">املأ الفراغ</option>
+</select>
+</div>
 
-  <!-- إدخال الحد الأدنى -->
-  <div class="card">
-    <h2>المدخل الوحيد</h2>
+<div class="section">
+<label>فكرة واحدة من الكتاب:</label>
+<input id="idea" placeholder="اكتب الفكرة باختصار">
+</div>
 
-    <div class="field">
-      <div class="label">الصف</div>
-      <div class="line"></div>
-    </div>
+<div class="section">
+<label>وصف السياق (مستقر / متقلّب / ضغط):</label>
+<input id="context" placeholder="مثال: الصف متعب – الوقت قصير">
+</div>
 
-    <div class="field">
-      <div class="label">المادة</div>
-      <div class="line"></div>
-    </div>
+<button onclick="generate()">نفّذ</button>
 
-    <div class="field">
-      <div class="label">فكرة واحدة فقط من الكتاب</div>
-      <div class="line"></div>
-    </div>
-  </div>
+<div id="result" class="output"></div>
 
-  <!-- حالة السياق -->
-  <div class="card">
-    <h2>حالة السياق</h2>
-    <div class="field">
-      <div class="label">وضع الحصّة</div>
-      <div class="checks">
-        <span>☐ مستقر</span>
-        <span>☐ متقلّب</span>
-        <span>☐ منقطع جزئيًا</span>
-        <span>☐ مهدّد بالتوقّف</span>
-      </div>
-    </div>
-    <div class="note">
-      اختيار أي حالة هنا لا يُلزمك بالإكمال ولا بالتعويض.
-    </div>
-  </div>
-
-  <!-- سجل اللحظة -->
-  <div class="card">
-    <h2>اللحظة التعليمية</h2>
-
-    <div class="field">
-      <div class="label">هل حدثت محاولة آمنة؟</div>
-      <div class="checks">
-        <span>☐ نعم</span>
-        <span>☐ لا</span>
-      </div>
-    </div>
-
-    <div class="field">
-      <div class="label">هل تشعر أن الإغلاق الآن مريح؟</div>
-      <div class="checks">
-        <span>☐ نعم</span>
-        <span>☐ لا</span>
-      </div>
-    </div>
-
-    <div class="note">
-      إذا حدثت محاولة — أو كان السياق متقلّبًا —  
-      فالإغلاق الآن قرار مهني صحيح.
-    </div>
-  </div>
-
-  <!-- قرار الضبط -->
-  <details open>
-    <summary>قرار الخبير (اضغط للقراءة)</summary>
-    <div class="details-body">
-      <p>
-        لا يُطلب منك شرح إضافي.  
-        لا يُطلب منك تسريع.  
-        لا يُطلب منك تبرير.
-      </p>
-      <div class="note">
-        ⟵ أغلِق الحصّة بهدوء، وامضِ.
-      </div>
-    </div>
-  </details>
-
-  <!-- تذكير السيادة -->
-  <details>
-    <summary>تذكير مهني</summary>
-    <div class="details-body">
-      <ul>
-        <li>أنت صاحب القرار.</li>
-        <li>الصمت ليس فشلًا.</li>
-        <li>المحاولة الجزئية كافية.</li>
-        <li>المنهاج لا يُنجَز بالقهر.</li>
-      </ul>
-    </div>
-  </details>
-
-  <!-- الإغلاق -->
-  <div class="footer">
-    <p>
-      إذا وصلت إلى هنا، فهذا يكفي.
-    </p>
-    <p>
-      ما لا يحميك ولا يحمي الطالب — لا تُجبر نفسك عليه.
-    </p>
-  </div>
+<div class="footer">
+هذا الداعم لا يقيّمك ولا يضغطك.
+إذا خرجت مرتاحًا، فهذا يكفي.
+</div>
 
 </div>
 </body>
