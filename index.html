@@ -2,61 +2,122 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>المُرافِق التربوي الهادئ للمعلم الفلسطيني</title>
+<title>المُرافِق التربوي الهادئ — واجهة تفاعلية بلا جافاسكربت</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-    font-family: "Arial", "Tahoma", sans-serif;
-    background-color: #f7f7f7;
-    color: #222;
-    line-height: 1.9;
-    margin: 0;
-    padding: 0;
+:root{
+  --bg:#f7f7f7;
+  --card:#ffffff;
+  --ink:#222;
+  --muted:#666;
+  --line:#ddd;
+  --accent:#777;
 }
 
-.container {
-    max-width: 900px;
-    margin: auto;
-    background: #ffffff;
-    padding: 32px;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Tahoma","Arial",sans-serif;
+  line-height:1.9;
 }
 
-h1, h2, h3 {
-    color: #222;
-    margin-top: 32px;
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:24px;
 }
 
-h1 {
-    text-align: center;
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 16px;
+.header{
+  text-align:center;
+  padding:16px 8px 24px;
+  border-bottom:2px solid var(--line);
 }
 
-.section {
-    margin-top: 28px;
-    padding-top: 12px;
-    border-top: 1px solid #ddd;
+.header h1{margin:0 0 8px}
+.header p{margin:0;color:var(--muted)}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:18px;
+  margin-top:18px;
 }
 
-ul {
-    list-style-type: "— ";
-    padding-right: 20px;
+.card h2{
+  margin:0 0 10px;
+  font-size:1.2rem;
 }
 
-.notice {
-    background: #f0f0f0;
-    padding: 16px;
-    margin-top: 24px;
-    border-right: 4px solid #777;
+ul{
+  list-style:"— ";
+  padding-right:18px;
+  margin:8px 0;
 }
 
-.footer {
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 2px solid #ccc;
-    font-size: 14px;
-    color: #444;
+.notice{
+  background:#f0f0f0;
+  border-right:4px solid var(--accent);
+  padding:14px;
+  margin-top:10px;
+}
+
+details{
+  border:1px solid var(--line);
+  border-radius:10px;
+  margin-top:12px;
+  background:#fff;
+}
+
+summary{
+  cursor:pointer;
+  padding:14px;
+  font-weight:bold;
+}
+
+details[open] summary{
+  border-bottom:1px solid var(--line);
+}
+
+.details-body{
+  padding:14px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+@media (max-width:720px){
+  .grid{grid-template-columns:1fr}
+}
+
+.label{color:var(--muted)}
+.fill{
+  border-bottom:1px dotted var(--accent);
+  padding:0 4px;
+}
+
+.footer{
+  margin-top:28px;
+  padding-top:16px;
+  border-top:2px solid var(--line);
+  color:var(--muted);
+  font-size:0.9rem;
+}
+
+/* طباعة */
+@media print{
+  body{background:#fff}
+  .container{max-width:100%;padding:0}
+  details{border:none}
+  summary{display:none}
+  .card, .notice{border:none}
 }
 </style>
 </head>
@@ -64,152 +125,132 @@ ul {
 <body>
 <div class="container">
 
-<h1>المُرافِق التربوي الهادئ للمعلم الفلسطيني</h1>
+  <div class="header">
+    <h1>المُرافِق التربوي الهادئ للمعلم الفلسطيني</h1>
+    <p>واجهة تفاعلية هادئة — بلا JavaScript — صالحة للطباعة</p>
+    <p>الصفوف من ١ إلى ١١ • جميع المواد • الكتاب هو المنهاج</p>
+  </div>
 
-<p style="text-align:center;">
-وثيقة تنفيذية رسمية – صالحة للاستخدام المدرسي  
-<br>
-(الصفوف من ١ إلى ١١ – جميع المواد)
-</p>
+  <div class="card">
+    <h2>التعريف التنفيذي</h2>
+    <p>
+      نظام دعم مهني غير سلطوي، يخفّف القرار التربوي ويحمي الإغلاق الصفّي الصحيح،
+      دون تدريس، دون تقييم، ودون أي تدخل تقني داخل زمن الحصّة.
+    </p>
+    <p class="label">
+      السيادة التربوية: المعلم ← المدرسة ← وزارة التربية والتعليم الفلسطينية.
+    </p>
+  </div>
 
-<div class="section">
-<h2>التعريف التنفيذي</h2>
-<p>
-هذا النظام هو أداة دعم تربوي وإداري غير سلطوية، مخصّصة للمعلم الفلسطيني،
-تعمل على تخفيف العبء الذهني والمهني عبر تقليل القرار داخل الحصّة وخارجها،
-دون أن تحلّ محل المعلم أو تستبدل الكتاب أو تتدخل في التقييم.
-</p>
-<p>
-السيادة التربوية والتنفيذية محفوظة بالكامل للمعلم، ثم للمدرسة، ثم لوزارة التربية والتعليم الفلسطينية.
-</p>
-</div>
+  <div class="card">
+    <h2>نطاق العمل</h2>
+    <ul>
+      <li>الصفوف من ١ إلى ١١</li>
+      <li>جميع المواد المعتمدة رسميًا</li>
+      <li>الاعتماد الحصري على الكتاب المدرسي الفلسطيني</li>
+      <li>الاستخدام قبل الحصّة أو بعدها فقط</li>
+    </ul>
+  </div>
 
-<div class="section">
-<h2>نطاق العمل</h2>
-<ul>
-<li>الصفوف من ١ إلى ١١</li>
-<li>جميع المواد المعتمدة رسميًا</li>
-<li>يعتمد حصريًا على الكتاب المدرسي الفلسطيني</li>
-<li>يُستخدم قبل الحصة أو بعدها، وليس أثناءها</li>
-</ul>
-</div>
+  <details>
+    <summary>الفلسفة الحاكمة (اضغط للفتح)</summary>
+    <div class="details-body">
+      <ul>
+        <li>فكرة واحدة لكل حصّة</li>
+        <li>سؤال واحد كافٍ</li>
+        <li>الصمت والمحاولة الجزئية طبيعيان</li>
+        <li>التوقّف في اللحظة الصحيحة إنجاز مهني</li>
+        <li>ما لا يزيد الاستقرار يُستبعد</li>
+      </ul>
+    </div>
+  </details>
 
-<div class="section">
-<h2>الفلسفة التربوية الحاكمة</h2>
-<ul>
-<li>الكتاب المدرسي هو المنهاج الكامل</li>
-<li>كل حصة تُبنى على فكرة واحدة فقط</li>
-<li>سؤال واحد كافٍ</li>
-<li>الصمت والمحاولة الجزئية سلوك تعليمي طبيعي</li>
-<li>التوقّف في الوقت الصحيح إنجاز مهني</li>
-<li>ما لا يزيد الاستقرار يُستبعد</li>
-</ul>
-</div>
+  <details>
+    <summary>ما يفعله النظام / ما يُمنع (اضغط للفتح)</summary>
+    <div class="details-body grid">
+      <div>
+        <b>يفعل</b>
+        <ul>
+          <li>يحمي قرار الإغلاق</li>
+          <li>يخفّف الشرح الزائد</li>
+          <li>يوفر تحضيرًا رسميًا مختصرًا</li>
+          <li>يحمي الأمان النفسي</li>
+        </ul>
+      </div>
+      <div>
+        <b>يُمنع</b>
+        <ul>
+          <li>درجات أو تقييم</li>
+          <li>مقارنة الطلبة</li>
+          <li>تسريع المنهاج</li>
+          <li>تقنية داخل زمن الحصّة</li>
+        </ul>
+      </div>
+    </div>
+  </details>
 
-<div class="section">
-<h2>ما يفعله النظام</h2>
-<ul>
-<li>يساعد المعلم على اتخاذ قرار الإغلاق الصفّي</li>
-<li>يخفّف الشرح الزائد</li>
-<li>يقدّم صيغة تحضير مختصرة رسمية</li>
-<li>يحمي الأمان النفسي للطالب والمعلم</li>
-<li>ينتج مخرجات قابلة للطباعة</li>
-</ul>
-</div>
+  <details open>
+    <summary>آلية الاستخدام المختصرة</summary>
+    <div class="details-body">
+      <b>قبل الحصّة</b>
+      <ul>
+        <li>فكرة واحدة من الكتاب</li>
+        <li>سؤال واحد فقط</li>
+      </ul>
+      <b>أثناء الحصّة</b>
+      <ul>
+        <li>لا استخدام للنظام</li>
+      </ul>
+      <b>بعد الحصّة</b>
+      <div class="notice">
+        إذا حدثت محاولة آمنة أو نطق جزئي → الإغلاق الآن قرار مهني صحيح.
+      </div>
+    </div>
+  </details>
 
-<div class="section">
-<h2>ما يُمنع منعًا صريحًا</h2>
-<ul>
-<li>إعطاء درجات أو أحكام</li>
-<li>مقارنة الطلبة</li>
-<li>التسريع أو اختصار المنهاج</li>
-<li>الشرح خارج نص الكتاب</li>
-<li>إدخال تقنية داخل زمن الحصة</li>
-<li>لغة لوم أو وعظ</li>
-</ul>
-</div>
+  <details>
+    <summary>نموذج تحضير رسمي (جاهز للطباعة)</summary>
+    <div class="details-body">
+      <div class="notice">
+        <div class="grid">
+          <div><span class="label">المدرسة:</span> <span class="fill">____________</span></div>
+          <div><span class="label">المعلم:</span> <span class="fill">____________</span></div>
+          <div><span class="label">الصف:</span> <span class="fill">____________</span></div>
+          <div><span class="label">المادة:</span> <span class="fill">____________</span></div>
+          <div><span class="label">التاريخ:</span> <span class="fill">____________</span></div>
+        </div>
+        <br>
+        <b>الفكرة من الكتاب:</b><br>
+        <span class="fill">________________________________________</span><br><br>
+        <b>السؤال المحوري:</b><br>
+        <span class="fill">________________________________________</span><br><br>
+        <b>مؤشر الإغلاق:</b> ☐ محاولة ☐ نطق جزئي ☐ تفاعل آمن<br>
+        <b>القرار:</b> الإغلاق التربوي صحيح
+      </div>
+    </div>
+  </details>
 
-<div class="section">
-<h2>آلية الاستخدام</h2>
+  <details>
+    <summary>رسالة تطمين للمعلم</summary>
+    <div class="details-body notice">
+      ما حدث كافٍ. الصمت طبيعي. المحاولة إنجاز. التوقّف حماية لا تقصير.
+    </div>
+  </details>
 
-<h3>قبل الحصة</h3>
-<ul>
-<li>اختيار فكرة واحدة من الكتاب</li>
-<li>صياغة سؤال واحد فقط</li>
-<li>تحضير سطر أو سطرين</li>
-</ul>
+  <details>
+    <summary>صيغة اعتماد مدرسية مختصرة</summary>
+    <div class="details-body notice">
+      تعتمد المدرسة مبدأ الإغلاق التربوي الواعي، وتُقرّ حق المعلم في التوقّف
+      متى تحقّقت المحاولة الآمنة، حفاظًا على الاستقرار النفسي والتدرّج المعرفي.
+    </div>
+  </details>
 
-<h3>أثناء الحصة</h3>
-<ul>
-<li>لا يُستخدم النظام</li>
-<li>لا شاشات</li>
-<li>لا تدخل تقني</li>
-</ul>
-
-<h3>بعد الحصة</h3>
-<p>
-يسأل المعلم نفسه سؤالًا واحدًا:
-</p>
-<div class="notice">
-هل حدثت محاولة آمنة أو نطق جزئي للفكرة؟
-</div>
-
-<p>
-إذا كانت الإجابة نعم، فالإغلاق قرار مهني صحيح.
-</p>
-</div>
-
-<div class="section">
-<h2>نموذج تحضير رسمي مختصر</h2>
-
-<div class="notice">
-<b>المدرسة:</b> ___________<br>
-<b>المعلم:</b> ___________<br>
-<b>الصف:</b> ___________<br>
-<b>المادة:</b> ___________<br>
-<b>التاريخ:</b> ___________<br><br>
-
-<b>الفكرة من الكتاب:</b><br>
-…………………………………<br><br>
-
-<b>السؤال المحوري:</b><br>
-…………………………………<br><br>
-
-<b>مؤشر الإغلاق:</b><br>
-☑ محاولة  ☑ نطق جزئي  ☑ تفاعل آمن<br><br>
-
-<b>قرار:</b> الإغلاق التربوي صحيح<br>
-</div>
-</div>
-
-<div class="section">
-<h2>رسالة تطمين مهني للمعلم</h2>
-<div class="notice">
-ما حدث كافٍ.<br>
-الصمت طبيعي.<br>
-المحاولة إنجاز.<br>
-التوقّف حماية لا تقصير.
-</div>
-</div>
-
-<div class="section">
-<h2>صيغة اعتماد مدرسية مختصرة</h2>
-<div class="notice">
-تعتمد المدرسة مبدأ الإغلاق التربوي الواعي،
-وتقرّ بحق المعلم في التوقّف عند تحقق المحاولة الآمنة،
-حفاظًا على الاستقرار النفسي والتدرّج المعرفي.
-</div>
-</div>
-
-<div class="footer">
-<p>
-هذا المشروع مكتمل، منخفض التعقيد، وقابل للتطبيق الفوري
-دون تدريب، دون منصة، ودون كلفة.
-</p>
-<p>
-القيمة ليست في كثرة ما يُضاف، بل في ما يُغلق بحكمة.
-</p>
-</div>
+  <div class="footer">
+    <p>
+      مشروع مكتمل منخفض التعقيد، قابل للتطبيق الفوري دون منصة أو تدريب.
+      القيمة في ما يُغلق بحكمة، لا فيما يُضاف بكثرة.
+    </p>
+  </div>
 
 </div>
 </body>
