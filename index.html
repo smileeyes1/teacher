@@ -3,106 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مرافق المعلم الفلسطيني</title>
+<title>حسم الحصّة الصامت — فلسطين</title>
 
 <style>
+:root{
+  --bg:#eef2f5;
+  --card:#ffffff;
+  --accent:#1f5d80;
+  --soft:#e9f0f5;
+  --txt:#222;
+}
+*{box-sizing:border-box;font-family:Tahoma}
 body{
-  margin:0; padding:16px;
-  background:#eef2f5;
-  font-family:Tahoma;
+  margin:0; padding:14px;
+  background:var(--bg); color:var(--txt);
 }
 .container{
-  max-width:820px;
-  margin:auto;
-  background:#fff;
-  padding:16px;
+  max-width:820px; margin:auto;
+  background:var(--card);
+  padding:18px;
+  border-radius:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+.title{
+  font-size:18px; color:var(--accent);
+  margin-bottom:10px;
+}
+.stage{
+  background:var(--soft);
   border-radius:14px;
-  box-shadow:0 4px 16px rgba(0,0,0,.08);
+  padding:26px;
+  text-align:center;
+  font-size:16px;
+  line-height:1.9;
+  min-height:160px;
 }
-h1{
-  color:#1f5d80;
-  margin:0 0 12px;
+.controls{
+  display:grid; grid-template-columns:1fr;
+  gap:10px; margin-top:14px;
 }
-p{margin:0 0 8px; color:#333}
-
-.zone{
-  background:#fafafa;
-  border:1px dashed #ccc;
-  border-radius:12px;
-  padding:16px;
-  margin-top:12px;
-  line-height:1.8;
-  min-height:120px;
-}
-
-.actions{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:8px;
-  margin-top:12px;
-}
-
 button{
-  padding:12px;
-  font-size:14px;
-  border-radius:10px;
-  border:none;
-  cursor:pointer;
-  background:#1f5d80;
-  color:#fff;
+  padding:18px;
+  font-size:16px;
+  border-radius:14px;
+  border:none; cursor:pointer;
+  background:var(--accent); color:#fff;
 }
-
-@media print{
-  .actions{display:none}
+button.alt{
+  background:#b7cddd; color:#0b2f44;
 }
+@media print{ .controls{display:none} }
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<h1>مرافق المعلم الفلسطيني</h1>
-<p>خبير • مرشد • مساعد عملي — دعم هادئ داخل الواقع الصفي</p>
+  <div class="title">حسم الحصّة الصامت</div>
 
-<div class="actions">
-  <button onclick="expert()">خبير</button>
-  <button onclick="guide()">مرشد</button>
-  <button onclick="helper()">مساعد</button>
-</div>
+  <div class="stage" id="stage">
+    جاهز للاستخدام.<br>
+    اضغط «ابدأ» وواصل الحصّة بهدوء.
+  </div>
 
-<div class="zone" id="output">
-اختر الدور الذي تحتاجه الآن.
-</div>
+  <div class="controls">
+    <button id="btn" onclick="toggle()">ابدأ</button>
+    <button class="alt" onclick="forceStop()">أغلق الآن</button>
+  </div>
 
 </div>
 
 <script>
-function expert(){
-  document.getElementById('output').textContent =
-  "أنت في حصّة حقيقية، وقتك محدود، والصف مزدحم.\n" +
-  "اختر مثالًا واحدًا فقط من الكتاب.\n" +
-  "اكتب سؤالًا واحدًا من المثال.\n" +
-  "اطرحه واصمت.\n" +
-  "عند أول محاولة: توقّف.\n" +
-  "هذا كافٍ مهنيًا الآن.";
+let running=false, closed=false, t0=null, timer=null;
+const AUTO_MS=300000; // خمس دقائق كحد صامت واقعي
+
+function toggle(){
+  if(closed) return;
+  if(!running){
+    running=true; t0=Date.now();
+    document.getElementById('stage').innerHTML=
+      'السؤال طُرح.<br>اصمت.<br>انتظر محاولة واحدة فقط.';
+    document.getElementById('btn').textContent='قيد التشغيل';
+    timer=setTimeout(autoStop, AUTO_MS);
+  }
 }
 
-function guide(){
-  document.getElementById('output').textContent =
-  "خذ نفسًا.\n" +
-  "أنت لست متأخرًا ولا مقصّرًا.\n" +
-  "إن حصلت محاولة واحدة، فتوقّف مطمئنًا.\n" +
-  "التوقّف هنا حماية لك وللطلبة.\n" +
-  "لا تحتاج أن تشرح أكثر.";
+function autoStop(){
+  if(closed) return;
+  close('إغلاق محسوب تلقائيًا.');
 }
 
-function helper(){
-  document.getElementById('output').textContent =
-  "الآن افعل خطوة واحدة فقط:\n" +
-  "أعد السؤال نفسه مرة واحدة.\n" +
-  "اصمت.\n" +
-  "إن لم تحصل محاولة، توقّف أيضًا.\n" +
-  "الحصّة انتهت بسلام.";
+function forceStop(){
+  if(closed) return;
+  close('⛔ أُغلق الآن.');
+}
+
+function close(note){
+  closed=true; running=false; clearTimeout(timer);
+  const sec=Math.max(0, Math.round((Date.now()-t0)/1000));
+  document.getElementById('stage').innerHTML=
+    note+'<br>مدة التفاعل: '+toArabic(sec)+' ثانية.<br>هذا كافٍ اليوم.';
+  document.getElementById('btn').textContent='مغلق';
+}
+
+function toArabic(n){
+  return String(n).replace(/\d/g, d=>'٠١٢٣٤٥٦٧٨٩'[d]);
 }
 </script>
 
