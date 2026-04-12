@@ -2,93 +2,88 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>محاكاة حصّة صفّية حقيقية</title>
+<title>Classroom Simulation Engine</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body{
   font-family:Tahoma;
-  background:#f4f6f8;
-  padding:20px;
+  background:#111;
+  color:#eee;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
-.card{
-  background:#fff;
-  padding:20px;
-  border-radius:14px;
-  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+#engine{
+  background:#1e1e1e;
+  border-radius:16px;
+  padding:24px;
+  max-width:600px;
+  width:100%;
+  box-shadow:0 0 40px rgba(0,0,0,.6);
 }
-h1{color:#1f5d80}
-#screen{
-  background:#fafafa;
+h1{
+  color:#6ab0f3;
+  margin-top:0;
+}
+#log{
+  background:#000;
+  border-radius:10px;
   padding:16px;
-  border-radius:12px;
-  min-height:220px;
-  white-space:pre-wrap;
+  height:280px;
+  overflow:auto;
+  white-space:pre-line;
   font-size:15px;
 }
 button{
   width:100%;
-  padding:14px;
   margin-top:16px;
-  background:#1f5d80;
-  color:#fff;
+  padding:14px;
+  font-size:16px;
   border:none;
-  font-size:15px;
   border-radius:10px;
+  background:#6ab0f3;
+  color:#000;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>محاكاة صفّية حقيقية</h1>
-  <p>
-    هذه ليست خطة.<br>
-    هذه حصة افتراضية تتقدّم تلقائيًا كما يحدث في الصف.
-  </p>
-
-  <div id="screen"></div>
-
-  <button onclick="startSimulation()">ابدأ المحاكاة</button>
+<div id="engine">
+  <h1>محرك محاكاة صفّية حقيقة</h1>
+  <div id="log"></div>
+  <button onclick="run()">تشغيل الحصّة</button>
 </div>
 
 <script>
-const steps = [
-  "🔔 بداية الحصّة\nالطلبة يجلسون.\nالمعلّم يفتح الكتاب على الدرس.",
-
-  "❓ طرح السؤال من الكتاب.\nالمعلّم يسأل سؤالًا واحدًا فقط.",
-
-  "⏳ تمرّ بضع ثوانٍ...\nالطلبة ينظرون.\nلا أحد يجيب فورًا.",
-
-  "🧠 ملاحظة صفّية:\nهذا صمت طبيعي.\nلا حاجة للتدخّل أو التكرار.",
-
-  "🗣️ محاولة فردية:\nطالب واحد يجيب إجابة غير مكتملة.",
-
-  "✅ ردّ مهني تلقائي:\n\"شكرًا لمحاولتك.\nنسمعك.\"",
-
-  "📉 لا تصويب علني.\nلا مقارنة.\nلا ضغط.",
-
-  "🛑 قرار مهني:\nالمحاولة كافية.\nالإغلاق الآن صحيح.",
-
-  "✅ نهاية الحصّة:\nما حدث كافٍ.\nلا حاجة للإضافة."
+const timeline = [
+  "🔔 بداية الحصّة.\nالطلبة يدخلون.\nالصف غير متحمّس بعد.",
+  "📖 المعلّم يفتح الكتاب.\nلا شرح إضافي.\nسؤال واحد فقط.",
+  "⏳ الصمت يسود لثوانٍ.\nلا أحد يُجيب فورًا.",
+  "🧠 النظام يقرّر:\nهذا صمت صحي.\nلا تدخل.",
+  "👤 طالب واحد يرفع يده.\nالإجابة غير مكتملة.",
+  "✅ القرار الآلي:\nالمحاولة مقبولة.\nلا تصويب.\nلا ضغط.",
+  "🛑 إغلاق الحصّة:\nالهدف تحقّق.\nالتوقّف الآن صحيح.",
+  "✅ نهاية الحصّة.\nما حدث كافٍ.\nلا مراجعة.\nلا ندم."
 ];
 
-let index = 0;
-let interval;
+let i = 0;
+let timer;
 
-function startSimulation(){
-  index = 0;
-  screen.textContent = "";
-  clearInterval(interval);
+function run(){
+  clearInterval(timer);
+  document.getElementById("log").textContent="";
+  i = 0;
 
-  interval = setInterval(()=>{
-    screen.textContent += steps[index] + "\n\n";
-    index++;
-    if(index === steps.length){
-      clearInterval(interval);
+  timer = setInterval(()=>{
+    document.getElementById("log").textContent += timeline[i] + "\n\n";
+    i++;
+    if(i === timeline.length){
+      clearInterval(timer);
     }
-  }, 2000);
+  }, 1800);
 }
 </script>
 
