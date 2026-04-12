@@ -2,128 +2,211 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>الداعم الواقعي للمعلم الفلسطيني</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>الخبير التربوي المرافق — دعم المعلّم</title>
 <style>
+:root{
+  --bg:#f7f7f8;
+  --card:#ffffff;
+  --text:#222;
+  --muted:#666;
+  --accent:#2f6f91;
+  --soft:#e6f0f6;
+  --danger:#c0392b;
+}
+*{box-sizing:border-box;font-family:"Segoe UI","Tahoma",sans-serif;}
 body{
-  font-family: Tahoma, Arial, sans-serif;
-  background:#f6f7f8;
   margin:0;
-  color:#222;
-  line-height:1.8;
+  background:var(--bg);
+  color:var(--text);
 }
 .container{
-  max-width:850px;
-  margin:auto;
-  padding:24px;
-  background:#fff;
+  max-width:720px;
+  margin:40px auto;
+  padding:20px;
 }
-h1{text-align:center;border-bottom:2px solid #ccc;padding-bottom:10px;}
-.section{margin-top:22px;}
-input, textarea, select{
+.card{
+  background:var(--card);
+  border-radius:14px;
+  padding:24px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.06);
+  margin-bottom:20px;
+}
+h1{
+  margin-top:0;
+  font-size:22px;
+  color:var(--accent);
+}
+h2{
+  font-size:18px;
+  margin-bottom:10px;
+}
+p{
+  line-height:1.7;
+  color:var(--muted);
+}
+label{
+  display:block;
+  margin-top:14px;
+  font-size:14px;
+}
+input,textarea{
   width:100%;
-  padding:10px;
   margin-top:6px;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  font-size:14px;
+}
+textarea{min-height:90px;resize:vertical;}
+.notice{
+  background:var(--soft);
+  padding:12px;
+  border-radius:10px;
+  font-size:14px;
+  margin-top:12px;
+}
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
 }
 button{
-  width:100%;
-  padding:16px;
-  margin-top:14px;
-  font-size:1rem;
+  flex:1;
+  padding:14px;
   border:none;
-  background:#eaeaea;
+  border-radius:12px;
+  background:var(--accent);
+  color:#fff;
+  font-size:15px;
   cursor:pointer;
 }
-button:hover{background:#dcdcdc;}
-.output{
-  background:#f0f0f0;
-  border-right:4px solid #777;
+button.secondary{
+  background:#bbb;
+}
+button.danger{
+  background:var(--danger);
+}
+button:active{transform:scale(0.98);}
+output{
+  display:block;
+  white-space:pre-wrap;
+  background:#fafafa;
+  border:1px dashed #ccc;
   padding:16px;
-  margin-top:20px;
-  display:none;
+  border-radius:10px;
+  margin-top:16px;
+  font-size:14px;
 }
 .footer{
-  margin-top:40px;
-  border-top:1px solid #ccc;
-  padding-top:14px;
   text-align:center;
-  color:#666;
+  font-size:13px;
+  color:#888;
+  margin-top:30px;
 }
 </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="card">
+    <h1>الخبير التربوي المرافق</h1>
+    <p>
+      هذه مساحة دعم هادئة لك كمعلّم/ـة.<br>
+      لا تقييم، لا مقارنة، لا تسريع.<br>
+      فقط تنظيم لحظة تعلّم واحدة… ثم إغلاق كريم.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>١) اعتماد الكتاب</h2>
+    <label>اسم الكتاب</label>
+    <input id="book" placeholder="مثال: اللغة العربية — الصف الأوّل">
+
+    <label>الصف / الوحدة / الصفحة</label>
+    <input id="place" placeholder="مثال: وحدة القراءة — ص ٢٣">
+  </div>
+
+  <div class="card">
+    <h2>٢) فكرة الحصّة (واحدة فقط)</h2>
+    <textarea id="idea" placeholder="اكتب أصغر فكرة مكتملة من النص كما هي في الكتاب."></textarea>
+    <div class="notice">
+      ✔ لا تبسيط زائد<br>
+      ✔ لا قفز مفاهيمي<br>
+      ✔ فكرة واحدة تُحتَرم ثم يُتوقّف
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>٣) سؤال يقود لنطق الفكرة</h2>
+    <textarea id="question" placeholder="سؤال مفتوح، آمن، لا يُحرج، يقود للنطق فقط."></textarea>
+  </div>
+
+  <div class="card">
+    <h2>٤) قرارك المهني</h2>
+    <p>
+      متى نُطقت الفكرة — أو حُوصِر الصمت بكرامة — الإغلاق صحيح.
+    </p>
+
+    <div class="actions">
+      <button onclick="generate()">اعتماد التحضير</button>
+      <button class="secondary" onclick="resetAll()">تفريغ الصفحة</button>
+      <button class="danger" onclick="closeClass()">إغلاق واعٍ</button>
+    </div>
+
+    <output id="result"></output>
+  </div>
+
+  <div class="footer">
+    هذا النظام لا يراقبك — ولا يقيسك — ولا يحلّ محلك.<br>
+    هو هنا فقط ليخفّف عنك.
+  </div>
+
+</div>
 
 <script>
 function generate(){
-  const role = document.getElementById("role").value;
-  const idea = document.getElementById("idea").value;
-  const context = document.getElementById("context").value;
+  const book = document.getElementById('book').value.trim();
+  const place = document.getElementById('place').value.trim();
+  const idea = document.getElementById('idea').value.trim();
+  const question = document.getElementById('question').value.trim();
 
-  let text = "";
-
-  if(role==="organize"){
-    text = `تنظيم الموقف:\n\nنركّز اليوم على فكرة واحدة فقط: ${idea}.\nنُبقي الشرح في حدّه الأدنى، ونغلق الحصة عند أول محاولة.`;
-  }
-  if(role==="explain"){
-    text = `شرح مبسّط:\n\nالفكرة الأساس هي: ${idea}.\nنطرح سؤالًا واحدًا فقط، وننتظر دون ضغط.`;
-  }
-  if(role==="analyze"){
-    text = `تحليل واقعي:\n\nالسياق الحالي (${context}) لا يحتمل توسّعًا.\nالمحاولة الجزئية كافية، والضغط سيضرّ التعلّم.`;
-  }
-  if(role==="plan"){
-    text = `خطة قصيرة جدًا:\n\n١) فكرة واحدة: ${idea}\n٢) سؤال واحد\n٣) إغلاق عند أول محاولة`;
-  }
-  if(role==="choose"){
-    text = `الاختيار المهني:\n\nأفضل قرار الآن هو الإغلاق الهادئ.\nهذا يحميك ويحفظ استقرار الطلبة.`;
-  }
-  if(role==="fill"){
-    text = `نص مكتمل:\n\nتم تنفيذ الحصة وفق فكرة "${idea}".\nوبسبب السياق ${context}، تم الإغلاق عند اللحظة المناسبة مهنيًا.`;
+  if(!book || !place || !idea || !question){
+    return;
   }
 
-  document.getElementById("result").innerText=text;
-  document.getElementById("result").style.display="block";
+  const text =
+`تحضير حصّة (اعتماد هادئ)
+
+الكتاب:
+${book}
+
+الموضع:
+${place}
+
+فكرة الحصّة:
+${idea}
+
+السؤال القائد:
+${question}
+
+ملاحظة مهنية:
+الصمت متوقّع.
+المحاولة كافية.
+الإغلاق قرار صحيح.`;
+
+  document.getElementById('result').textContent = text;
+}
+
+function resetAll(){
+  document.querySelectorAll('input,textarea,output').forEach(e=>e.value ? e.value="" : e.textContent="");
+}
+
+function closeClass(){
+  document.getElementById('result').textContent =
+"تمّ الإغلاق.\nلا حاجة للمزيد.\nالتوقّف هنا جودة، لا تقصير.";
 }
 </script>
-</head>
 
-<body>
-<div class="container">
-
-<h1>الداعم المهني للمعلم الفلسطيني</h1>
-<p style="text-align:center;">
-اختر ما تحتاجه الآن، وخذ ناتجًا واحدًا مكتملًا.
-</p>
-
-<div class="section">
-<label>ما الدور الذي تريده الآن؟</label>
-<select id="role">
-  <option value="organize">نظّم لي</option>
-  <option value="explain">اشرح لي</option>
-  <option value="analyze">حلّل لي</option>
-  <option value="plan">اكتب خطة قصيرة</option>
-  <option value="choose">اختر واحدًا</option>
-  <option value="fill">املأ الفراغ</option>
-</select>
-</div>
-
-<div class="section">
-<label>فكرة واحدة من الكتاب:</label>
-<input id="idea" placeholder="اكتب الفكرة باختصار">
-</div>
-
-<div class="section">
-<label>وصف السياق (مستقر / متقلّب / ضغط):</label>
-<input id="context" placeholder="مثال: الصف متعب – الوقت قصير">
-</div>
-
-<button onclick="generate()">نفّذ</button>
-
-<div id="result" class="output"></div>
-
-<div class="footer">
-هذا الداعم لا يقيّمك ولا يضغطك.
-إذا خرجت مرتاحًا، فهذا يكفي.
-</div>
-
-</div>
 </body>
 </html>
