@@ -3,131 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الداعم الخبير للمعلّم الفلسطيني</title>
+<title>الداعم الخبير — الرياضيات | الصفّ الأوّل</title>
 
 <style>
 :root{
   --bg:#f4f6f8;
   --card:#ffffff;
-  --text:#1f1f1f;
+  --text:#222;
   --muted:#666;
   --accent:#1f5d80;
   --soft:#e9f2f7;
   --border:#ddd;
 }
-
-/* Reset + Typography */
-*{
-  box-sizing:border-box;
-  font-family:"Segoe UI","Tahoma",sans-serif;
-}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-}
-
-/* Layout */
-.container{
-  max-width:860px;
-  margin:auto;
-  padding:16px;
-}
+*{box-sizing:border-box;font-family:"Segoe UI","Tahoma",sans-serif;}
+body{margin:٠;background:var(--bg);color:var(--text);}
+.container{max-width:٨٢٠px;margin:auto;padding:١٦px;}
 .card{
   background:var(--card);
-  border-radius:14px;
-  padding:20px;
-  box-shadow:0 4px 16px rgba(0,0,0,0.06);
-  margin-bottom:16px;
+  border-radius:١٤px;
+  padding:٢٠px;
+  box-shadow:٠ ٤px ١٦px rgba(٠,٠,٠,٠.٠٦);
+  margin-bottom:١٦px;
 }
+h1{margin:٠ ٠ ٨px;font-size:٢٢px;color:var(--accent);}
+h2{margin:٠ ٠ ٨px;font-size:١٨px;}
+p{margin:٠;color:var(--muted);line-height:١.٦;}
 
-/* Headings */
-h1{
-  margin:0 0 10px 0;
-  font-size:22px;
-  color:var(--accent);
-}
-h2{
-  margin:0 0 8px 0;
-  font-size:18px;
-}
-p{
-  margin:0;
-  color:var(--muted);
-  line-height:1.7;
-}
-
-/* Form */
-label{
-  display:block;
-  margin-top:12px;
-  font-size:14px;
-}
-input, textarea{
-  width:100%;
-  padding:12px;
-  margin-top:6px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  font-size:14px;
-}
-textarea{
-  min-height:80px;
-  resize:vertical;
-}
-
-/* Notes */
-.note{
-  background:var(--soft);
-  border-radius:10px;
-  padding:12px;
-  margin-top:10px;
-  font-size:14px;
-}
-
-/* Actions */
-.actions{
-  display:flex;
-  gap:10px;
-  margin-top:16px;
-  flex-wrap:wrap;
+select,button{
+  width:١٠٠%;
+  padding:١٤px;
+  border-radius:١٢px;
+  border:١px solid var(--border);
+  margin-top:١٠px;
+  font-size:١٥px;
 }
 button{
-  flex:1;
-  min-width:140px;
-  padding:14px;
-  border:none;
-  border-radius:12px;
   background:var(--accent);
   color:#fff;
-  font-size:15px;
-  cursor:pointer;
+  border:none;
 }
 button.secondary{background:#aaa;}
 
+.note{
+  background:var(--soft);
+  padding:١٢px;
+  border-radius:١٠px;
+  margin-top:١٠px;
+  font-size:١٤px;
+}
+
 output{
   display:block;
-  margin-top:16px;
-  padding:16px;
   background:#fafafa;
-  border:1px dashed #ccc;
-  border-radius:10px;
+  border:١px dashed #ccc;
+  border-radius:١٠px;
+  padding:١٦px;
+  margin-top:١٦px;
   white-space:pre-wrap;
-  font-size:14px;
+  font-size:١٤px;
 }
 
-/* Footer */
-.footer{
-  text-align:center;
-  font-size:13px;
-  color:#888;
-  margin:24px 0;
-}
-
-/* Responsive tweaks */
-@media(max-width:600px){
-  h1{font-size:20px;}
-  h2{font-size:17px;}
+@media(max-width:٦٠٠px){
+  h1{font-size:٢٠px;}
+  h2{font-size:١٧px;}
 }
 </style>
 </head>
@@ -135,100 +73,80 @@ output{
 <body>
 <div class="container">
 
-  <!-- Header -->
   <div class="card">
-    <h1>الداعم الخبير للمعلّم الفلسطيني</h1>
+    <h1>الداعم الخبير للمعلّم</h1>
     <p>
-      نظام تحضير وتنظيم مهني داعم.<br>
-      لا تقييم، لا مقارنة، لا تسريع.<br>
-      يخفّف العبء ويحفظ قرارك التربوي.
+      مقيَّد بكتاب <strong>الرياضيات — الصفّ الأوّل</strong>.<br>
+      لا يطلب منك شرحًا أو تخطيطًا… أنت تختار فقط.
     </p>
   </div>
 
-  <!-- Book -->
   <div class="card">
-    <h2>١) اعتماد الكتاب الحكومي</h2>
-    <label>اسم الكتاب الرسمي</label>
-    <input id="book" placeholder="مثال: اللغة العربية — الصفّ الأوّل">
-    <label>الصف / الوحدة / الصفحة</label>
-    <input id="place" placeholder="الوحدة الأولى — صفحة ١٥">
-  </div>
+    <h2>١) نوع درس الرياضيات</h2>
+    <select id="lesson">
+      <option>الأعداد (تعرّف / تسمية)</option>
+      <option>العدّ الشفهي</option>
+      <option>مقارنة كميّات</option>
+      <option>العلاقة بين عددين</option>
+      <option>نشاط عملي بسيط</option>
+    </select>
 
-  <!-- Idea -->
-  <div class="card">
-    <h2>٢) فكرة الحصّة (واحدة فقط)</h2>
-    <textarea id="idea" placeholder="أصغر فكرة مكتملة من نصّ الكتاب فقط."></textarea>
     <div class="note">
-      • فكرة واحدة<br>
-      • من النص الرسمي فقط<br>
-      • بلا شرح زائد
+      مأخوذ من بنية دروس الرياضيات في الصفّ الأوّل.
     </div>
   </div>
 
-  <!-- Question -->
   <div class="card">
-    <h2>٣) سؤال آمن يقود للمحاولة</h2>
-    <textarea id="question" placeholder="سؤال شفهي بسيط، يقبل الكلمة أو الإشارة."></textarea>
+    <h2>٢) نمط السؤال المسموح</h2>
+    <select id="question">
+      <option>كم ترى هنا؟</option>
+      <option>أيّهما أكثر؟</option>
+      <option>من يستطيع العدّ؟</option>
+      <option>هل الأعداد متساوية؟</option>
+    </select>
+
     <div class="note">
-      الصمت طبيعي.<br>
-      المحاولة كافية.
+      الإشارة، العدّ الجماعي، أو الصمت… جميعها مقبولة.
     </div>
   </div>
 
-  <!-- Approval -->
   <div class="card">
-    <h2>٤) الاعتماد والإغلاق</h2>
-    <div class="note">
-      متى حاول طفل واحد أو أكثر:<br>
-      فالحصّة ناجحة والتوقّف صحيح.
-    </div>
+    <h2>٣) الإغلاق التربوي المعتمد</h2>
+    <select id="closure">
+      <option>محاولة واحدة — الإغلاق صحيح</option>
+      <option>محاولات غير دقيقة — الإغلاق صحيح</option>
+      <option>تفاعل جسدي فقط — الإغلاق صحيح</option>
+    </select>
 
-    <div class="actions">
-      <button onclick="approve()">اعتماد التحضير</button>
-      <button class="secondary" onclick="resetAll()">تفريغ</button>
-    </div>
+    <button onclick="generate()">اعتماد القرار</button>
+    <button class="secondary" onclick="resetAll()">تفريغ</button>
 
     <output id="result"></output>
-  </div>
-
-  <div class="footer">
-    هذا الداعم لا يراقبك ولا يقيمك.<br>
-    ما فعلته كافٍ.
   </div>
 
 </div>
 
 <script>
-function approve(){
-  const b=book.value.trim();
-  const p=place.value.trim();
-  const i=idea.value.trim();
-  const q=question.value.trim();
-  if(!b||!p||!i||!q)return;
+function generate(){
+  result.textContent =
+`قرار تربوي — الرياضيات (الصفّ الأوّل)
 
-  result.textContent=
-`تحضير حصّة — دعم خبير للمعلّم الفلسطيني
+نوع الدرس:
+${lesson.value}
 
-الكتاب:
-${b}
+نمط السؤال:
+${question.value}
 
-الموضع:
-${p}
+قرار الإغلاق:
+${closure.value}
 
-فكرة الحصّة:
-${i}
-
-السؤال:
-${q}
-
-قرار مهني:
-الصمت متوقّع.
-المحاولة كافية.
-الإغلاق صحيح.`;
+ملاحظة مهنية:
+الكتاب هو المرجع.
+التوقّف هنا صحيح.`;
 }
 
 function resetAll(){
-  document.querySelectorAll("input,textarea").forEach(e=>e.value="");
+  document.querySelectorAll("select").forEach(s=>s.selectedIndex=٠);
   result.textContent="";
 }
 </script>
