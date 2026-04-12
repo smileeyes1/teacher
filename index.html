@@ -2,213 +2,93 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<title>محاكاة حصّة صفّية حقيقية</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>المرافق الصامت للحصّة | المنهاج الفلسطيني</title>
 
 <style>
-:root{
-  --bg:#f4f6f8;
-  --card:#ffffff;
-  --accent:#1f5d80;
-  --soft:#e9f2f7;
-  --text:#222;
-  --muted:#666;
-  --border:#ddd;
-  --radius:14px;
-}
-*{box-sizing:border-box;font-family:Tahoma,"Segoe UI",sans-serif}
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  padding:16px;
-}
-.wrapper{max-width:960px;margin:auto}
-.card{
-  background:var(--card);
+  font-family:Tahoma;
+  background:#f4f6f8;
   padding:20px;
-  margin-bottom:16px;
-  border-radius:var(--radius);
-  box-shadow:0 4px 16px rgba(0,0,0,.08);
 }
-h1{margin:0 0 8px;color:var(--accent);font-size:22px}
-h2{margin:0 0 6px;font-size:18px}
-p{margin:0;color:var(--muted);line-height:1.7}
-
-textarea,button{
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+}
+h1{color:#1f5d80}
+#screen{
+  background:#fafafa;
+  padding:16px;
+  border-radius:12px;
+  min-height:220px;
+  white-space:pre-wrap;
+  font-size:15px;
+}
+button{
   width:100%;
   padding:14px;
-  margin-top:10px;
-  font-size:15px;
-  border-radius:12px;
-  border:1px solid var(--border);
-}
-textarea{min-height:130px;resize:vertical}
-button{
-  background:var(--accent);
+  margin-top:16px;
+  background:#1f5d80;
   color:#fff;
   border:none;
-  cursor:pointer;
-}
-.note{
-  background:var(--soft);
-  padding:12px;
-  border-radius:12px;
-  margin-top:10px;
-  font-size:14px;
-}
-pre{
-  background:#fafafa;
-  border:1px dashed #ccc;
-  padding:16px;
-  border-radius:12px;
-  white-space:pre-wrap;
-  font-size:14px;
-}
-
-@media print{
-  body{background:#fff}
-  textarea,button{display:none}
+  font-size:15px;
+  border-radius:10px;
 }
 </style>
 </head>
 
 <body>
-<div class="wrapper">
 
-<!-- ================= الرأس ================= -->
 <div class="card">
-  <h1>المرافق الصامت للحصّة</h1>
+  <h1>محاكاة صفّية حقيقية</h1>
   <p>
-    نظام ذكي ينتج محاكاة صفّية واقعية قابلة للتنفيذ.<br>
-    يعتمد أولًا على محتوى الكتاب الفلسطيني، وإن تعذّر ينتقل تلقائيًا إلى دعم آمن.<br>
-    ما سيحدث في الحصّة محسوب ومقبول مهنيًا.
+    هذه ليست خطة.<br>
+    هذه حصة افتراضية تتقدّم تلقائيًا كما يحدث في الصف.
   </p>
-</div>
 
-<!-- ========== إدخال اختياري من الكتاب ========== -->
-<div class="card">
-  <h2>نص الدرس من الكتاب (اختياري)</h2>
-  <textarea id="lessonText"
-   placeholder="ألصق هنا سطرًا أو سطرين من الدرس كما هو في الكتاب..."></textarea>
+  <div id="screen"></div>
 
-  <div class="note">
-    ✅ لا يُطلب منك تعبئة أهداف أو تخطيط.<br>
-    ✅ النص يُستخدم للتعرّف فقط، ولا يُعرض أو يُخزّن.<br>
-    ✅ إن لم يُدخل نص → النظام يدعمك تلقائيًا.
-  </div>
-
-  <button onclick="generateSimulation()">إنتاج المحاكاة الصفّية</button>
-</div>
-
-<!-- ================= النتيجة ================= -->
-<div class="card" id="result"></div>
-
+  <button onclick="startSimulation()">ابدأ المحاكاة</button>
 </div>
 
 <script>
-function recognizeFromBook(text){
-  const t = text.toLowerCase();
-  let nature="عام", load="متوسط";
+const steps = [
+  "🔔 بداية الحصّة\nالطلبة يجلسون.\nالمعلّم يفتح الكتاب على الدرس.",
 
-  if(t.includes("عد")||t.includes("احسب")||t.includes("اكتب")||t.includes("قارن")){
-    nature="عددي"; load="مرتفع";
-  }
-  else if(t.includes("اقرأ")||t.includes("نص")||t.includes("الفهم")){
-    nature="قرائي"; load="متوسط";
-  }
-  else if(t.includes("لاحظ")||t.includes("صورة")||t.includes("شاهد")){
-    nature="بصري"; load="منخفض";
-  }
-  else if(t.includes("استنتج")||t.includes("فسر")||t.includes("جرّب")){
-    nature="استقصائي"; load="مرتفع";
-  }
+  "❓ طرح السؤال من الكتاب.\nالمعلّم يسأل سؤالًا واحدًا فقط.",
 
-  return {nature, load};
-}
+  "⏳ تمرّ بضع ثوانٍ...\nالطلبة ينظرون.\nلا أحد يجيب فورًا.",
 
-function buildHolisticSimulation(nature, load){
-  let sim =
-`نوع الدرس: ${nature}
-العبء المعرفي المتوقع: ${load}
+  "🧠 ملاحظة صفّية:\nهذا صمت طبيعي.\nلا حاجة للتدخّل أو التكرار.",
 
-الجوانب النفسية المتوقعة طبيعيًا:
-- تردّد
-- خوف من الخطأ
-- تفاوت مشاركة
-- صمت في البداية
-- توتّر خفيف لدى المعلّم
+  "🗣️ محاولة فردية:\nطالب واحد يجيب إجابة غير مكتملة.",
 
-التفسير التربوي:
-هذه استجابات طبيعية ولا تدل على فشل.
-`;
+  "✅ ردّ مهني تلقائي:\n\"شكرًا لمحاولتك.\nنسمعك.\"",
 
-  if(load==="مرتفع"){
-    sim+=
-`التصرّف المهني الآمن:
-- قبول أول محاولة
-- عدم التصويب العلني
-- تخفيف الإيقاع
+  "📉 لا تصويب علني.\nلا مقارنة.\nلا ضغط.",
 
-قرار الإغلاق:
-التوقّف بعد أول محاولة أو صمت كامل قرار مهني صحيح.
-`;
-  }
-  else if(load==="متوسط"){
-    sim+=
-`التصرّف المهني الآمن:
-- تطبيع التردّد
-- سؤال واحد فقط
-- تثبيت المحاولة
+  "🛑 قرار مهني:\nالمحاولة كافية.\nالإغلاق الآن صحيح.",
 
-قرار الإغلاق:
-التوقّف بعد أول تفاعل مفهوم كافٍ.
-`;
-  }
-  else{
-    sim+=
-`التصرّف المهني الآمن:
-- تثبيت الملاحظة
-- عدم التوسّع
-- الحفاظ على الهدوء
+  "✅ نهاية الحصّة:\nما حدث كافٍ.\nلا حاجة للإضافة."
+];
 
-قرار الإغلاق:
-التوقّف المبكر يعزّز الأمان.
-`;
-  }
+let index = 0;
+let interval;
 
-  sim+=
-`------------------------------------------------
-ملاحظة مهنية داعمة:
-ما حدث في الحصّة كافٍ.
-التوقّف هنا جودة تربوية لا تقصير.
-------------------------------------------------`;
+function startSimulation(){
+  index = 0;
+  screen.textContent = "";
+  clearInterval(interval);
 
-  return sim;
-}
-
-function generateSimulation(){
-  const text = lessonText.value.trim();
-  let rec;
-
-  // أولوية المحتوى من الكتاب
-  if(text.length>20){
-    rec = recognizeFromBook(text);
-  }else{
-    // ذكاء عام آمن
-    rec = {nature:"عام", load:"متوسط"};
-  }
-
-  const resultText = buildHolisticSimulation(rec.nature, rec.load);
-
-  document.getElementById("result").innerHTML =
-  `<h2>المحاكاة الصفّية الجاهزة للتنفيذ</h2>
-   <pre>${resultText}</pre>
-   <div class="note">
-     🖨️ اطبع هذه الوثيقة وادخل الحصّة بثقة.<br>
-     لا حاجة للمراجعة أثناء الدرس.
-   </div>
-   <button onclick="window.print()">طباعة</button>`;
+  interval = setInterval(()=>{
+    screen.textContent += steps[index] + "\n\n";
+    index++;
+    if(index === steps.length){
+      clearInterval(interval);
+    }
+  }, 2000);
 }
 </script>
 
