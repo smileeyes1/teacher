@@ -3,36 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>المرافق الصامت للحصّة</title>
+<title>المرافق الصامت للحصّة | المنهاج الفلسطيني</title>
 
 <style>
 :root{
-  --bg:#f4f6f8; --card:#ffffff; --accent:#1f5d80;
-  --soft:#e9f2f7; --text:#222; --muted:#666;
-  --border:#ddd; --radius:14px;
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --accent:#1f5d80;
+  --soft:#e9f2f7;
+  --text:#222;
+  --muted:#666;
+  --border:#ddd;
+  --radius:14px;
 }
 *{box-sizing:border-box;font-family:Tahoma,"Segoe UI",sans-serif}
-body{margin:0;background:var(--bg);color:var(--text);padding:16px}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  padding:16px;
+}
 .wrapper{max-width:960px;margin:auto}
 .card{
-  background:var(--card);padding:20px;margin-bottom:16px;
+  background:var(--card);
+  padding:20px;
+  margin-bottom:16px;
   border-radius:var(--radius);
   box-shadow:0 4px 16px rgba(0,0,0,.08);
 }
 h1{margin:0 0 8px;color:var(--accent);font-size:22px}
 h2{margin:0 0 6px;font-size:18px}
 p{margin:0;color:var(--muted);line-height:1.7}
+
 textarea,button{
-  width:100%;padding:14px;margin-top:10px;
-  font-size:15px;border-radius:12px;border:1px solid var(--border)
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  font-size:15px;
+  border-radius:12px;
+  border:1px solid var(--border);
 }
-textarea{min-height:120px;resize:vertical}
-button{background:var(--accent);color:#fff;border:none;cursor:pointer}
-.note{background:var(--soft);padding:12px;border-radius:12px;margin-top:10px;font-size:14px}
+textarea{min-height:130px;resize:vertical}
+button{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+.note{
+  background:var(--soft);
+  padding:12px;
+  border-radius:12px;
+  margin-top:10px;
+  font-size:14px;
+}
 pre{
-  background:#fafafa;border:1px dashed #ccc;
-  padding:16px;border-radius:12px;white-space:pre-wrap;font-size:14px
+  background:#fafafa;
+  border:1px dashed #ccc;
+  padding:16px;
+  border-radius:12px;
+  white-space:pre-wrap;
+  font-size:14px;
 }
+
 @media print{
   body{background:#fff}
   textarea,button{display:none}
@@ -43,123 +76,138 @@ pre{
 <body>
 <div class="wrapper">
 
-<!-- رأس النظام -->
+<!-- ================= الرأس ================= -->
 <div class="card">
   <h1>المرافق الصامت للحصّة</h1>
   <p>
-    نظام ذكي يُنتج محاكاة صفّية عملية قابلة للتنفيذ.<br>
-    يستخدم محتوى الكتاب أولًا، وإن تعذّر يعتمد ذكاءً تربويًا آمنًا.<br>
-    ما سيحدث في الحصّة محسوب ومقبول.
+    نظام ذكي ينتج محاكاة صفّية واقعية قابلة للتنفيذ.<br>
+    يعتمد أولًا على محتوى الكتاب الفلسطيني، وإن تعذّر ينتقل تلقائيًا إلى دعم آمن.<br>
+    ما سيحدث في الحصّة محسوب ومقبول مهنيًا.
   </p>
 </div>
 
-<!-- إدخال اختياري من الكتاب -->
+<!-- ========== إدخال اختياري من الكتاب ========== -->
 <div class="card">
   <h2>نص الدرس من الكتاب (اختياري)</h2>
-  <textarea id="lessonText" placeholder="ألصق هنا سطرًا أو سطرين من الدرس إن رغبت..."></textarea>
+  <textarea id="lessonText"
+   placeholder="ألصق هنا سطرًا أو سطرين من الدرس كما هو في الكتاب..."></textarea>
+
   <div class="note">
-    ✅ إن وُجد نص واضح → تُبنى المحاكاة عليه.<br>
-    ✅ إن لم يُدخل شيء → تنتج محاكاة عامة واقعية وآمنة.
+    ✅ لا يُطلب منك تعبئة أهداف أو تخطيط.<br>
+    ✅ النص يُستخدم للتعرّف فقط، ولا يُعرض أو يُخزّن.<br>
+    ✅ إن لم يُدخل نص → النظام يدعمك تلقائيًا.
   </div>
+
   <button onclick="generateSimulation()">إنتاج المحاكاة الصفّية</button>
 </div>
 
-<!-- المخرج -->
+<!-- ================= النتيجة ================= -->
 <div class="card" id="result"></div>
 
 </div>
 
 <script>
-function recognizeFromContent(text){
+function recognizeFromBook(text){
   const t = text.toLowerCase();
   let nature="عام", load="متوسط";
 
-  if(t.includes("اقرأ")||t.includes("نص")){
-    nature="قرائي"; load="متوسط";
-  } else if(t.includes("عد")||t.includes("احسب")||t.includes("اكتب")){
+  if(t.includes("عد")||t.includes("احسب")||t.includes("اكتب")||t.includes("قارن")){
     nature="عددي"; load="مرتفع";
-  } else if(t.includes("لاحظ")||t.includes("صورة")||t.includes("شاهد")){
+  }
+  else if(t.includes("اقرأ")||t.includes("نص")||t.includes("الفهم")){
+    nature="قرائي"; load="متوسط";
+  }
+  else if(t.includes("لاحظ")||t.includes("صورة")||t.includes("شاهد")){
     nature="بصري"; load="منخفض";
-  } else if(t.includes("استنتج")||t.includes("فسر")||t.includes("جرّب")){
+  }
+  else if(t.includes("استنتج")||t.includes("فسر")||t.includes("جرّب")){
     nature="استقصائي"; load="مرتفع";
   }
 
   return {nature, load};
 }
 
-function buildSimulation(nature, load){
-  let s =
+function buildHolisticSimulation(nature, load){
+  let sim =
 `نوع الدرس: ${nature}
-العبء المتوقع: ${load}
+العبء المعرفي المتوقع: ${load}
 
-الجوانب النفسية المرجّحة:
-- تردّد طبيعي
+الجوانب النفسية المتوقعة طبيعيًا:
+- تردّد
 - خوف من الخطأ
 - تفاوت مشاركة
-- صمت وظيفي خصوصًا في البداية
+- صمت في البداية
+- توتّر خفيف لدى المعلّم
 
 التفسير التربوي:
-هذه استجابات طبيعية وليست مؤشر ضعف.
+هذه استجابات طبيعية ولا تدل على فشل.
 `;
 
   if(load==="مرتفع"){
-    s+=
-`التصرف المهني الآمن:
+    sim+=
+`التصرّف المهني الآمن:
 - قبول أول محاولة
 - عدم التصويب العلني
-- تخفيف الوتيرة
+- تخفيف الإيقاع
 
 قرار الإغلاق:
-التوقف بعد أول محاولة أو صمت كامل صحيح مهنيًا.
+التوقّف بعد أول محاولة أو صمت كامل قرار مهني صحيح.
 `;
-  } else if(load==="متوسط"){
-    s+=
-`التصرف المهني الآمن:
+  }
+  else if(load==="متوسط"){
+    sim+=
+`التصرّف المهني الآمن:
 - تطبيع التردّد
 - سؤال واحد فقط
 - تثبيت المحاولة
 
 قرار الإغلاق:
-التوقف بعد أول تفاعل مفهوم كافٍ.
+التوقّف بعد أول تفاعل مفهوم كافٍ.
 `;
-  } else {
-    s+=
-`التصرف المهني الآمن:
+  }
+  else{
+    sim+=
+`التصرّف المهني الآمن:
 - تثبيت الملاحظة
 - عدم التوسّع
 - الحفاظ على الهدوء
 
 قرار الإغلاق:
-التوقف المبكر يعزّز الأمان.
+التوقّف المبكر يعزّز الأمان.
 `;
   }
 
-  s+=
+  sim+=
 `------------------------------------------------
-ملاحظة داعمة للمعلّم:
-ما حدث في الحصّة كافٍ مهنيًا.
-التوقف هنا جودة لا تقصير.
+ملاحظة مهنية داعمة:
+ما حدث في الحصّة كافٍ.
+التوقّف هنا جودة تربوية لا تقصير.
 ------------------------------------------------`;
 
-  return s;
+  return sim;
 }
 
 function generateSimulation(){
   const text = lessonText.value.trim();
   let rec;
 
+  // أولوية المحتوى من الكتاب
   if(text.length>20){
-    rec = recognizeFromContent(text);   // أولوية المحتوى
+    rec = recognizeFromBook(text);
   }else{
-    rec = {nature:"عام", load:"متوسط"}; // ذكاء آمن افتراضي
+    // ذكاء عام آمن
+    rec = {nature:"عام", load:"متوسط"};
   }
 
-  const simulation = buildSimulation(rec.nature, rec.load);
+  const resultText = buildHolisticSimulation(rec.nature, rec.load);
 
   document.getElementById("result").innerHTML =
   `<h2>المحاكاة الصفّية الجاهزة للتنفيذ</h2>
-   <pre>${simulation}</pre>
-   <div class="note">🖨️ اطبع وادخل الحصّة بثقة.</div>
+   <pre>${resultText}</pre>
+   <div class="note">
+     🖨️ اطبع هذه الوثيقة وادخل الحصّة بثقة.<br>
+     لا حاجة للمراجعة أثناء الدرس.
+   </div>
    <button onclick="window.print()">طباعة</button>`;
 }
 </script>
