@@ -7,33 +7,15 @@
 
 <style>
 :root{
-  --bg:#f4f6f8;
-  --card:#ffffff;
-  --accent:#1f5d80;
-  --soft:#e9f2f7;
-  --text:#222;
-  --muted:#666;
-  --border:#ddd;
-  --radius:14px;
-  --font:14px;
+  --bg:#f4f6f8; --card:#fff; --accent:#1f5d80;
+  --soft:#e9f2f7; --text:#222; --muted:#666;
+  --border:#ddd; --radius:14px;
 }
-*{
-  box-sizing:border-box;
-  font-family:"Tahoma","Segoe UI",sans-serif;
-}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  padding:16px;
-  font-size:var(--font);
-}
+*{box-sizing:border-box;font-family:"Tahoma","Segoe UI",sans-serif;}
+body{margin:0;background:var(--bg);color:var(--text);padding:16px;}
 .wrapper{max-width:960px;margin:auto;}
-
 .card{
-  background:var(--card);
-  padding:20px;
-  margin-bottom:16px;
+  background:var(--card); padding:20px; margin-bottom:16px;
   border-radius:var(--radius);
   box-shadow:0 4px 16px rgba(0,0,0,.06);
 }
@@ -42,56 +24,27 @@ h2{margin:0 0 6px;font-size:18px;}
 p{margin:0;color:var(--muted);line-height:1.7;}
 
 input,select,textarea,button{
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  font-size:15px;
-  border-radius:12px;
-  border:1px solid var(--border);
+  width:100%; padding:14px; margin-top:10px;
+  font-size:15px; border-radius:12px; border:1px solid var(--border);
 }
-textarea{min-height:140px;resize:vertical;}
-button{
-  background:var(--accent);
-  color:#fff;
-  border:none;
-  cursor:pointer;
-}
+textarea{min-height:120px;}
+button{background:var(--accent);color:#fff;border:none;cursor:pointer;}
 button.secondary{background:#aaa;}
-button.light{background:#ddd;color:#000;}
 
 .note{
-  background:var(--soft);
-  padding:12px;
-  border-radius:12px;
-  margin-top:10px;
-  font-size:14px;
+  background:var(--soft); padding:12px;
+  border-radius:12px; margin-top:10px; font-size:14px;
 }
-
 output{
-  display:block;
-  background:#fafafa;
-  border:1px dashed #ccc;
-  padding:16px;
-  margin-top:16px;
-  border-radius:12px;
-  white-space:pre-wrap;
-  font-size:14px;
+  display:block; background:#fafafa;
+  border:1px dashed #ccc; padding:16px;
+  margin-top:16px; border-radius:12px;
+  white-space:pre-wrap; font-size:14px;
 }
 
-.controls{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:10px;
-}
-
-@media(max-width:600px){
-  h1{font-size:20px;}
-  h2{font-size:17px;}
-}
 @media print{
   body{background:#fff;}
-  input,select,textarea,button,.controls{display:none;}
+  input,select,textarea,button{display:none;}
 }
 </style>
 </head>
@@ -99,21 +52,22 @@ output{
 <body>
 <div class="wrapper">
 
-<!-- ===== الشاشة الأولى: الطمأنة ===== -->
+<!-- رأس -->
 <div class="card">
   <h1>المرافق الصامت للحصّة</h1>
   <p>
-    دعم واقعي قبل الحصّة فقط.<br>
-    يكفي استخدام ما هو موجود في الكتاب.<br>
-    ما سيحدث في الحصّة محلول مسبقًا.
+    يستخدم الكتاب الفلسطيني كما هو.<br>
+    يدعمك قبل الحصّة فقط.<br>
+    ما سيحدث في الصف محلول مسبقًا.
   </p>
 </div>
 
-<!-- ===== الشاشة الثانية: الربط بالكتاب ===== -->
+<!-- الربط بالكتاب -->
 <div class="card">
-  <h2>١) بيانات الدرس من الكتاب</h2>
+  <h2>١) ربط الدرس بالكتاب</h2>
 
-  <input id="lessonTitle" placeholder="اسم الدرس كما في الكتاب (مثال: مكونات العدد ٥)">
+  <input id="lessonTitle" placeholder="اسم الدرس كما في الكتاب">
+  <input id="page" type="number" placeholder="رقم الصفحة">
 
   <select id="grade">
     <option>الصف الأوّل</option>
@@ -129,19 +83,34 @@ output{
     <option>التربية الوطنية</option>
   </select>
 
-  <input id="page" type="number" placeholder="رقم الصفحة في الكتاب">
-
-  <textarea id="lessonText" placeholder="ألصق هنا نص الدرس كما هو من الكتاب (للاستخدام التحليلي فقط)"></textarea>
-
   <div class="note">
-    ✅ لا يُطلب منك تحديد أهداف أو أنشطة.<br>
-    ✅ النص يُستخدم لتحليل نوع الدرس فقط، ولن يُعرض أو يُحفظ.
+    ✅ اختيار اسم الدرس والصفحة يكفي لاعتماد الحصّة رسميًا.
   </div>
-
-  <button onclick="analyzeLesson()">حضّر مسار الحصّة من الكتاب</button>
 </div>
 
-<!-- ===== النتيجة ===== -->
+<!-- دعم الكتاب -->
+<div class="card">
+  <h2>٢) دعم الكتاب (اختياري)</h2>
+
+  <input type="file" id="bookFile" accept=".pdf,.jpg,.png">
+  <input type="url" id="bookLink" placeholder="رابط الكتاب الرسمي (إن وُجد)">
+
+  <div class="note">
+    📘 الملف أو الرابط للمرجع فقط.<br>
+    لا يُعرض في الصف ولا يُحلّل تلقائيًا.
+  </div>
+</div>
+
+<!-- نص الدرس للتحليل -->
+<div class="card">
+  <h2>٣) نص الدرس من الصفحة</h2>
+
+  <textarea id="lessonText" placeholder="ألصق هنا نص الدرس كما هو من الكتاب"></textarea>
+
+  <button onclick="analyzeLesson()">حضّر مسار الحصّة</button>
+</div>
+
+<!-- النتيجة -->
 <div class="card" id="result"></div>
 
 </div>
@@ -149,125 +118,60 @@ output{
 <script>
 function analyzeLesson(){
   if(!lessonTitle.value || !page.value || !lessonText.value){
-    alert("يرجى إدخال اسم الدرس ورقم الصفحة ونص الدرس.");
+    alert("يرجى إدخال اسم الدرس، الصفحة، ونص الدرس.");
     return;
   }
 
-  const text = lessonText.value.toLowerCase();
+  const t = lessonText.value.toLowerCase();
+  let type = "عام";
 
-  let lessonType = "عام";
+  if(t.includes("عد") || t.includes("اكتب") || t.includes("قارن")) type = "عددي";
+  else if(t.includes("اقرأ") || t.includes("نص")) type = "قرائي";
+  else if(t.includes("لاحظ") || t.includes("صورة")) type = "بصري";
 
-  if(text.includes("عد") || text.includes("اكتب") || text.includes("قارن")){
-    lessonType = "عددي";
-  }
-  if(text.includes("اقرأ") || text.includes("قراءة") || text.includes("نص")){
-    lessonType = "قرائي";
-  }
-  if(text.includes("لاحظ") || text.includes("صورة") || text.includes("شاهد")){
-    lessonType = "بصري";
-  }
-
-  buildLessonPath(lessonType);
+  buildPath(type);
 }
 
-function buildLessonPath(type){
-
+function buildPath(type){
   const header =
-`مسار حصّة — معتمد رسميًا
-
+`مسار حصّة — معتمد
 اسم الدرس: ${lessonTitle.value}
 الصف: ${grade.value}
 المبحث: ${subject.value}
 الصفحة: ${page.value}
 المرجع: الكتاب المدرسي الفلسطيني الحكومي
-
-نوع الدرس (حسب النص): ${type}
+نوع الدرس: ${type}
 
 `;
 
-  let body = "";
-
-  if(type === "عددي"){
-    body = `
-الدرس ذو طبيعة عددية.
-
-المتوقّع طبيعيًا:
-- تردّد
-- أخطاء في العد أو المقارنة
-- مشاركة جزئية
-
-المسار المعتمد:
-السؤال من الكتاب.
-قبول أول محاولة.
-الإغلاق بعد المحاولة الأولى صحيح.
-`;
-  }
-
-  if(type === "قرائي"){
-    body = `
-الدرس ذو طبيعة قرائية.
-
-المتوقّع طبيعيًا:
-- صمت
-- قراءة فردية
-- تردّد عام
-
-المسار المعتمد:
-السؤال من الكتاب.
-تطبيع التردّد.
-الإغلاق بعد أول محاولة أو صمت كامل صحيح.
-`;
-  }
-
-  if(type === "بصري"){
-    body = `
-الدرس ذو طبيعة بصرية.
-
-المتوقّع طبيعيًا:
-- ملاحظات غير دقيقة
-- وصف عام للصورة
-- مشاركة محدودة
-
-المسار المعتمد:
-السؤال من الكتاب.
-تثبيت الملاحظة دون تعميق.
-الإغلاق دون توسّع صحيح.
-`;
-  }
-
-  if(type === "عام"){
-    body = `
-الدرس ذو طبيعة عامة.
-
-المتوقّع طبيعيًا:
-- مشاركة جزئية
-- صمت
-- إجابات تقريبية
-
-المسار المعتمد:
-السؤال من الكتاب.
-قبول المحاولة.
-الإغلاق بعد أول تفاعل أو صمت كامل صحيح.
-`;
-  }
-
-  const encouragement =
-`----------------------------------
-ملاحظة داعمة:
-بهذا التحضير أنت جاهز.
-ما سيحدث في الحصّة كافٍ مهنيًا.
-لا حاجة للإضافة أو القلق.
-----------------------------------
-`;
+  const scenarios = {
+    عددي:`المتوقع: تردد، أخطاء.
+المسار: قبول المحاولة.
+الإغلاق: بعد أول محاولة.`,
+    قرائي:`المتوقع: صمت، قراءة فردية.
+المسار: تطبيع التردد.
+الإغلاق: بعد أول قراءة أو صمت.`,
+    بصري:`المتوقع: وصف عام.
+المسار: تثبيت الملاحظة.
+الإغلاق: دون توسع.`,
+    عام:`المتوقع: مشاركة جزئية.
+المسار: قبول التفاعل.
+الإغلاق: بعد أول تفاعل.`
+  };
 
   result.innerHTML = `
     <h2>وثيقة مسار الحصّة</h2>
-    <output>${header}${body}${encouragement}</output>
-    <div class="note">
-      📌 اطبع هذه الوثيقة وادخل الحصّة مباشرة.<br>
-      لا تحتاج لمراجعتها أثناء الدرس.
-    </div>
-    <button class="secondary" onclick="window.print()">طباعة الوثيقة</button>
+    <output>
+${header}
+${scenarios[type]}
+
+----------------------------------
+ملاحظة داعمة:
+ما سيحدث في الحصّة كافٍ.
+لا حاجة للإضافة أو القلق.
+----------------------------------
+</output>
+<button class="secondary" onclick="window.print()">طباعة الوثيقة</button>
   `;
 }
 </script>
