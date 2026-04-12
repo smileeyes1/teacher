@@ -3,30 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>النظام التشغيلي اليومي للمعلم الفلسطيني</title>
+<title>النظام التشغيلي المدرسي — فلسطين</title>
 
 <style>
 :root{--bg:#eef2f5;--card:#fff;--accent:#1f5d80;--border:#ddd;--radius:14px}
 *{box-sizing:border-box;font-family:Tahoma}
 body{margin:0;background:var(--bg);padding:16px}
-.wrap{max-width:1000px;margin:auto}
+.wrap{max-width:1020px;margin:auto}
 .card{
-  background:var(--card);
-  padding:16px;
-  margin-bottom:16px;
-  border-radius:var(--radius);
+  background:var(--card);padding:16px;margin-bottom:16px;border-radius:var(--radius);
   box-shadow:0 4px 16px rgba(0,0,0,.08)
 }
 h1,h2{margin:0 0 8px;color:var(--accent)}
 input,button{width:100%;padding:12px;margin-top:8px;font-size:15px;border-radius:10px;border:1px solid var(--border)}
 button{background:var(--accent);color:#fff;border:none;cursor:pointer}
 .zone{
-  background:#fafafa;
-  border:1px dashed #ccc;
-  border-radius:12px;
-  padding:14px;
-  white-space:pre-wrap;
-  line-height:1.7
+  background:#fafafa;border:1px dashed #ccc;border-radius:12px;
+  padding:14px;white-space:pre-wrap;line-height:1.7
 }
 .actions{display:flex;gap:8px;margin-top:8px}
 .actions button{flex:1}
@@ -38,131 +31,134 @@ button{background:var(--accent);color:#fff;border:none;cursor:pointer}
 <div class="wrap">
 
 <div class="card">
-<h1>النظام التشغيلي اليومي للمعلم الفلسطيني</h1>
+  <h1>النظام التشغيلي اليومي للمعلم الفلسطيني</h1>
 </div>
 
 <div class="card">
-<h2>مدخل وحيد إجباري</h2>
-<input id="lessonTitle" placeholder="عنوان الدرس كما هو في الكتاب">
-<input id="lessonTime" type="number" placeholder="مدة الحصة بالدقائق">
-<button onclick="RUN()">تشغيل النظام</button>
+  <h2>مدخل وحيد</h2>
+  <input id="lessonTitle" placeholder="عنوان الدرس كما هو في الكتاب المدرسي الفلسطيني">
+  <input id="lessonMinutes" type="number" placeholder="مدة الحصة بالدقائق">
+  <button onclick="RUN()">تشغيل</button>
 </div>
 
 <div class="card">
-<h2>التحضير والخطة (اشتقاق آلي)</h2>
-<div id="prep" class="zone"></div>
+  <h2>التحضير والخطة (اشتقاق آلي)</h2>
+  <div id="prep" class="zone"></div>
 </div>
 
 <div class="card">
-<h2>المحاكاة الصفّية الحقيقية</h2>
-<div id="sim" class="zone"></div>
-<div class="actions">
-<button onclick="print()">طباعة</button>
-<button onclick="RESET()">إعادة</button>
-</div>
+  <h2>سير الحصة (محاكاة سلوكية زمنية)</h2>
+  <div id="sim" class="zone"></div>
+  <div class="actions">
+    <button onclick="print()">طباعة</button>
+    <button onclick="RESET()">إعادة</button>
+  </div>
 </div>
 
 <div class="card">
-<h2>قائمة الرصد (ناتجة عن المسار)</h2>
-<div id="track" class="zone"></div>
+  <h2>قائمة الرصد (ناتجة عن المسار)</h2>
+  <div id="track" class="zone"></div>
 </div>
 
 </div>
 
 <script>
-// ====== اشتقاق المعنى ======
-function complexity(title){
-  let s = Math.max(title.length,10);
-  if(/تطبيق|تحليل|حل/.test(title)) s+=12;
-  if(/مراجعة|تمهيد/.test(title)) s-=6;
-  return Math.max(s,10);
+// ===== اشتقاق التعقيد من العنوان فقط =====
+function complexityFromTitle(title){
+  let s = Math.max((title||'').length, 10);
+  if(/تطبيق|تحليل|حل|مشكلات/.test(title)) s += 14;
+  if(/مراجعة|تمهيد|تعريف/.test(title)) s -= 8;
+  return Math.max(s, 10);
 }
 
-// ====== اشتقاق الزمن ======
-function timeSlices(total){
-  total=Math.min(Math.max(total,30),60);
-  const a=Math.round(total*0.25);
-  const b=Math.round(total*0.6);
-  return [a,b,total];
+// ===== اشتقاق الزمن =====
+function deriveSlices(total){
+  total = Math.min(Math.max(total||45, 30), 60);
+  const a = Math.round(total*0.24);
+  const b = Math.round(total*0.60);
+  return [a, b, total];
 }
 
-// ====== محرك السلوك ======
-let minute=0,pressure=0,meaning=0,timer=null;
-function event(){
-  const e=[
-   {p:1,m:0,txt:"صمت عام."},
-   {p:0,m:1,txt:"محاولة غير مكتملة."},
-   {p:1,m:0,txt:"تشتت خفيف."},
-   {p:0,m:1,txt:"تركيز قصير."}
+// ===== محرك السلوك الصفّي (آلة حالات) =====
+let minute=0, pressure=0, meaning=0, timer=null;
+function eventTick(){
+  const pool = [
+    {p:1,m:0, t:"صمت طبيعي في الصف."},
+    {p:0,m:1, t:"محاولة فردية غير مكتملة."},
+    {p:1,m:0, t:"تشتت خفيف محدود."},
+    {p:0,m:1, t:"تركيز قصير على الفكرة."}
   ];
-  return e[Math.floor(Math.random()*e.length)];
+  return pool[Math.floor(Math.random()*pool.length)];
 }
 
-// ====== التحضير ======
-function buildPrep(title,total){
- const c=complexity(title);
- const [a,b,T]=timeSlices(total);
- return `
-العنوان: ${title}
+// ===== بناء التحضير والخطة بلا قوالب =====
+function buildPrep(title, minutes){
+  const c = complexityFromTitle(title);
+  const [a,b,T] = deriveSlices(minutes);
+  return `
+العنوان: ${title||"درس من الكتاب"}
 المدة: ${T} دقيقة
-تعقيد الدرس: ${c}
+تعقيد مُحتسَب: ${c}
 
-اشتقاق الخطة:
-0–${a} دقيقة ⟶ دخول بطيء طبيعي.
-${a}–${b} دقيقة ⟶ تشكّل جزئي للمعنى.
-${b}–${T} دقيقة ⟶ قرار إغلاق عند تحقق الشرط.
+خطة مشتقّة:
+0–${a} د: دخول تدريجي (تردّد متوقّع).
+${a}–${b} د: تشكّل جزئي للمعنى (محاولات فردية).
+${b}–${T} د: قرار إغلاق عند تحقّق الشرط.
 
-الشرط:
-زمن كافٍ + معنى ابتدائي + ضغط قابل للتحمل.
+شرط الإغلاق:
+(زمن كافٍ) ∧ (معنى ابتدائي) ∨ (ضغط مرتفع).
 `;
 }
 
-// ====== المحاكاة ======
-function playSim(total){
- clearInterval(timer);
- minute=0;pressure=0;meaning=0;
- const [a,b,T]=timeSlices(total);
- const box=document.getElementById("sim");
- box.textContent="⏳ بداية الحصة…";
- timer=setInterval(()=>{
-  minute++;
-  const e=event(); pressure+=e.p; meaning+=e.m;
-  box.textContent+=`\n\n⏱ دقيقة ${minute}: ${e.txt}\n(ضغط=${pressure} | معنى=${meaning})`;
-  if(meaning>=2 || pressure>=4 || minute>=Math.ceil(T*0.7)){
-    box.textContent+=`\n\n🛑 قرار آلي: الإغلاق الآن صحيح.`;
-    clearInterval(timer);
-  }
- },1200);
+// ===== تشغيل المحاكاة =====
+function playSimulation(total){
+  clearInterval(timer);
+  minute=0; pressure=0; meaning=0;
+  const [a,b,T] = deriveSlices(total);
+  const box = document.getElementById("sim");
+  box.textContent = "⏳ بدء الحصة…";
+  timer = setInterval(()=>{
+    minute++;
+    const e = eventTick();
+    pressure += e.p;
+    meaning += e.m;
+    box.textContent += `\n\n⏱ دقيقة ${minute}: ${e.t}\n(ضغط=${pressure} | معنى=${meaning})`;
+    // قرار آلي مُلزم
+    if(meaning>=2 || pressure>=4 || minute>=Math.ceil(T*0.7)){
+      box.textContent += `\n\n🛑 قرار آلي: الإغلاق الآن صحيح.`;
+      clearInterval(timer);
+    }
+  }, 1200);
 }
 
-// ====== الرصد ======
-function buildTrack(title){
- const d=new Date().toLocaleDateString('ar-EG');
- return `
-الدرس: ${title}
+// ===== الرصد مشتق من المسار =====
+function buildTracking(title){
+  const d = new Date().toLocaleDateString('ar-EG');
+  return `
+الدرس: ${title||"—"}
 التاريخ: ${d}
 
 ☐ حضور
 ☐ صمت طبيعي
-☐ محاولة واحدة
-☐ لا تصويب علني
+☐ محاولة واحدة على الأقل
+☐ عدم تصويب علني
 ☐ إغلاق محسوب
 `;
 }
 
-// ====== واجهة ======
+// ===== واجهة =====
 function RUN(){
- const title=document.getElementById("lessonTitle").value||"درس من الكتاب";
- const total=parseInt(document.getElementById("lessonTime").value)||45;
- document.getElementById("prep").textContent=buildPrep(title,total);
- document.getElementById("track").textContent=buildTrack(title);
- playSim(total);
+  const title = document.getElementById("lessonTitle").value || "درس من الكتاب";
+  const minutes = parseInt(document.getElementById("lessonMinutes").value) || 45;
+  document.getElementById("prep").textContent = buildPrep(title, minutes);
+  document.getElementById("track").textContent = buildTracking(title);
+  playSimulation(minutes);
 }
 function RESET(){
- clearInterval(timer);
- document.getElementById("prep").textContent="";
- document.getElementById("sim").textContent="";
- document.getElementById("track").textContent="";
+  clearInterval(timer);
+  document.getElementById("prep").textContent="";
+  document.getElementById("sim").textContent="";
+  document.getElementById("track").textContent="";
 }
 </script>
 
