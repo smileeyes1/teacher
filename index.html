@@ -3,118 +3,268 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>المرافق الصامت للحصّة | منهاج فلسطين</title>
+<title>الخبير التربوي المرافق — دعم المعلّم</title>
+
+<!-- =============================
+     الهوية البصرية الهادئة
+============================= -->
 <style>
 :root{
-  --bg:#f4f6f8; --card:#fff; --accent:#1f5d80;
-  --soft:#e9f2f7; --text:#222; --muted:#666;
-  --border:#ddd; --radius:14px;
+  --bg:#f8f9fa;
+  --card:#ffffff;
+  --text:#222;
+  --muted:#666;
+  --accent:#2f6f91;
+  --soft:#e7f1f7;
+  --border:#ddd;
 }
-*{box-sizing:border-box;font-family:"Tahoma","Segoe UI",sans-serif}
-body{margin:0;background:var(--bg);color:var(--text);padding:16px}
-.wrapper{max-width:960px;margin:auto}
-.card{background:var(--card);padding:20px;margin-bottom:16px;border-radius:var(--radius);
-box-shadow:0 4px 16px rgba(0,0,0,.06)}
-h1{margin:0 0 8px;color:var(--accent);font-size:22px}
-h2{margin:0 0 6px;font-size:18px}
-p{margin:0;color:var(--muted);line-height:1.7}
-select,input,button{
-  width:100%;padding:14px;margin-top:10px;font-size:15px;
-  border-radius:12px;border:1px solid var(--border)
+
+*{
+  box-sizing:border-box;
+  font-family:"Segoe UI","Tahoma",sans-serif;
 }
-button{background:var(--accent);color:#fff;border:none;cursor:pointer}
-button.secondary{background:#aaa}
-.note{background:var(--soft);padding:12px;border-radius:12px;margin-top:10px;font-size:14px}
-output{display:block;background:#fafafa;border:1px dashed #ccc;padding:16px;margin-top:16px;
-border-radius:12px;white-space:pre-wrap;font-size:14px}
-@media (max-width:600px){h1{font-size:20px}h2{font-size:17px}}
-@media print{body{background:#fff}select,input,button{display:none}}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.wrapper{
+  max-width:760px;
+  margin:40px auto;
+  padding:20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:22px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.06);
+}
+
+h1{
+  margin-top:0;
+  font-size:22px;
+  color:var(--accent);
+}
+
+h2{
+  font-size:18px;
+  margin-bottom:10px;
+}
+
+p{
+  line-height:1.7;
+  color:var(--muted);
+}
+
+label{
+  display:block;
+  margin-top:16px;
+  font-size:14px;
+}
+
+input, textarea{
+  width:100%;
+  margin-top:6px;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  font-size:14px;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.notice{
+  background:var(--soft);
+  padding:14px;
+  border-radius:12px;
+  font-size:14px;
+  margin-top:14px;
+}
+
+.actions{
+  display:flex;
+  gap:12px;
+  margin-top:22px;
+}
+
+button{
+  flex:1;
+  border:none;
+  border-radius:14px;
+  padding:14px;
+  font-size:15px;
+  cursor:pointer;
+  background:var(--accent);
+  color:#fff;
+}
+
+button.secondary{background:#aaa;}
+button.danger{background:#c0392b;}
+
+button:active{transform:scale(0.98);}
+
+output{
+  display:block;
+  white-space:pre-wrap;
+  background:#fafafa;
+  border:1px dashed #ccc;
+  padding:18px;
+  border-radius:12px;
+  margin-top:18px;
+  font-size:14px;
+}
+
+footer{
+  text-align:center;
+  font-size:13px;
+  color:#888;
+  margin-top:30px;
+}
 </style>
 </head>
 
 <body>
+
 <div class="wrapper">
 
-<div class="card">
-  <h1>المرافق الصامت للحصّة</h1>
-  <p>
-    خبير مرافق قبل الحصّة فقط.<br>
-    المرجع الوحيد: الكتاب المدرسي الفلسطيني الحكومي.<br>
-    الدعم يتمّ بحلّ السيناريوهات مسبقًا.
-  </p>
-</div>
-
-<div class="card">
-  <h2>١) الربط الرسمي بالكتاب</h2>
-  <select id="grade">
-    <option>الصف الأوّل</option>
-    <option>الصف الثاني</option>
-    <option>المرحلة الأساسية العليا</option>
-    <option>المرحلة الثانوية</option>
-  </select>
-
-  <select id="subject">
-    <option>الرياضيات</option>
-    <option>اللغة العربية</option>
-    <option>العلوم</option>
-    <option>التربية الوطنية</option>
-  </select>
-
-  <input id="page" type="number" placeholder="رقم الصفحة في الكتاب (إلزامي)"/>
-
-  <div class="note">
-    الربط الرسمي يتم عبر الصفحة فقط.<br>
-    الفكرة والسؤال يؤخذان من الكتاب الورقي.
+  <!-- =============================
+       البطاقة التعريفية
+  ============================= -->
+  <div class="card">
+    <h1>الخبير التربوي المرافق</h1>
+    <p>
+      مساحة دعم مهني هادئة للمعلّم الفلسطيني.<br>
+      لا تقييم — لا مقارنة — لا تسريع.<br>
+      فكرة واحدة، ثم توقّف كريم.
+    </p>
   </div>
 
-  <button onclick="buildPath()">حضّر مسار الحصّة</button>
+  <!-- =============================
+       اعتماد الكتاب
+  ============================= -->
+  <div class="card">
+    <h2>١) اعتماد الكتاب</h2>
+
+    <label>اسم الكتاب</label>
+    <input id="book" placeholder="مثال: اللغة العربية — الصف الأوّل">
+
+    <label>الصف / الوحدة / الصفحة</label>
+    <input id="place" placeholder="مثال: وحدة الاستماع — ص ١٥">
+  </div>
+
+  <!-- =============================
+       فكرة الحصّة
+  ============================= -->
+  <div class="card">
+    <h2>٢) فكرة الحصّة (واحدة فقط)</h2>
+
+    <textarea id="idea"
+      placeholder="اكتب أصغر فكرة مكتملة كما وردت في نص الكتاب.">
+    </textarea>
+
+    <div class="notice">
+      ✔ لا تبسيط مُخل<br>
+      ✔ لا شرح زائد<br>
+      ✔ فكرة واحدة تُحترم ثم يُغلق
+    </div>
+  </div>
+
+  <!-- =============================
+       السؤال القائد
+  ============================= -->
+  <div class="card">
+    <h2>٣) السؤال القائد</h2>
+
+    <textarea id="question"
+      placeholder="سؤال آمن، مفتوح، يقود لنطق الفكرة دون إحراج.">
+    </textarea>
+  </div>
+
+  <!-- =============================
+       القرار المهني
+  ============================= -->
+  <div class="card">
+    <h2>٤) قرارك المهني</h2>
+    <p>
+      إذا نُطقت الفكرة — أو تمّت المحاولة — فالإغلاق صحيح.
+    </p>
+
+    <div class="actions">
+      <button onclick="generate()">اعتماد التحضير</button>
+      <button class="secondary" onclick="clearAll()">تفريغ</button>
+      <button class="danger" onclick="closeSession()">إغلاق واعٍ</button>
+    </div>
+
+    <output id="result"></output>
+  </div>
+
+  <footer>
+    هذا النظام لا يراقبك ولا يحاسبك.<br>
+    هو فقط هنا ليكون معك.
+  </footer>
+
 </div>
 
-<div class="card" id="result"></div>
-
-</div>
-
+<!-- =============================
+     المنطق السلوكي (Fail Silent)
+============================= -->
 <script>
-function buildPath(){
-  if(!page.value){ alert("يرجى إدخال رقم الصفحة"); return; }
+function generate(){
+  const book = bookEl().value.trim();
+  const place = placeEl().value.trim();
+  const idea = ideaEl().value.trim();
+  const question = questionEl().value.trim();
 
-  const header =
-`مسار حصّة — معتمد رسميًا
-الصف: ${grade.value}
-المبحث: ${subject.value}
-الصفحة: ${page.value}
-المرجع: الكتاب المدرسي الفلسطيني الحكومي
+  if(!book || !place || !idea || !question) return;
 
-الفكرة: (تُحدَّد من نص الصفحة)
-السؤال: (سؤال واحد من الصفحة)
+  resultEl().textContent =
+`تحضير حصة (معتمد)
 
-`;
+الكتاب:
+${book}
 
-  const body =
-`السيناريوهات المحتملة (محلولة مسبقًا):
+الموضع:
+${place}
 
-(أ) مشاركة جزئية:
-- رد مهني: تثبيت المحاولة دون تعميم.
-- الإغلاق: المشاركة الجزئية كافية — التوقّف صحيح.
+فكرة الحصة:
+${idea}
 
-(ب) إجابات غير دقيقة:
-- رد مهني: قبول الفكرة العامة دون تصويب علني.
-- الإغلاق: المحاولة تحقّقت — التوقّف حكمة.
+السؤال:
+${question}
 
-(ج) صمت أو تردّد:
-- رد مهني: تطبيع الصمت والتفكير الهادئ.
-- الإغلاق: الصمت ليس فشلًا — التوقّف قرار تربوي.
-
-إقرار مهني:
-في جميع الحالات السابقة، الإغلاق بعد أول محاولة أو صمت كامل قرار صحيح ولا يحتاج تبريرًا.
-`;
-
-  result.innerHTML = `
-    <h2>وثيقة مسار الحصّة</h2>
-    <output>${header}${body}</output>
-    <button class="secondary" onclick="window.print()">طباعة الوثيقة</button>
-  `;
+ملاحظة مهنية:
+الصمت متوقّع.
+المحاولة كافية.
+الإغلاق قرار صحيح.`;
 }
+
+function clearAll(){
+  bookEl().value="";
+  placeEl().value="";
+  ideaEl().value="";
+  questionEl().value="";
+  resultEl().textContent="";
+}
+
+function closeSession(){
+  resultEl().textContent =
+"تم الإغلاق.\nالتوقّف هنا جودة مهنية.\nلا حاجة للمزيد.";
+}
+
+/* اختصارات نظيفة */
+const bookEl = ()=>document.getElementById("book");
+const placeEl = ()=>document.getElementById("place");
+const ideaEl = ()=>document.getElementById("idea");
+const questionEl = ()=>document.getElementById("question");
+const resultEl = ()=>document.getElementById("result");
 </script>
+
 </body>
 </html>
