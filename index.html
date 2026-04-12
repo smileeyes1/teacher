@@ -3,154 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الداعم الخبير — الرياضيات | الصفّ الأوّل</title>
+<title>الداعم الخبير — جميع الصفوف</title>
 
 <style>
-body{
-  font-family:"Tahoma",sans-serif;
-  background:#f4f6f8;
-  margin:0;
-  padding:16px;
-  color:#222;
-}
-.card{
-  background:#ffffff;
-  border-radius:14px;
-  padding:20px;
-  margin-bottom:16px;
-  box-shadow:0 4px 16px rgba(0,0,0,0.06);
-}
-h1{
-  margin-top:0;
-  font-size:22px;
-  color:#1f5d80;
-}
-h2{
-  font-size:18px;
-  margin-bottom:8px;
-}
-p{
-  margin:0;
-  line-height:1.7;
-  color:#555;
-}
-button{
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  font-size:15px;
-  border:none;
-  border-radius:12px;
-  background:#1f5d80;
-  color:#fff;
-  cursor:pointer;
-}
-.note{
-  background:#e9f2f7;
-  border-radius:10px;
-  padding:12px;
-  margin-top:10px;
-  font-size:14px;
-}
-output{
-  display:block;
-  background:#fafafa;
-  border:1px dashed #ccc;
-  border-radius:10px;
-  padding:16px;
-  margin-top:16px;
-  white-space:pre-wrap;
-  font-size:14px;
-}
+body{font-family:Tahoma;background:#f4f6f8;margin:0;padding:16px;color:#222;}
+.card{background:#fff;border-radius:14px;padding:20px;margin-bottom:16px;
+box-shadow:0 4px 16px rgba(0,0,0,.06);}
+h1{margin:0 0 10px;color:#1f5d80;font-size:22px;}
+h2{margin:0 0 8px;font-size:18px;}
+select,button{width:100%;padding:14px;margin-top:10px;
+border-radius:12px;border:1px solid #ddd;font-size:15px;}
+button{background:#1f5d80;color:#fff;border:none;}
+.note{background:#e9f2f7;padding:12px;border-radius:10px;margin-top:10px;font-size:14px;}
+output{display:block;background:#fafafa;border:1px dashed #ccc;
+border-radius:10px;padding:16px;margin-top:16px;white-space:pre-wrap;}
 </style>
 </head>
 
 <body>
 
 <div class="card">
-  <h1>الداعم الخبير للمعلّم</h1>
-  <p>
-    محاكاة واقعية لدرس <strong>الرياضيات — الصفّ الأوّل</strong>.<br>
-    النظام يقترح… وأنت تختار فقط.
-  </p>
+  <h1>الداعم الخبير للمعلّم الفلسطيني</h1>
+  <p>نظام مرافق قبل الحصّة — الكتاب هو المرجع، وأنت تختار فقط.</p>
 </div>
 
 <div class="card">
-  <h2>الفكرة العلمية للدرس</h2>
-  <p>التعرّف إلى عدد ومقارنته بكميّة.</p>
+  <h2>١) اختر الصف</h2>
+  <select id="grade">
+    <option>الصف الأوّل</option>
+    <option>الصف الثاني</option>
+    <option>المرحلة الأساسية العليا</option>
+    <option>المرحلة الثانوية</option>
+  </select>
 </div>
 
 <div class="card">
-  <h2>السؤال الواحد المستخدم</h2>
-  <p>«كم عدد الأشياء التي نراها هنا؟»</p>
+  <h2>٢) اختر المبحث</h2>
+  <select id="subject">
+    <option>الرياضيات</option>
+    <option>اللغة العربية</option>
+    <option>العلوم</option>
+    <option>التربية الوطنية</option>
+  </select>
 </div>
 
 <div class="card">
-  <h2>ما الذي حدث في الصف؟</h2>
-
-  <button onclick="simulate(1)">شارك طفل واحد فقط</button>
+  <h2>٣) ماذا حدث في الصف؟</h2>
+  <button onclick="simulate(1)">شارك عدد قليل من الطلبة</button>
   <button onclick="simulate(2)">كانت الإجابات غير دقيقة</button>
-  <button onclick="simulate(3)">ساد صمت جماعي</button>
+  <button onclick="simulate(3)">ساد صمت أو تردد</button>
 </div>
 
 <div class="card" id="result"></div>
 
 <script>
 function simulate(caseId){
-  let text = "";
+let txt="";
+if(caseId===1){
+txt=`ردّ مهني:
+تثبيت المحاولة دون تعميم.
 
-  if(caseId===1){
-    text = `
-    <h2>ردّ مهني آمن</h2>
-    <p>تثبيت المحاولة دون تعميم:</p>
-    <p>«سمعنا محاولة، شكرًا لك»</p>
-    <div class="note">
-      المحاولة كافية.<br>
-      الإغلاق الآن قرار مهني صحيح.
-    </div>
-    <output>
-تحضير مختصر:
-– فكرة واحدة (مقارنة عدد).
-– مشاركة واحدة كافية.
-– تمّ الإغلاق.
-    </output>`;
-  }
+الإغلاق:
+المشاركة الجزئية كافية.
+التوقّف الآن صحيح.`;
+}
+if(caseId===2){
+txt=`ردّ مهني:
+قبول الفكرة العامة دون تصحيح علني.
 
-  if(caseId===2){
-    text = `
-    <h2>ردّ مهني آمن</h2>
-    <p>قبول الفكرة العامة دون تصحيح علني:</p>
-    <p>«نحن قريبون من العدد»</p>
-    <div class="note">
-      الخطأ غير دالّ على فشل.<br>
-      التوقّف الآن صحيح.
-    </div>
-    <output>
-تحضير مختصر:
-– فكرة واحدة قُوربت.
-– هدَف المحاولة تحقّق.
-– تمّ الإغلاق.
-    </output>`;
-  }
+الإغلاق:
+المحاولة تحقّقت.
+التوقّف صحيح.`;
+}
+if(caseId===3){
+txt=`ردّ مهني:
+تطبيع الصمت والتردّد.
 
-  if(caseId===3){
-    text = `
-    <h2>ردّ مهني آمن</h2>
-    <p>تطبيع الصمت:</p>
-    <p>«نفكّر بهدوء… هذا طبيعي»</p>
-    <div class="note">
-      الصمت ليس فشلًا.<br>
-      الإغلاق قرار تربوي سليم.
-    </div>
-    <output>
-تحضير مختصر:
-– فكرة واحدة عُرضت.
-– الصمت قُبل.
-– تمّ الإغلاق.
-    </output>`;
-  }
-
-  document.getElementById("result").innerHTML = text;
+الإغلاق:
+الصمت ليس فشلًا.
+التوقّف قرار مهني.`;}
+document.getElementById("result").innerHTML="<output>"+txt+"</output>";
 }
 </script>
 
