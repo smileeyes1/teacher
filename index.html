@@ -2,154 +2,248 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>المرافق اليومي للمعلم الفلسطيني</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المرافق اليومي للمعلم الفلسطيني</title>
 
 <style>
-body{
-  font-family:Tahoma;
-  background:#eef2f5;
-  margin:0;
-  padding:20px;
+:root{
+  --bg:#eef2f5; --card:#fff; --accent:#1f5d80;
+  --soft:#e9f2f7; --text:#222; --muted:#666;
+  --border:#ddd; --radius:14px;
 }
-.section{
-  background:#fff;
-  padding:20px;
-  margin-bottom:16px;
-  border-radius:14px;
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
-  max-width:900px;
-  margin-left:auto;
-  margin-right:auto;
+*{box-sizing:border-box;font-family:Tahoma,"Segoe UI",sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);padding:16px}
+.wrap{max-width:980px;margin:auto}
+.card{
+  background:var(--card);padding:18px;margin-bottom:16px;
+  border-radius:var(--radius);
+  box-shadow:0 4px 16px rgba(0,0,0,.08)
 }
-h1,h2{color:#1f5d80;margin-top:0}
-input,select,button{
-  width:100%;
-  padding:12px;
-  margin-top:8px;
-  font-size:15px;
-  border-radius:10px;
-  border:1px solid #ccc;
+h1,h2{margin:0 0 8px;color:var(--accent)}
+p{margin:0;color:var(--muted);line-height:1.7}
+input,select,textarea,button{
+  width:100%;padding:12px;margin-top:8px;
+  font-size:15px;border-radius:10px;border:1px solid var(--border)
 }
-button{
-  background:#1f5d80;
-  color:#fff;
-  border:none;
-  cursor:pointer;
-}
+textarea{min-height:70px;resize:vertical}
+button{background:var(--accent);color:#fff;border:none;cursor:pointer}
+.note{background:var(--soft);padding:12px;border-radius:10px;margin-top:10px;font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .output{
-  background:#fafafa;
-  border:1px dashed #ccc;
-  border-radius:12px;
-  padding:16px;
-  white-space:pre-wrap;
-  line-height:1.7;
+  background:#fafafa;border:1px dashed #ccc;border-radius:12px;
+  padding:16px;white-space:pre-wrap;line-height:1.7
 }
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.actions button{flex:1}
+@media(max-width:700px){.grid,.grid3{grid-template-columns:1fr}}
 @media print{
-  button,input,select{display:none}
+  input,select,textarea,button,.actions{display:none}
 }
 </style>
 </head>
 
 <body>
+<div class="wrap">
 
-<div class="section">
+<!-- رأس -->
+<div class="card">
   <h1>المرافق اليومي للمعلم الفلسطيني</h1>
-  <p>أداة عملية ترافقك في التحضير، التنفيذ، والرصد — بدون تعبئة وبدون شرح إضافي.</p>
+  <p>
+    منتج عملي يُنظّم تحاضيرك وخططك ويقود الحصة بواقعية
+    ويُصدر قرار الإغلاق مهنيًا — بدون تعبئة وبدون قوالب.
+  </p>
 </div>
 
-<div class="section">
-  <h2>مدخلات الحصة (الحد الأدنى)</h2>
-  <input id="lesson" placeholder="عنوان الدرس كما في الكتاب">
-  <select id="subject">
-    <option value="math">رياضيات</option>
-    <option value="civics">تربية وطنية</option>
-    <option value="science">علوم</option>
-  </select>
-  <input id="duration" type="number" placeholder="مدة الحصة بالدقائق (مثال 45)">
-  <button onclick="run()">تنظيم الحصة</button>
+<!-- مدخلات الحد الأدنى -->
+<div class="card">
+  <h2>مدخلات سريعة (واحد يكفي)</h2>
+  <div class="grid">
+    <input id="title" placeholder="عنوان الدرس (كما في الكتاب)">
+    <input id="link" placeholder="رابط الدرس (اختياري)">
+  </div>
+  <div class="grid">
+    <input type="file" id="file">
+    <textarea id="hint" placeholder="سطر/كلمتان من الصفحة (اختياري لتعزيز التعرّف)"></textarea>
+  </div>
+  <div class="grid3">
+    <select id="subject">
+      <option value="math">رياضيات</option>
+      <option value="civics">تربية وطنية</option>
+      <option value="science">علوم</option>
+    </select>
+    <input id="duration" type="number" placeholder="مدة الحصة بالدقائق (مثال 45)">
+    <button onclick="startAll()">ابدأ</button>
+  </div>
+  <div class="note">
+    ✅ لا تعبئة طويلة. أدخل ما يتوفر فقط.  
+    ✅ يعتمد على الكتاب أولًا، وإن تعذّر يعمل بذكاء آمن.
+  </div>
 </div>
 
-<div class="section">
-  <h2>محاكاة وتنظيم الحصة</h2>
-  <div id="simulation" class="output">بانتظار التنفيذ…</div>
+<!-- التحضير والخطة -->
+<div class="card">
+  <h2>التحضير والخطة (تلقائي)</h2>
+  <div id="prep" class="output">بانتظار البدء…</div>
 </div>
 
-<div class="section">
-  <h2>قائمة الرصد (جاهزة للطباعة)</h2>
+<!-- محاكاة الحصة -->
+<div class="card">
+  <h2>سير الحصة (محاكاة واقعية زمنية)</h2>
+  <div id="sim" class="output">بانتظار التشغيل…</div>
+  <div class="actions">
+    <button onclick="print()">طباعة</button>
+    <button onclick="resetAll()">إعادة</button>
+  </div>
+</div>
+
+<!-- الرصد -->
+<div class="card">
+  <h2>قائمة رصد (جاهزة للطباعة)</h2>
   <div id="tracking" class="output"></div>
 </div>
 
+</div>
+
 <script>
-function run(){
-  const lesson = lesson.value || "درس من الكتاب";
-  const duration = parseInt(document.getElementById("duration").value) || 45;
-  const subject = document.getElementById("subject").value;
+// ---- أدوات ----
+const now = () => new Date().toLocaleString('ar-EG');
+const clamp = (n,min,max)=>Math.max(min,Math.min(max,n));
 
-  let start = Math.round(duration * 0.2);
-  let middle = Math.round(duration * 0.5);
-  let end = duration - start - middle;
+// تقسيم الزمن تلقائيًا
+function splitTime(total){
+  total = clamp(total||45,30,60);
+  const start = clamp(Math.round(total*0.2),5,15);
+  const core  = clamp(Math.round(total*0.5),15,30);
+  const end   = total - start - core;
+  return [start, start+core, total];
+}
 
-  let sim = "";
+// تعرّف بسيط من التلميح (إن وُجد)
+function recognize(h){
+  const t=(h||"").toLowerCase();
+  if(/عد|احسب|اكتب|قارن|كم/.test(t)) return {nature:"عددي", load:"مرتفع"};
+  if(/اقرأ|نص|معنى|فهم/.test(t))     return {nature:"قرائي", load:"متوسط"};
+  if(/لاحظ|صورة|شاهد|ارسم/.test(t))  return {nature:"بصري", load:"منخفض"};
+  if(/جرّب|استنتج|فسر/.test(t))       return {nature:"استقصائي", load:"مرتفع"};
+  return {nature:"عام", load:"متوسط"};
+}
 
-  if(subject==="math"){
-    sim = `
-عنوان الدرس: ${lesson}
+// بناء التحضير والخطة (بدون قوالب نصية ثابتة)
+function buildPrep(title, sub, dur, rec, times){
+  const [tA,tB,total]=times;
+  const map={
+    math:[
+      `التمهيد (0–${tA}): مثال واحد من الكتاب. بطء متوقّع.`,
+      `البناء (${tA}–${tB}): محاولات فردية. أخطاء طبيعية.`,
+      `الإغلاق (${tB}–${total}): العلامات الأولى للفكرة كافية.`
+    ],
+    civics:[
+      `التمهيد (0–${tA}): قراءة قصيرة/صورة. صمت تفكيري.`,
+      `البناء (${tA}–${tB}): إجابات عامة. لا تصويب علني.`,
+      `الإغلاق (${tB}–${total}): ترسيخ القيمة بإغلاق مبكر.`
+    ],
+    science:[
+      `التمهيد (0–${tA}): ملاحظة/تجربة بسيطة.`,
+      `البناء (${tA}–${tB}): تخمينات ونقاش محدود.`,
+      `الإغلاق (${tB}–${total}): استنتاج أولي كافٍ.`
+    ]
+  };
+  return `
+تحضير تلقائي
+العنوان: ${title||"درس من الكتاب"}
+المادة: ${sub}
+المدة: ${total} دقيقة
+الطبيعة: ${rec.nature} | العبء: ${rec.load}
 
-الدقائق 0–${start}:
-بداية هادئة – عرض مثال واحد – تردد طبيعي.
+خطة التنفيذ:
+- ${map[sub][0]}
+- ${map[sub][1]}
+- ${map[sub][2]}
 
-الدقائق ${start}–${start+middle}:
-محاولات حل – أخطاء جزئية – مشاركة فردية واحدة.
-
-الدقائق ${start+middle}–${duration}:
-الفكرة بدأت تتضح.
-⛔ الإغلاق الآن صحيح ومهني.
+قرار مهني:
+التوقف عند تحقق أول علامة معنى أو ارتفاع الضغط — جودة لا تقصير.
 `;
+}
+
+// محاكاة زمنية (آلة حالات بسيطة)
+let timer=null, idx=0, lines=[];
+function buildSimulation(sub, rec, times){
+  const [tA,tB,total]=times;
+  if(sub==="math"){
+    return [
+`🔔 0–${tA}: بداية رياضيات. تردد طبيعي.`,
+`➗ ${tA}–${tB}: محاولة واحدة غير مكتملة. قبول بلا تصويب.`,
+`🛑 ${tB}–${total}: المعنى بدأ. الإغلاق الآن صحيح.`
+    ];
   }
-  if(subject==="civics"){
-    sim = `
-عنوان الدرس: ${lesson}
+  if(sub==="civics"){
+    return [
+`🔔 0–${tA}: قراءة/صورة. صمت طبيعي.`,
+`🗣️ ${tA}–${tB}: إجابة عامة واحدة. تثبيت بلا وعظ.`,
+`🛑 ${tB}–${total}: القيمة زُرعت. إغلاق مهني.`
+    ];
+  }
+  return [
+`🔔 0–${tA}: ملاحظة/تجربة.`,
+`🔬 ${tA}–${tB}: استنتاج غير دقيق. تصحيح غير علني.`,
+`🛑 ${tB}–${total}: الاستنتاج الأولي كافٍ.`
+  ];
+}
 
-الدقائق 0–${start}:
-قراءة فقرة أو موقف – صمت تفكيري.
+function playSim(){
+  const box=document.getElementById("sim");
+  box.textContent="⏳ بدء الحصة…";
+  idx=0; clearInterval(timer);
+  timer=setInterval(()=>{
+    if(idx<lines.length){
+      box.textContent += "\n\n"+lines[idx];
+      idx++;
+    }else{
+      box.textContent += "\n\n✅ نهاية الحصة:\nما حدث كافٍ مهنيًا.";
+      clearInterval(timer);
+    }
+  },2000);
+}
 
-الدقائق ${start}–${start+middle}:
-إجابات عامة – حذر في التعبير – لا تصويب.
+// الرصد
+function buildTracking(title){
+  return `
+قائمة رصد مختصرة
+الدرس: ${title||"—"}
+التاريخ: ${now()}
 
-الدقائق ${start+middle}–${duration}:
-الفكرة زُرعت.
-⛔ الإغلاق المبكر يحمي القيمة.
+☐ حضر الطلبة
+☐ صمت طبيعي في البداية
+☐ محاولة واحدة على الأقل
+☐ عدم تصويب علني
+☐ إغلاق مهني صحيح
 `;
-  }
-  if(subject==="science"){
-    sim = `
-عنوان الدرس: ${lesson}
+}
 
-الدقائق 0–${start}:
-ملاحظة أو تجربة بسيطة – تركيز بصري.
+// التشغيل
+function startAll(){
+  const title=document.getElementById("title").value;
+  const sub=document.getElementById("subject").value;
+  const dur=parseInt(document.getElementById("duration").value)||45;
+  const rec=recognize(document.getElementById("hint").value);
+  const times=splitTime(dur);
 
-الدقائق ${start}–${start+middle}:
-تخمينات غير دقيقة – نقاش محدود.
+  document.getElementById("prep").textContent =
+    buildPrep(title,sub,dur,rec,times);
 
-الدقائق ${start+middle}–${duration}:
-الاستنتاج الأولي تحقق.
-⛔ الإغلاق الآن كافٍ.
-`;
-  }
-
-  document.getElementById("simulation").textContent =
-sim + "\n✅ قرار مهني: التوقف هنا جودة وليس تقصير.";
+  lines = buildSimulation(sub,rec,times);
+  playSim();
 
   document.getElementById("tracking").textContent =
-`قائمة رصد مختصرة:
+    buildTracking(title);
+}
 
-□ حضر الطلبة
-□ محاولة واحدة على الأقل
-□ صمت طبيعي
-□ مشاركة فردية
-□ لا ضغط
-□ إغلاق صحيح`;
+function resetAll(){
+  clearInterval(timer);
+  document.getElementById("prep").textContent="بانتظار البدء…";
+  document.getElementById("sim").textContent="بانتظار التشغيل…";
+  document.getElementById("tracking").textContent="";
 }
 </script>
 
