@@ -3,118 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الداعم التشغيلي الكامل للمعلم الفلسطيني</title>
+<title>الداعم التشغيلي الكامل — فلسطين</title>
 <style>
-:root{--bg:#eef2f5;--card:#fff;--accent:#1f5d80;--border:#ddd;--r:14px}
+:root{--bg:#eef2f5;--card:#fff;--accent:#1f5d80;--border:#ddd;--r:١٤px}
 *{box-sizing:border-box;font-family:Tahoma}
-body{margin:0;background:var(--bg);padding:16px}
-.wrap{max-width:1100px;margin:auto}
-.card{background:var(--card);padding:16px;margin-bottom:16px;border-radius:var(--r);
-box-shadow:0 4px 16px rgba(0,0,0,.08)}
-h1,h2{margin:0 0 8px;color:var(--accent)}
-input,button{width:100%;padding:12px;margin-top:8px;font-size:15px;border-radius:10px;border:1px solid var(--border)}
+body{margin:0;background:var(--bg);padding:١٦px}
+.wrap{max-width:١٠٨٠px;margin:auto}
+.card{background:var(--card);padding:١٦px;margin-bottom:١٦px;border-radius:var(--r);
+box-shadow:0 ٤px ١٦px rgba(٠,٠,٠,.٠٨)}
+h١,h٢{margin:٠ ٠ ٨px;color:var(--accent)}
+input,button{width:١٠٠%;padding:١٢px;margin-top:٨px;font-size:١٥px;border-radius:١٠px;border:١px solid var(--border)}
 button{background:var(--accent);color:#fff;border:none;cursor:pointer}
-.zone{background:#fafafa;border:1px dashed #ccc;border-radius:12px;padding:14px;white-space:pre-wrap;line-height:1.7}
-.actions{display:flex;gap:8px;margin-top:8px}
-.actions button{flex:1}
+.zone{background:#fafafa;border:١px dashed #ccc;border-radius:١٢px;padding:١٤px;white-space:pre-wrap;line-height:١.٧}
+.actions{display:flex;gap:٨px;margin-top:٨px}
+.actions button{flex:١}
+.hidden{display:none}
+.lock{opacity:.٤;pointer-events:none}
 @media print{input,button,.actions{display:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="card"><h1>الداعم التشغيلي الكامل للمعلم الفلسطيني</h1></div>
 
-  <div class="card">
-    <h2>مدخل وحيد</h2>
-    <input id="title" placeholder="عنوان الدرس كما في الكتاب المدرسي الفلسطيني">
-    <input id="minutes" type="number" placeholder="مدة الحصة بالدقائق">
-    <button onclick="RUN()">تشغيل</button>
-  </div>
+<div class="card">
+  <h١>الداعم التشغيلي الكامل للمعلم الفلسطيني</h١>
+</div>
 
-  <div class="card">
-    <h2>تنظيم الحصة (آلي)</h2>
-    <div id="prep" class="zone"></div>
-  </div>
+<div class="card" id="bookGate">
+  <h٢>اعتماد الكتاب (شرط تشغيل)</h٢>
+  <input type="file" id="bookFile" accept=".pdf,image/*">
+  <input type="url" id="bookLink" placeholder="رابط رسمي معتمد (اختياري)">
+  <button onclick="approveBook()">اعتماد الكتاب</button>
+  <div class="zone" id="bookStatus">الحالة: غير معتمد.</div>
+</div>
 
-  <div class="card">
-    <h2>سير الحصة (تشغيل صامت محسوب)</h2>
-    <div id="sim" class="zone"></div>
-    <div class="actions">
-      <button onclick="print()">طباعة</button>
-      <button onclick="RESET()">إعادة</button>
-    </div>
-  </div>
+<div class="card lock" id="runGate">
+  <h٢>تشغيل</h٢>
+  <input id="title" placeholder="عنوان الدرس كما في الكتاب">
+  <input id="minutes" type="number" placeholder="مدة الحصّة بالدقائق (٣٠–٦٠)">
+  <button onclick="RUN()">تشغيل الدعم</button>
+</div>
 
-  <div class="card">
-    <h2>قائمة الرصد (ناتجة عن المسار)</h2>
-    <div id="track" class="zone"></div>
+<div class="card lock" id="prepCard">
+  <h٢>تنظيم الحصة (آلي)</h٢>
+  <div id="prep" class="zone"></div>
+</div>
+
+<div class="card lock" id="simCard">
+  <h٢>سير الحصة (تشغيل صامت محسوب)</h٢>
+  <div id="sim" class="zone"></div>
+  <div class="actions">
+    <button onclick="print()">طباعة</button>
+    <button onclick="RESET()">إعادة</button>
   </div>
 </div>
 
+<div class="card lock" id="trackCard">
+  <h٢>قائمة الرصد (ناتجة عن المسار)</h٢>
+  <div id="track" class="zone"></div>
+</div>
+
+</div>
+
 <script>
-/* ====== نواة حاسبة داعمة (لا شرح، لا خيارات) ====== */
-let minute=0, pressure=0, meaning=0, timer=null;
+/* ====== سيادة: لا تشغيل بلا كتاب ====== */
+let BOOK_APPROVED=false;
+function approveBook(){
+  const f=document.getElementById('bookFile').files.length>٠;
+  const l=document.getElementById('bookLink').value.trim().length>٠;
+  if(!f && !l){
+    document.getElementById('bookStatus').textContent='الحالة: فشل صامت (لم يُعتمد كتاب).';
+    return;
+  }
+  BOOK_APPROVED=true;
+  document.getElementById('bookStatus').textContent='الحالة: مُعتمد كمنهاج رسمي وحيد.';
+  unlock();
+}
+function unlock(){
+  ['runGate','prepCard','simCard','trackCard'].forEach(id=>{
+    document.getElementById(id).classList.remove('lock');
+  });
+}
 
-/* اشتقاق بسيط من العنوان (لا تفسير) */
+/* ====== نواة دعم بلا قرارات ====== */
+let minute=٠, pressure=٠, meaning=٠, timer=null;
+
 function complexity(title){
-  let s=Math.max((title||'').length,10);
-  if(/تطبيق|تحليل|حل|مشكلات|تقويم/.test(title)) s+=14;
-  if(/مراجعة|تمهيد|تعريف/.test(title)) s-=8;
-  return Math.max(s,10);
+  let s=Math.max((title||'').length,١٠);
+  if(/تطبيق|تحليل|حل|مشكلات|تقويم/.test(title)) s+=١٤;
+  if(/مراجعة|تمهيد|تعريف/.test(title)) s-=٨;
+  return Math.max(s,١٠);
 }
-
-/* تقسيم زمن محافظ (واقعي) */
 function slices(total){
-  total=Math.min(Math.max(total||45,30),60);
-  return [Math.round(total*0.24), Math.round(total*0.60), total];
+  total=Math.min(Math.max(total||٤٥,٣٠),٦٠);
+  return [Math.round(total*٠.٢٤), Math.round(total*٠.٦٠), total];
 }
-
-/* أحداث صفّية طبيعية (سلوكية) */
 function tick(){
   const e=[
-    {p:1,m:0,t:"صمت طبيعي."},
-    {p:0,m:1,t:"محاولة واحدة غير مكتملة."},
-    {p:1,m:0,t:"تشتت خفيف قصير."},
-    {p:0,m:1,t:"تركيز قصير على الفكرة."}
+    {p:١,m:٠,t:'صمت طبيعي.'},
+    {p:٠,m:١,t:'محاولة واحدة غير مكتملة.'},
+    {p:١,m:٠,t:'تشتت خفيف قصير.'},
+    {p:٠,m:١,t:'تركيز قصير على الفكرة.'}
   ];
   return e[Math.floor(Math.random()*e.length)];
 }
-
-/* تحضير آلي مختصر (بدون قوالب) */
 function prepare(title,min){
   const c=complexity(title);
   const [a,b,T]=slices(min);
-  return `العنوان: ${title||"درس من الكتاب"}
+  return `العنوان: ${title||'درس من الكتاب'}
 المدة: ${T} دقيقة
-تعقيد محتسب: ${c}
+تعقيد مُحتسب: ${c}
 
 المسار:
-0–${a} د: دخول هادئ.
+٠–${a} د: دخول هادئ.
 ${a}–${b} د: تشكّل جزئي للمعنى.
 ${b}–${T} د: شرط إغلاق محسوب.`;
 }
-
-/* تشغيل صامت يقرّر وحده */
 function play(min){
   clearInterval(timer);
-  minute=0; pressure=0; meaning=0;
+  minute=٠; pressure=٠; meaning=٠;
   const [a,b,T]=slices(min);
-  const box=document.getElementById("sim");
-  box.textContent="⏳ بدء الحصة…";
+  const box=document.getElementById('sim');
+  box.textContent='بدء الحصة…';
   timer=setInterval(()=>{
     minute++;
     const e=tick(); pressure+=e.p; meaning+=e.m;
-    box.textContent+=`\n\n⏱ دقيقة ${minute}: ${e.t}\n(ضغط=${pressure} | معنى=${meaning})`;
-    if(meaning>=2 || pressure>=4 || minute>=Math.ceil(T*0.7)){
-      box.textContent+=`\n\n🛑 إغلاق إلزامي.`; clearInterval(timer);
+    box.textContent+=`\n\nدقيقة ${minute}: ${e.t}\n(ضغط=${pressure} | معنى=${meaning})`;
+    if(meaning>=٢ || pressure>=٤ || minute>=Math.ceil(T*٠.٧)){
+      box.textContent+='\n\nإغلاق إلزامي.'; clearInterval(timer);
     }
-  },1200);
+  },١٢٠٠);
 }
-
-/* رصد بسيط مشتق */
 function tracking(title){
   const d=new Date().toLocaleDateString('ar-EG');
-  return `الدرس: ${title||"—"}
+  return `الدرس: ${title||'—'}
 التاريخ: ${d}
 
 ☐ حضور
@@ -124,19 +146,20 @@ function tracking(title){
 ☐ إغلاق محسوب`;
 }
 
-/* واجهة وحيدة */
+/* ====== واجهة ====== */
 function RUN(){
-  const title=document.getElementById("title").value||"درس من الكتاب";
-  const min=parseInt(document.getElementById("minutes").value)||45;
-  document.getElementById("prep").textContent=prepare(title,min);
-  document.getElementById("track").textContent=tracking(title);
+  if(!BOOK_APPROVED) return;
+  const title=document.getElementById('title').value||'درس من الكتاب';
+  const min=parseInt(document.getElementById('minutes').value)||٤٥;
+  document.getElementById('prep').textContent=prepare(title,min);
+  document.getElementById('track').textContent=tracking(title);
   play(min);
 }
 function RESET(){
   clearInterval(timer);
-  document.getElementById("prep").textContent="";
-  document.getElementById("sim").textContent="";
-  document.getElementById("track").textContent="";
+  document.getElementById('prep').textContent='';
+  document.getElementById('sim').textContent='';
+  document.getElementById('track').textContent='';
 }
 </script>
 </body>
