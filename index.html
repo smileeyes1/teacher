@@ -2,16 +2,16 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>الخبير التربوي المرافق — منهاج وزارة التربية الفلسطينية</title>
+<title>تحضير الصفّ الأوّل — دعم المعلّم</title>
 
 <style>
 :root{
-  --bg:#f6f7f8;
+  --bg:#f7f7f7;
   --card:#ffffff;
-  --text:#1f1f1f;
+  --text:#222;
   --muted:#666;
-  --accent:#1e5c7a;
-  --soft:#e9f2f7;
+  --accent:#2c6e91;
+  --soft:#eaf2f6;
 }
 *{
   box-sizing:border-box;
@@ -22,48 +22,49 @@ body{
   background:var(--bg);
   color:var(--text);
 }
-.container{
-  max-width:700px;
-  margin:٤٠px auto;
+.wrapper{
+  max-width:٦٨٠px;
+  margin:٣٠px auto;
   padding:٢٠px;
 }
 .card{
   background:var(--card);
   border-radius:١٤px;
-  padding:٢٤px;
-  box-shadow:0 ٦px ١٨px rgba(0,0,0,0.06);
+  padding:٢٠px;
+  box-shadow:٠ ٤px ١٤px rgba(٠,٠,٠,٠.٠٦);
   margin-bottom:٢٠px;
 }
 h1{
-  margin-top:0;
+  margin-top:٠;
   font-size:٢٢px;
   color:var(--accent);
 }
 h2{
   font-size:١٨px;
+  margin-bottom:١٠px;
 }
 p{
-  line-height:١.٧;
   color:var(--muted);
+  line-height:١.٧;
 }
 label{
   display:block;
-  margin-top:١٤px;
+  margin-top:١٢px;
   font-size:١٤px;
 }
 input, textarea{
-  width:100%;
-  margin-top:٦px;
+  width:١٠٠%;
   padding:١٢px;
+  margin-top:٦px;
   border-radius:١٠px;
   border:١px solid #ddd;
   font-size:١٤px;
 }
 textarea{
-  min-height:٩٠px;
+  min-height:٨٠px;
   resize:vertical;
 }
-.notice{
+.note{
   background:var(--soft);
   padding:١٢px;
   border-radius:١٠px;
@@ -76,7 +77,7 @@ textarea{
   margin-top:٢٠px;
 }
 button{
-  flex:1;
+  flex:١;
   padding:١٤px;
   border:none;
   border-radius:١٢px;
@@ -88,7 +89,6 @@ button{
 button.secondary{
   background:#aaa;
 }
-button:active{transform:scale(٠.٩٨);}
 output{
   display:block;
   background:#fafafa;
@@ -97,6 +97,7 @@ output{
   border-radius:١٠px;
   margin-top:١٦px;
   white-space:pre-wrap;
+  font-size:١٤px;
 }
 .footer{
   text-align:center;
@@ -108,101 +109,98 @@ output{
 </head>
 
 <body>
-<div class="container">
+<div class="wrapper">
 
   <div class="card">
-    <h1>الخبير التربوي المرافق</h1>
+    <h1>تحضير حصة — الصفّ الأوّل</h1>
     <p>
-      نظام دعم تحضيري ملتزم التزامًا كاملًا<br>
-      <strong>بمنهاج وزارة التربية والتعليم الفلسطينية (الكتاب المدرسي الرسمي)</strong>.<br><br>
-      لا يضيف، لا يفسّر، لا يستبدل، ولا يختصر المنهاج.
+      هذا النموذج مُصمَّم لتخفيف الجهد عنك،<br>
+      وحماية الطفل في تجربته الأولى مع التعلّم المدرسي.
     </p>
   </div>
 
   <div class="card">
-    <h2>١) اعتماد الكتاب الرسمي</h2>
+    <h2>١) الكتاب الرسمي</h2>
+    <label>اسم الكتاب</label>
+    <input id="book" placeholder="اللغة العربية — الصفّ الأوّل">
 
-    <label>اسم الكتاب كما ورد رسميًا</label>
-    <input id="book" placeholder="مثال: اللغة العربية — الصفّ الأوّل — الفصل الأوّل">
-
-    <label>الصف / الوحدة / الصفحة</label>
-    <input id="place" placeholder="مثال: الوحدة الأولى — صفحة ٢٣">
+    <label>الوحدة / الصفحة</label>
+    <input id="place" placeholder="الوحدة الأولى — ص ١٢">
   </div>
 
   <div class="card">
-    <h2>٢) فكرة الحصّة (من نصّ الكتاب فقط)</h2>
-
-    <textarea id="idea" placeholder="اكتب الفكرة كما هي مستخلصة حرفيًا من النص المطبوع في الكتاب."></textarea>
-
-    <div class="notice">
-      ✔ ممنوع أي فكرة من خارج النص<br>
-      ✔ لا تبسيط خارج صياغة الكتاب<br>
-      ✔ فكرة واحدة فقط للحصّة الواحدة
+    <h2>٢) فكرة الحصّة (صغيرة جدًا)</h2>
+    <textarea id="idea" placeholder="كلمة، صورة، أو فكرة قصيرة من النص فقط."></textarea>
+    <div class="note">
+      ✓ فكرة واحدة<br>
+      ✓ من نصّ الكتاب فقط<br>
+      ✓ مناسبة لطفل في بداية التعلّم
     </div>
   </div>
 
   <div class="card">
-    <h2>٣) سؤال واحد يقود لنطق الفكرة</h2>
-
-    <textarea id="question" placeholder="سؤال مباشر، آمن، مستند إلى نصّ الكتاب فقط."></textarea>
+    <h2>٣) سؤال شفهي آمن</h2>
+    <textarea id="question" placeholder="سؤال بسيط، لا يتطلّب جملة طويلة."></textarea>
+    <div class="note">
+      لا إلزام.<br>
+      الإشارة أو الكلمة الواحدة كافية.
+    </div>
   </div>
 
   <div class="card">
-    <h2>٤) اعتماد مهني وإغلاق</h2>
+    <h2>٤) الإغلاق التربوي</h2>
 
-    <div class="notice">
-      عند نطق الفكرة أو محاولة نطقها:<br>
-      التوقّف صحيح ومُعتمد مهنيًا.
+    <div class="note">
+      إذا حاول طفل واحد أو أكثر:<br>
+      فالحصّة ناجحة، والإغلاق صحيح.
     </div>
 
     <div class="actions">
-      <button onclick="generate()">اعتماد التحضير</button>
-      <button class="secondary" onclick="resetAll()">تفريغ النموذج</button>
+      <button onclick="approve()">اعتماد التحضير</button>
+      <button class="secondary" onclick="resetAll()">تفريغ</button>
     </div>
 
     <output id="result"></output>
   </div>
 
   <div class="footer">
-    هذا التحضير ملتزم بالمنهاج الحكومي الفلسطيني<br>
-    ولا يُستخدم داخل زمن الحصّة.
+    الصفّ الأوّل لا يحتاج أكثر من هذا.<br>
+    التوقّف هنا حكمة.
   </div>
 
 </div>
 
 <script>
-function generate(){
-  const book=document.getElementById('book').value.trim();
-  const place=document.getElementById('place').value.trim();
-  const idea=document.getElementById('idea').value.trim();
-  const question=document.getElementById('question').value.trim();
+function approve(){
+  const b=book.value.trim();
+  const p=place.value.trim();
+  const i=idea.value.trim();
+  const q=question.value.trim();
+  if(!b||!p||!i||!q)return;
 
-  if(!book||!place||!idea||!question){return;}
+  result.textContent=
+`تحضير حصّة — الصفّ الأوّل (منهاج رسمي)
 
-  document.getElementById('result').textContent=
-`تحضير حصّة ملتزم بالمنهاج الحكومي الفلسطيني
-
-الكتاب المعتمد:
-${book}
+الكتاب:
+${b}
 
 الموضع:
-${place}
+${p}
 
-فكرة الحصّة (من النص فقط):
-${idea}
+فكرة الحصّة:
+${i}
 
-السؤال القائد:
-${question}
+السؤال:
+${q}
 
-ملاحظة مهنية:
-الصمت متوقّع.
+قرار مهني:
 المحاولة كافية.
-الإغلاق قرار تربوي صحيح.`;
+الصمت طبيعي.
+الإغلاق صحيح.`;
 }
-
 function resetAll(){
   document.querySelectorAll('input,textarea').forEach(e=>e.value="");
-  document.getElementById('result').textContent="";
+  result.textContent="";
 }
 </script>
 
