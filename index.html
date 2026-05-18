@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة المعلم البديل الذكي - النظام التربوي السيادي الموحد</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- الواجهة الرئيسية للنظام المعماري -->
+    <div class="system-wrapper no-print" id="mainAppWrapper">
+        <!-- شريط التنقل الجانبي الاحترافي الهيكل -->
+        <aside class="sidebar-navigation">
+            <div class="sidebar-brand">
+                <div class="brand-logo">🤖</div>
+                <div class="brand-text">
+                    <h2>المعلم البديل</h2>
+                    <p>الذكاء التربوي التكيفي</p>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-link active" data-target="dashboard-section">📊 لوحة التحكم القيادية</button>
+                <button class="nav-link" data-target="explainer-section">🧠 مساعد الشرح والتلقين</button>
+                <button class="nav-link" data-target="worksheets-section">📝 أوراق العمل والاختبارات</button>
+                <button class="nav-link" data-target="students-section">👥 السجل التشخيصي للطلاب</button>
+                <button class="nav-link" data-target="curriculum-section">📚 مركز المناهج والكتب</button>
+                <button class="nav-link" data-target="settings-section">⚙️ إعدادات محركات الإدراك</button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>الإصدار v١.٠.٠</p>
+                <p>تاريخ المعالجة: ٢٠٢٦م</p>
+            </div>
+        </aside>
+
+        <!-- لوحة العرض والمعالجة الديناميكية المركزية -->
+        <main class="main-workspace">
+            <!-- الترويسة المدمجة الذكية بتنسيق فليكس بوكس -->
+            <header class="workspace-header">
+                <div class="header-welcome">
+                    <h1 id="welcomeTitle">لوحة التحكم الإدارية</h1>
+                    <p class="text-muted">مراقبة الأداء الصفي وهندسة مسارات التعليم المتقدمة</p>
+                </div>
+                <div class="system-status-pill">
+                    <span class="status-dot-active"></span>
+                    <span id="activeEngineBadge">المعالج المحلي: نشط</span>
+                </div>
+            </header>
+
+            <!-- الاقسام الديناميكية المستقلة البنية -->
+            
+            <!-- أولاً: لوحة التحكم الإحصائية -->
+            <section id="dashboard-section" class="workspace-panel">
+                <div class="stats-grid-container">
+                    <div class="stat-card-widget">
+                        <div class="card-icon-box">👥</div>
+                        <div class="card-info-data">
+                            <h3>عدد المتعلمين المقيدين</h3>
+                            <p class="stat-number">٠٥</p>
+                        </div>
+                    </div>
+                    <div class="stat-card-widget">
+                        <div class="card-icon-box">🧠</div>
+                        <div class="card-info-data">
+                            <h3>المسارات المشروحة</h3>
+                            <p class="stat-number">١٢</p>
+                        </div>
+                    </div>
+                    <div class="stat-card-widget">
+                        <div class="card-icon-box">📝</div>
+                        <div class="card-info-data">
+                            <h3>الوثائق المطبوعة</h3>
+                            <p class="stat-number">٠٨</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-split-layout">
+                    <div class="panel-card-inner">
+                        <h4>📈 مراقبة مستوى التركيز العام والتقدم المعرفي الصفي</h4>
+                        <div class="chart-simulation-bar">
+                            <p>مستوى الفهم الحسي العام: ٨٥%</p>
+                            <div class="progress-track"><div class="progress-fill" style="width: 85%;"></div></div>
+                        </div>
+                        <div class="chart-simulation-bar">
+                            <p>مستوى الاستنتاج المجرد: ٦٢%</p>
+                            <div class="progress-track"><div class="progress-fill" style="width: 62%; background: #eab308;"></div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel-card-inner">
+                        <h4>⚠️ تنبيهات تشخيصية فورية لخطط العلاج</h4>
+                        <ul class="remediation-alerts-list">
+                            <li><strong>الطالب زيد:</strong> يظهر ضعفاً في الانتقال من مرحلة رسومات الشطب إلى الرموز المجردة.</li>
+                            <li><strong>الطالبة مريم:</strong> أتمت مسار التفكير النقدي المتكامل في مادة العلوم بنجاح فائق.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ثانياً: مساعد الشرح والتلقين التكيفي -->
+            <section id="explainer-section" class="workspace-panel hidden">
+                <div class="panel-card-inner">
+                    <h4>🧠 محرك الشرح الذكي وتفكيك المفاهيم المعقدة للمتعلمين</h4>
+                    <p class="panel-instruction-text">يقوم هذا المحرك بصياغة المفهوم العلمي تلقائياً بالتدرج النمائي المناسب لعمر الطفل وعقليته.</p>
+                    
+                    <div class="interactive-form-grid">
+                        <div class="form-element">
+                            <label>المادة المستهدفة:</label>
+                            <input type="text" id="explainerSubject" placeholder="مثال: الرياضيات، العلوم الحياتية...">
+                        </div>
+                        <div class="form-element">
+                            <label>الصف المستهدف والمستوى الإدراكي:</label>
+                            <select id="explainerGrade">
+                                <option value="١">الصف الأول الابتدائي (تأسيس حسي ملموس)</option>
+                                <option value="٢">الصف الثاني الابتدائي (تأسيس حسي ملموس)</option>
+                                <option value="٣">الصف الثالث الابتدائي (تأسيس حسي ملموس)</option>
+                                <option value="٤">الصف الرابع الابتدائي (نمو مفاهيمي سياقي)</option>
+                                <option value="٥">الصف الخامس الابتدائي (نمو مفاهيمي سياقي)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-element" style="margin-top: 15px;">
+                        <label>عنوان المحور المعرفي والدرس:</label>
+                        <input type="text" id="explainerTopic" placeholder="مثال: مفهوم عملية الطرح، خصائص المعادن...">
+                    </div>
+                    
+                    <button class="btn-action-primary" id="generateExplanationBtn">⚡ تشغيل المحرك وتوليد مسار الشرح</button>
+                </div>
+
+                <!-- لوحة عرض الشرح التكيفي المستنتج -->
+                <div class="panel-card-inner hidden" id="explanationResultWrapper" style="margin-top: 20px;">
+                    <div class="result-header-flex">
+                        <h5>📋 المسار الشرحي المفاهيمي المتكامل</h5>
+                        <button class="btn-action-secondary" id="speakExplanationBtn">🔊 قراءة صوتية للمتعلم</button>
+                    </div>
+                    <div class="scaffolded-output-container" id="explanationDynamicContainer"></div>
+                </div>
+            </section>
+
+            <!-- ثالثاً: نظام أوراق العمل والاختبارات الرسمية A4 -->
+            <section id="worksheets-section" class="workspace-panel hidden">
+                <div class="panel-card-inner">
+                    <h4>📝 مهندس الوثائق المطبوعة وأوراق العمل الأكاديمية المعيارية</h4>
+                    <p class="panel-instruction-text">توليد تلقائي فوري لأوراق عمل أو اختبارات مصممة هندسياً للطباعة بمقاس A4 دون تشويه للتنسيق البصري.</p>
+                    
+                    <div class="interactive-form-grid">
+                        <div class="form-element">
+                            <label>نوع الوثيقة المطلوبة:</label>
+                            <select id="docTypeSelect">
+                                <option value="ورقة عمل تشخيصية">ورقة عمل تشخيصية متدرجة</option>
+                                <option value="اختبار تقويمي منهجي">اختبار تقويمي منهجي مقنن</option>
+                            </select>
+                        </div>
+                        <div class="form-element">
+                            <label>عنوان وعنوان الورقة/الموضوع:</label>
+                            <input type="text" id="docTopicInput" placeholder="مثال: مهارات الجمع مع إعادة التجميع">
+                        </div>
+                    </div>
+                    
+                    <button class="btn-action-success" id="generateDocumentBtn" style="margin-top: 15px;">🛠️ هندسة وبناء الوثيقة الرسمية</button>
+                </div>
+            </section>
+
+            <!-- رابعاً: السجل التشخيصي للمتعلمين وملفات الأداء -->
+            <section id="students-section" class="workspace-panel hidden">
+                <div class="panel-card-inner">
+                    <div class="result-header-flex">
+                        <h4>👥 سجل كفاءة الأداء الطلابي والذكاء المعرفي</h4>
+                        <button class="btn-action-primary" id="addNewStudentBtn">+ إضافة متعلم جديد</button>
+                    </div>
+                    
+                    <table class="data-matrix-table" id="studentsMatrixTable">
+                        <thead>
+                            <tr>
+                                <th>اسم المتعلم</th>
+                                <th>مستوى الاستيعاب</th>
+                                <th>مرحلة التدرج الحالية</th>
+                                <th>نقاط القوة المستهدفة</th>
+                                <th>الإجراء العلاجي المقترح</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- محقون تلقائياً عبر JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- خامساً: إدارة واعتماد الكتب المدرسية والمناهج -->
+            <section id="curriculum-section" class="workspace-panel hidden">
+                <div class="panel-card-inner">
+                    <h4>📚 مركز محاكاة معالجة ورفع الكتب المدرسية والمنهاج</h4>
+                    <p class="panel-instruction-text">ارفع نصوص الوحدات الدراسية أو محتوى الكتاب المدرسي ليقوم الذكاء التربوي باعتماده وتفكيكه تلقائياً إلى دروس جاهزة للتنفيذ.</p>
+                    
+                    <div class="upload-zone-simulation" id="dropZoneArea">
+                        <div class="upload-icon">📂</div>
+                        <p>اسحب ملف الكتاب المدرسي هنا أو اضغط للتصفح السريع (يدعم التحليل المفاهيمي الكلي)</p>
+                        <input type="file" id="bookFileInput" class="hidden">
+                    </div>
+
+                    <div class="panel-card-inner hidden" id="bookAnalysisResult" style="margin-top: 20px; background: #f8fafc;">
+                        <h5>✅ تم اعتماد الكتاب المدرسي وتفكيك البنية المعرفية آلياً</h5>
+                        <ul class="curriculum-steps-list" id="curriculumStepsContainer"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- سادساً: لوحة إعدادات محركات الإدراك والذكاء الهجين -->
+            <section id="settings-section" class="workspace-panel hidden">
+                <div class="panel-card-inner">
+                    <h4>⚙️ ربط وإدارة بوابات ومفاتيح الذكاء الاصطناعي (Hybrid Connection)</h4>
+                    <div class="form-element" style="margin-top: 15px;">
+                        <label>مفتاح الوصول السري لنموذج (Google Gemini API Key):</label>
+                        <input type="password" id="geminiKeySecret" placeholder="أدخل رمز الـ API الفعلي للربط الفوري بالنموذج السحابي المباشر...">
+                    </div>
+                    <div class="form-element" style="margin-top: 15px;">
+                        <label>مسار خادم الاستضافة المحلي (Ollama / WebLLM Endpoint):</label>
+                        <input type="text" id="localLlmEndpoint" value="http://localhost:11434" placeholder="مسار الاتصال المحلي لمعالجة الأوفلاين">
+                    </div>
+                    <p class="input-tip">💡 يمتلك النظام آلية تراجع ذكية؛ في حال غياب المفاتيح أو انقطاع الشبكة، ينشط **محرك القواعد الديناميكي التربوي** لتأمين استمرارية العمل المدرسي دون توقف.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ------------------------------------------------------------- -->
+    <!-- طبقة مخرجات وثيقة الـ A4 المستقلة كلياً والمجهزة للطباعة الصارمة -->
+    <!-- ------------------------------------------------------------- -->
+    <div id="enterpriseA4PrintArea" class="print-preview-wrapper hidden">
+        <div class="print-control-toolbar no-print">
+            <button class="btn-action-success" id="executePhysicalPrintBtn">🖨️ تأكيد إرسال الأمر للطباعة المادية</button>
+            <button class="btn-action-neutral" id="abortPrintPreviewBtn">🔄 إلغاء والعودة للوحة المعلم</button>
+        </div>
+
+        <article class="a4-academic-sheet" id="sheetAcademicBody">
+            <header class="academic-sheet-header">
+                <div class="meta-right">
+                    <p class="bold-text">دولة فلسطين</p>
+                    <p class="bold-text">وزارة التربية والتعليم</p>
+                    <p>مديرية التربية والتعليم العالي</p>
+                </div>
+                <div class="meta-center">
+                    <h2 id="printDocumentMainTitle">ورقة عمل تشخيصية شاملة</h2>
+                    <p id="printDocumentSubtitle">نظام التقويم المعرفي المتكامل والتدرج البنائي</p>
+                </div>
+                <div class="meta-left">
+                    <p>التاريخ المرجعي: ٢٠٢٦/٠٥/١٨م</p>
+                    <p>العام الدراسي: ٢٠٢٥ / ٢٠٢٦م</p>
+                    <p id="printDocCryptoId">المعرف الرقمي: SAT-ـ</p>
+                </div>
+            </header>
+
+            <hr class="academic-divider-line">
+
+            <table class="student-info-table">
+                <tr>
+                    <th>اسم الطالب الثلاثي:</th>
+                    <td>............................................................</td>
+                    <th>الصف والشعبة:</th>
+                    <td id="printDocGradeField">...................</td>
+                </tr>
+                <tr>
+                    <th>المادة الدراسية:</th>
+                    <td id="printDocSubjectField">...................</td>
+                    <th>عنوان المحور المعرفي:</th>
+                    <td id="printDocTopicField">...................</td>
+                </tr>
+            </table>
+
+            <!-- الهيكل الداخلي النظيف المحقون لمتن الطلاب فقط -->
+            <div id="printDocumentPayloadBody" class="academic-payload-content"></div>
+
+            <footer class="academic-sheet-footer">
+                <p>مخرجات نظيفة جاهزة للطباعة الصارمة متولدة آلياً عبر نظام "المعلم البديل الذكي" - متوافق بالكامل مع متطلبات المنهاج الفلسطيني.</p>
+            </footer>
+        </article>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
